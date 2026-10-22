@@ -161,3 +161,6 @@ example : ArithmeticFunction.sigma 7 2 =
 #print axioms Fugue.LSeries_sigma_mul_sigma
 #print axioms Fugue.RankinSelberg.sigma_pmul_sigma_mul_sqPow
 #print axioms Fugue.RankinSelberg.LSeries_card_divisors_sq
+
+-- 17. (θ₂⁸ + θ₃⁸ + θ₄⁸)/2 = E₄ (half of Θ_E8 = E₄).
+#print axioms Fugue.thetaCombo_eq_E₄
