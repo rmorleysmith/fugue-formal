@@ -1,0 +1,19 @@
+name = "Formal"
+version = "0.1.0"
+defaultTargets = ["QuasiRH"]
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+relaxedAutoImplicit = false
+
+# Pinned to the exact mathlib commit used by openai/math (lean/lake-manifest.json),
+# so that OpenAI's sorry-free `OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re`
+# can later replace our hypothesis without a version mismatch.
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+
+[[lean_lib]]
+name = "QuasiRH"
