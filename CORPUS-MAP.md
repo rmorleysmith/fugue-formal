@@ -28,6 +28,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C11 | multiplicative functions form a submonoid | PROVEN | `multiplicativeSubmonoid`; not closed under `+`: `zeta_add_zeta_not_multiplicative` | same |
 | C12 | product of eigenforms has product eigenvalues | REFUTED (numerically) | **`Fugue.discriminant_mul_E₄_not_multiplicative_eigenvalue`**: `a₂(ΔE₄) = 216 ≠ (−24)(2160)`; with `tau_two` (`τ(2) = −24`) | `Fugue/HeckeRefutation.lean` |
 | C13 | `Θ_{L⊕M} = Θ_L Θ_M` | PROVEN | `reprCount_directSum`, `theta_directSum`, `theta_two_squares` | `Fugue/Theta.lean` |
+| C15 | eta quotients can place a neuron anywhere | REFUTED | `Fugue.etaQuotient_ne_zero`: no zeros in `ℍ` at all | `Fugue/SieveEta.lean` |
 | D2 | functional equation | PROVEN | Mathlib `riemannZeta_one_sub`; used in `QuasiRH.riemannHypothesis_iff_zeroFreeRight_half` | `QuasiRH/Reflection.lean` |
 | D3 | symmetry alone does not force RH; Euler product is load-bearing | PROVEN | the reflection theorem shows exactly what symmetry *does* give: RH ⟺ no zeros right of ½ | same |
 | D4 | zeros ↔ primes (explicit formula) | PROVEN (classical) | qualitative form: `zeroFreeRight_iff_differentiableOn`, `zeroFreeRight_of_psiError`; quantitative: `Ingham.*` | `QuasiRH/*`, `../FormalPNT` |
