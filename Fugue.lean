@@ -12,3 +12,4 @@ import Fugue.SieveEta
 import Fugue.HeckeE4
 import Fugue.HexagonalCount
 import Fugue.HeckeEk
+import Fugue.RankinSelberg

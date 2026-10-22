@@ -364,6 +364,16 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   the sign `−1` forces `Λ₆(3) = −Λ₆(3)`, so `Λ₆(3) = 0`; unfolding, `Λ₆(3)` contains the factor
   `ζ(3 − 5) = ζ(−2) = 0` — the forced zero is a trivial zero.
 
+### `Fugue/RankinSelberg.lean` — Ramanujan's formula, the Rankin–Selberg prototype
+
+* **`LSeries_sigma_mul_sigma`** — `Σ σ_a(n)σ_b(n) n^{−s} = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)/ζ(2s−a−b)`.
+  *Why:* the *pointwise* product of two multiplicative functions is multiplicative (the corpus'
+  C11 closure law), so both sides are Euler products and it suffices to compare one prime: there it
+  is the power-series identity `Σ_k σ_a(p^k)σ_b(p^k)X^k = (1 − p^{a+b}X²)/((1−X)(1−p^aX)(1−p^bX)(1−p^{a+b}X))`.
+  Sanity case `a = b = 0`: `Σ d(n)² n^{−s} = ζ(s)⁴/ζ(2s)`. In modular-form language this is the
+  Rankin–Selberg L-function of `E_{a+1}` with `E_{b+1}` — "composing" two Eisenstein DNAs
+  pointwise gives a quotient of four zetas by one.
+
 ### `Fugue/HexagonalCount.lean` — the Eisenstein integers
 
 * **`card_hexagonal`** — `#{(a,b) : a² − ab + b² = n} = 6 Σ_{d∣n} χ₋₃(d)`; e.g. `n = 7`: `12`. Same

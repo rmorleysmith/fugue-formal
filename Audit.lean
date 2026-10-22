@@ -156,3 +156,8 @@ example : ArithmeticFunction.sigma 7 2 =
 #print axioms Fugue.HeckeEk.heckeEk_eq
 #print axioms Fugue.HeckeEk.heckeEk_eq_of_ne
 #print axioms Fugue.HeckeEk.heckeE6_centre_eq_zeta
+
+-- 16. Ramanujan's formula (Rankin–Selberg prototype), C11.
+#print axioms Fugue.LSeries_sigma_mul_sigma
+#print axioms Fugue.RankinSelberg.sigma_pmul_sigma_mul_sqPow
+#print axioms Fugue.RankinSelberg.LSeries_card_divisors_sq

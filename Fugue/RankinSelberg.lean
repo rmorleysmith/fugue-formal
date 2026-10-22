@@ -4,6 +4,18 @@ set_option autoImplicit false
 
 /-!
 # Ramanujan's formula: `∑ σ_a(n) σ_b(n) n^{-s} = ζ(s)ζ(s-a)ζ(s-b)ζ(s-a-b) / ζ(2s-a-b)`
+
+The prototype of Rankin–Selberg (the "Rankin–Selberg closure" of the multiplicativity locus).
+
+* `key'` : the Euler-factor identity in `R⟦X⟧` (any commutative ring),
+  `(∑ A_x(k) A_y(k) X^k) · ∑ (xy)^j X^{2j} = 1/((1-X)(1-xX)(1-yX)(1-xyX))`, proved by
+  first-order recurrences, with no division.
+* `sigma_pmul_sigma_mul_sqPow` : `(σ_a · σ_b) * S_{a+b} = ζ * Id^a * Id^b * Id^{a+b}` in
+  `ArithmeticFunction ℕ`, where `S_k(m²) = m^k` and `S_k = 0` off the squares; both sides are
+  multiplicative and the prime-power generating series `P p` turns `*` into power-series product.
+* `LSeries_sigma_mul_sigma` : for `re s > a + b + 1`,
+  `L(σ_a σ_b, s) · ζ(2s - a - b) = ζ(s) ζ(s-a) ζ(s-b) ζ(s-a-b)`.
+* `LSeries_card_divisors_sq` : sanity check `a = b = 0`, `L(d², s) ζ(2s) = ζ(s)⁴`.
 -/
 
 namespace Fugue.RankinSelberg

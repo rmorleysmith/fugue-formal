@@ -26,7 +26,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C1×C8 | Ramanujan's Eisenstein identities link the rings | (corpus prose, Q2) | **`Fugue.E₄sq_eq`** (`E₄² = E₈`, via `dim M₈ = 1`) and **`sigma_seven_eq`**: `σ₇ = σ₃ + 120 σ₃⋆σ₃` | `Fugue/Ramanujan.lean` |
 | C9 | `·log` is a derivation; `log * μ = Λ` | PROVEN | `pmul_log_mul`; Mathlib `log_mul_moebius_eq_vonMangoldt` | same |
 | C10 | Ramanujan's `E₂, E₄, E₆` system | PROVEN | Mathlib `normalizedDerivOfComplex_E₂/E₄/E₆`, `serreDerivative_E₄/E₆` | — |
-| C11 | multiplicative functions form a submonoid | PROVEN | `multiplicativeSubmonoid`; not closed under `+`: `zeta_add_zeta_not_multiplicative` | same |
+| C11 | multiplicative functions form a submonoid; "Rankin–Selberg closure" | PROVEN | `multiplicativeSubmonoid`; not closed under `+`: `zeta_add_zeta_not_multiplicative`; **`Fugue.LSeries_sigma_mul_sigma`** (Ramanujan 1916: the pointwise product `σ_a·σ_b` has L-series `ζζζζ/ζ`) | `Fugue/TwoRings.lean`, `Fugue/RankinSelberg.lean` |
 | C12 | product of eigenforms has product eigenvalues | REFUTED (numerically) | **`Fugue.discriminant_mul_E₄_not_multiplicative_eigenvalue`**: `a₂(ΔE₄) = 216 ≠ (−24)(2160)`; with `tau_two` (`τ(2) = −24`) | `Fugue/HeckeRefutation.lean` |
 | C13 | `Θ_{L⊕M} = Θ_L Θ_M` | PROVEN | `reprCount_directSum`, `theta_directSum`, `theta_two_squares` | `Fugue/Theta.lean` |
 | C15 | eta quotients can place a neuron anywhere | REFUTED | `Fugue.etaQuotient_ne_zero`: no zeros in `ℍ` at all | `Fugue/SieveEta.lean` |
