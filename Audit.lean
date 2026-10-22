@@ -184,3 +184,8 @@ example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 :=
 #print axioms Fugue.RamanujanL.ramanujanΛ_differentiable
 #print axioms Fugue.RamanujanL.ramanujanΛ_eq
 #print axioms Fugue.RamanujanL.τ_three
+
+-- 21. Primon gas: bosons ζ(s), fermions ζ(s)/ζ(2s), (−1)^F = μ, Witten index 1/ζ(s).
+#print axioms Fugue.PrimonGas.fermionic_partition
+#print axioms Fugue.PrimonGas.witten_index
+#print axioms Fugue.PrimonGas.fockEquiv

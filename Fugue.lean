@@ -21,3 +21,4 @@ import Fugue.ThetaE8Count
 import Fugue.HeteroticE8
 import Fugue.D16Plus
 import Fugue.RamanujanL
+import Fugue.PrimonGas
