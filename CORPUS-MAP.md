@@ -19,7 +19,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C3 | Ring A has the identity `δ` | REFUTED | `delta_is_X`, `X_ne_one` | same |
 | C4 | `ζ * μ = δ` | PROVEN | `zeta_mul_moebius` (Mathlib) | same |
 | C5 | `ζ * ζ = d` | PROVEN | `zeta_mul_zeta_eq_sigma_zero` | same |
-| C6 | `r₂(n) = 4 Σ χ₋₄(d)` | PROVEN (numerically) | in progress: `Fugue/TwoSquares.lean` | — |
+| C6 | `r₂(n) = 4 Σ χ₋₄(d)` | PROVEN (numerically) | **`Fugue.card_sq_add_sq`** — Jacobi's two-square theorem (not in Mathlib) | `Fugue/TwoSquares.lean` |
 | C8 | `σ₃ = ζ⁴` | REFUTED | `sigma_three_ne_zeta_pow_four`; correct form `sigma_three_eq` | same |
 | C9 | `·log` is a derivation; `log * μ = Λ` | PROVEN | `pmul_log_mul`; Mathlib `log_mul_moebius_eq_vonMangoldt` | same |
 | C10 | Ramanujan's `E₂, E₄, E₆` system | PROVEN | Mathlib `normalizedDerivOfComplex_E₂/E₄/E₆`, `serreDerivative_E₄/E₆` | — |

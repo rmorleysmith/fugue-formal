@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **39** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **40** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -62,6 +62,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **39** headline theorems (al
 | `Fugue/EllipticPoints.lean` | every level-1 form of weight `6 ∤ k` vanishes at `ρ`, of weight `4 ∤ k` at `i`; `E₄(ρ) = 0`, `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` (A3, A8) | ✅ |
 | `Fugue/Dynamics.lean` | minimum modulus: attractors of `|F|` are the zeros (A9); coupling matrix PSD ⟺ `|κ| ≤ 1`, PD ⟺ `|κ| < 1`; equilibria preserved for *any* `K` (E2, E3, E5) | ✅ |
 | `Fugue/Theta.lean` | `Θ_{L⊕M} = Θ_L·Θ_M` as a Cauchy product (C13; settles B9) | ✅ |
+| `Fugue/TwoSquares.lean` | **Jacobi's two-square theorem** `r₂(n) = 4·Σ_{d∣n} χ₋₄(d)` (C6) — not in Mathlib; via Gaussian integers, strong induction on the least prime factor | ✅ |
 | `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
 
 ### `../FormalPNT` — sibling project for the hard direction (in progress)

@@ -97,3 +97,7 @@ example : Fugue.reprCount Fugue.sq 1 = 2 := by
       omega
     · rintro (rfl | rfl) <;> rfl
   rw [Fugue.reprCount, ← Set.coe_ofPred, this, Nat.card_coe_set_eq, Set.ncard_pair (by decide)]
+
+-- 7. Jacobi's two-square theorem (C6).
+#print axioms Fugue.card_sq_add_sq
+-- Non-vacuity: concrete counts r₂(5) = 8, r₂(3) = 0 follow (examples inside the file).

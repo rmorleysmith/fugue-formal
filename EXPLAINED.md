@@ -253,6 +253,20 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   corpus' `Θ = E₄²`. It also settles ledger B9: "direct sum" and "tensor product" of DNAs are the
   same coefficient operation.
 
+### `Fugue/TwoSquares.lean` — Jacobi's two-square theorem
+
+* **`card_sq_add_sq`** — the number of integer pairs `(a, b)` with `a² + b² = n` is
+  `4·Σ_{d∣n} χ₋₄(d)`, where `χ₋₄(d)` is `+1` for `d ≡ 1`, `−1` for `d ≡ 3 (mod 4)`, `0` for even `d`.
+  E.g. `n = 5`: divisors 1, 5 give `4(1+1) = 8` — `(±1,±2), (±2,±1)`.
+  *Why (one paragraph):* pairs `(a,b)` are Gaussian integers `a+bi` of norm `n`. Peel off the
+  smallest prime `p ∣ n`. If `p = 2`, everything of norm `2k` is `(1+i)` times something of norm
+  `k`. If `p ≡ 3 (mod 4)`, `p` stays prime in `ℤ[i]`, so it divides everything of norm `pk` —
+  either the count is `0` or you divide by `p²`. If `p ≡ 1 (mod 4)`, `p = ππ̄` splits into two
+  different primes, and everything of norm `pk` is `π` or `π̄` times something of norm `k`, with
+  the overlap being the multiples of `p`. The divisor sum obeys exactly the same three rules, and
+  both start at `n = 1` with values `4` and `1`. *Corpus link:* ledger C6, `ζ·L(s,χ₋₄) = ζ_{ℚ(i)}`
+  at the level of coefficients.
+
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
 * **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the
