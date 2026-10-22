@@ -336,6 +336,16 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   `not_ringEquiv_powerSeries`), and modularity is what makes a Ring-A product of Ring-B objects land
   back in Ring B. Check at `n = 2`: `129 = 9 + 120·1`.
 
+### `Fugue/HeckeRefutation.lean` — a corpus claim refuted in Lean
+
+* **`discriminant_mul_E₄_not_multiplicative_eigenvalue`** — the corpus said the product of two
+  Hecke eigenforms is an eigenform with the *product* eigenvalues. For `Δ = q − 24q² + …` and
+  `E₄ = 1 + 240q + 2160q² + …`, the `q²`-coefficient of `Δ·E₄` is `1·240 + (−24)·1 = 216`, while
+  `a₂(Δ)·a₂(E₄) = −24·2160 = −51840`. *Where the numbers come from:* `τ(2) = −24` (`tau_two`) is
+  computed in Lean from `Δ = (E₄³ − E₆²)/1728` and Mathlib's Eisenstein coefficients
+  `240σ₃(n)`, `−504σ₅(n)`. The correct closure law is about coefficient *sequences* being
+  multiplicative (ledger C11), not about eigenvalues multiplying.
+
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
 * **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the

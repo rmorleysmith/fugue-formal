@@ -7,3 +7,4 @@ import Fugue.TwoSquares
 import Fugue.E8Lattice
 import Fugue.LeibnizL
 import Fugue.Ramanujan
+import Fugue.HeckeRefutation

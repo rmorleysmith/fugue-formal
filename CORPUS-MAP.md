@@ -26,6 +26,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C9 | `·log` is a derivation; `log * μ = Λ` | PROVEN | `pmul_log_mul`; Mathlib `log_mul_moebius_eq_vonMangoldt` | same |
 | C10 | Ramanujan's `E₂, E₄, E₆` system | PROVEN | Mathlib `normalizedDerivOfComplex_E₂/E₄/E₆`, `serreDerivative_E₄/E₆` | — |
 | C11 | multiplicative functions form a submonoid | PROVEN | `multiplicativeSubmonoid`; not closed under `+`: `zeta_add_zeta_not_multiplicative` | same |
+| C12 | product of eigenforms has product eigenvalues | REFUTED (numerically) | **`Fugue.discriminant_mul_E₄_not_multiplicative_eigenvalue`**: `a₂(ΔE₄) = 216 ≠ (−24)(2160)`; with `tau_two` (`τ(2) = −24`) | `Fugue/HeckeRefutation.lean` |
 | C13 | `Θ_{L⊕M} = Θ_L Θ_M` | PROVEN | `reprCount_directSum`, `theta_directSum`, `theta_two_squares` | `Fugue/Theta.lean` |
 | D2 | functional equation | PROVEN | Mathlib `riemannZeta_one_sub`; used in `QuasiRH.riemannHypothesis_iff_zeroFreeRight_half` | `QuasiRH/Reflection.lean` |
 | D3 | symmetry alone does not force RH; Euler product is load-bearing | PROVEN | the reflection theorem shows exactly what symmetry *does* give: RH ⟺ no zeros right of ½ | same |

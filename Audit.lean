@@ -134,3 +134,7 @@ example : ArithmeticFunction.sigma 7 2 =
     ArithmeticFunction.sigma 3 2 + 120 * ∑ i ∈ Finset.range 1,
       ArithmeticFunction.sigma 3 (i + 1) * ArithmeticFunction.sigma 3 (2 - 1 - i) :=
   Fugue.sigma_seven_eq 2 (by norm_num)
+
+-- 11. C12 refuted: a₂(Δ·E₄) = 216 ≠ a₂(Δ)·a₂(E₄); Ramanujan τ(2) = -24.
+#print axioms Fugue.tau_two
+#print axioms Fugue.discriminant_mul_E₄_not_multiplicative_eigenvalue
