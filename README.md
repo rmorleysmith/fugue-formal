@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **65** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **67** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -68,7 +68,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **65** headline theorems (al
 | `Fugue/Ramanujan.lean` | **`E₄² = E₈`** and Ramanujan's **`σ₇(n) = σ₃(n) + 120 Σ σ₃(a)σ₃(n−a)`** — Ring A (Cauchy) of Ring B (Dirichlet) objects | ✅ |
 | `Fugue/HeckeRefutation.lean` | ledger C12 refuted in Lean: `a₂(Δ·E₄) = 216 ≠ a₂(Δ)·a₂(E₄)`; Ramanujan `τ(2) = −24` from `Δ = (E₄³−E₆²)/1728` | ✅ |
 | `Fugue/SieveEta.lean` | D9 sieve by `{2,3,5,7}` = Eratosthenes; C15 eta quotients never vanish on `ℍ` | ✅ |
-| `Fugue/ThetaE8*.lean` | **`Θ_{E8} = E₄`** (A2): `E8 = D8 ∪ (D8+½𝟙)` gives `Θ_{E8} = (θ₂⁸+θ₃⁸+θ₄⁸)/2`, which is a level-one weight-4 form, hence `E₄` | ✅ |
+| `Fugue/ThetaE8*.lean` | **`Θ_{E8} = E₄`** (A2): `E8 = D8 ∪ (D8+½𝟙)` gives `Θ_{E8} = (θ₂⁸+θ₃⁸+θ₄⁸)/2`, which is a level-one weight-4 form, hence `E₄`; **#E8 vectors of norm 2n = 240σ₃(n)** (240, 2160, 6720) | ✅ |
 | `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` (the Eisenstein road; see `EISENSTEIN-ROAD.md`) | ✅ |
 | `Fugue/HeckeEk.lean` | Hecke for **every** `E_k` (`k ≥ 4` even): root number `(−1)^{k/2}`, identification with `−(2k/B_k)(2π)^{−s}Γ(s)ζ(s)ζ(s−k+1)` on `ℂ∖{1,k,0,−1,…}`; `E₆`'s forced centre zero `Λ₆(3) = 0` *is* the trivial zero `ζ(−2) = 0` | ✅ |
 | `Fugue/RankinSelberg.lean` | **Ramanujan's formula** `Σσ_a(n)σ_b(n)n^{−s}·ζ(2s−a−b) = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)` (Re s > a+b+1) — the Rankin–Selberg prototype; C11's "Rankin–Selberg closure" made precise | ✅ |

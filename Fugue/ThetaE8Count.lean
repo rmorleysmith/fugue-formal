@@ -3,6 +3,21 @@ import Fugue.Ramanujan
 
 set_option autoImplicit false
 
+/-!
+# E8 vector counts from `Θ_{E8} = E₄` (ledger row A2, numerical claims)
+
+Assuming the identity `Θ_{E8} = E₄` on `ℍ` (proved elsewhere), we derive the corpus' numbers:
+the number of E8 vectors of norm `2n` is `240 σ₃(n)`; in particular 240, 2160, 6720 for
+`n = 1, 2, 3`.
+
+* `reprCount_e8Norm_le`: `r(m) ≤ (80m+21)⁸` (box from `e8_coord_bound`);
+* `summable_pow_e8Norm`: `∑_{v∈ℤ⁸} r^{Q(v)}` converges for `0 ≤ r < 1` (fibrewise, via the
+  polynomial bound);
+* `hasSum_thetaE8`: `Θ_{E8}(τ) = ∑_m r(m) qᵐ`, `q = e^{2πiτ}`;
+* `reprCount_e8_of_theta`: uniqueness of `q`-expansion coefficients
+  (`ModularFormClass.qExpansion_coeff_unique`) plus `coeff_E₄`.
+-/
+
 open Complex ModularForm PowerSeries
 open scoped Real UpperHalfPlane MatrixGroups ArithmeticFunction.sigma
 
@@ -116,17 +131,32 @@ theorem reprCount_e8_of_theta (h : ∀ τ : UpperHalfPlane, Fugue.thetaE8 τ = M
   have hE : ∀ τ : ℍ, HasSum (fun m : ℕ => (reprCount e8Norm m : ℂ) •
       Function.Periodic.qParam 1 (τ : ℂ) ^ m) (E₄ τ) := fun τ => h τ ▸ hasSum_thetaE8 τ
   rw [ModularFormClass.qExpansion_coeff_unique one_pos one_mem_strictPeriods_SL hE n, coeff_E₄,
-    if_neg hn.ne']
+    ite_eq_right hn.ne']
 
 /-- Natural-number form. -/
 theorem reprCount_e8_of_theta' (h : ∀ τ : UpperHalfPlane, Fugue.thetaE8 τ = ModularForm.E₄ τ)
     (n : ℕ) (hn : 0 < n) : reprCount e8Norm n = 240 * σ 3 n := by
   exact_mod_cast reprCount_e8_of_theta h n hn
 
-/-- 240 roots: vectors of norm 2. -/
+/-- `σ₃(1) = 1`, `σ₃(2) = 9`, `σ₃(3) = 28`. -/
+theorem sigma_three_one : σ 3 1 = 1 := by decide
+theorem sigma_three_two : σ 3 2 = 9 := by decide
+theorem sigma_three_three : σ 3 3 = 28 := by decide
+
+/-- **240** vectors of norm 2 (the roots of E8), assuming `Θ_{E8} = E₄`. -/
 theorem reprCount_e8_one_of_theta (h : ∀ τ : UpperHalfPlane, Fugue.thetaE8 τ = ModularForm.E₄ τ) :
     reprCount e8Norm 1 = 240 := by
-  rw [reprCount_e8_of_theta' h 1 one_pos, ArithmeticFunction.sigma_one_apply_prime_pow]
-  sorry
+  rw [reprCount_e8_of_theta' h 1 one_pos, sigma_three_one]
+
+/-- **2160** vectors of norm 4, assuming `Θ_{E8} = E₄`. -/
+theorem reprCount_e8_two_of_theta (h : ∀ τ : UpperHalfPlane, Fugue.thetaE8 τ = ModularForm.E₄ τ) :
+    reprCount e8Norm 2 = 2160 := by
+  rw [reprCount_e8_of_theta' h 2 two_pos, sigma_three_two]
+
+/-- **6720** vectors of norm 6, assuming `Θ_{E8} = E₄`. -/
+theorem reprCount_e8_three_of_theta
+    (h : ∀ τ : UpperHalfPlane, Fugue.thetaE8 τ = ModularForm.E₄ τ) :
+    reprCount e8Norm 3 = 6720 := by
+  rw [reprCount_e8_of_theta' h 3 (by norm_num), sigma_three_three]
 
 end Fugue

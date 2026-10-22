@@ -355,6 +355,10 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   under `τ ↦ τ+1` (θ₃ ↔ θ₄, θ₂ gains `e^{πi/4}`, killed by the 8th power) and transforms with `τ⁴`
   under `τ ↦ −1/τ`, so it is a weight-4 level-one modular form tending to 1 at `i∞`; `dim M₄ = 1`
   forces it to be `E₄`.
+* **`reprCount_e8`** — the number of E8 vectors of norm `2n` is `240 σ₃(n)`: 240 roots, 2160 vectors of
+  norm 4, 6720 of norm 6 — the corpus' numerical checks, now theorems. *Why:* both sides of
+  `Θ_{E8} = E₄` are `q`-series; regrouping the lattice sum by norm gives coefficients `#{v : ‖v‖² = 2n}`,
+  and `q`-expansion coefficients are unique.
 
 ### `Fugue/HeckeE4.lean` — the Eisenstein road: E₄ knows ζ's functional equation
 

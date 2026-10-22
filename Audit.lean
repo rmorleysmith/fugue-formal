@@ -166,3 +166,6 @@ example : ArithmeticFunction.sigma 7 2 =
 #print axioms Fugue.thetaCombo_eq_E₄
 #print axioms Fugue.thetaE8_eq_thetaCombo
 #print axioms Fugue.thetaE8_eq_E₄
+#print axioms Fugue.reprCount_e8
+#print axioms Fugue.reprCount_e8_three
+example : Fugue.reprCount Fugue.e8Norm 2 = 2160 := Fugue.reprCount_e8_two
