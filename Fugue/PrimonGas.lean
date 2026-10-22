@@ -3,6 +3,45 @@ import Fugue.RankinSelberg
 
 set_option autoImplicit false
 
+/-!
+# The primon gas (Riemann gas): Dirichlet series as partition functions
+
+The "Riemann gas" or "primon gas" (B. Julia, *Statistical theory of numbers*, in
+*Number Theory and Physics*, Springer 1990; D. Spector, *Supersymmetry and the Möbius inversion
+function*, Comm. Math. Phys. 127 (1990) 239–252) is a toy free quantum gas whose single-particle
+states are the primes `p`, with energies `log p`. A multi-particle state is a choice of
+occupation numbers `k_p`, i.e. a positive integer `n = ∏ p^{k_p}`, of energy `log n`; at inverse
+temperature `s` its Boltzmann weight is `e^{-s log n} = n^{-s}`. The dictionary:
+
+* **bosons** (any occupation): `Z_B(s) = ∑_{n ≥ 1} n^{-s} = ζ(s)` — `bosonic_partition`;
+* **fermions** (Pauli exclusion `k_p ∈ {0, 1}`, i.e. `n` squarefree):
+  `Z_F(s) = ∑_{n squarefree} n^{-s} = ζ(s)/ζ(2s)` — `fermionic_partition` (in the
+  division-free form `Z_F(s) · ζ(2s) = ζ(s)`) and `fermionic_partition_div`. The arithmetic core is
+  `sqf_mul_sqPow_zero`: `1_{squarefree} * 1_{squares} = ζ` as arithmetic functions, i.e. every
+  `n ≥ 1` is uniquely (squarefree) × (square); proved by multiplicativity, comparing the
+  prime-power generating series `(1 + X) · 1/(1 - X²) = 1/(1 - X)`;
+* the fermion-number parity `(-1)^F` of the squarefree state `n` is `μ(n)` — `moebius_eq_parity`
+  — so the **Witten index** `∑ (-1)^F e^{-sE} = ∑ μ(n) n^{-s} = 1/ζ(s)` — `witten_index`;
+* the fermionic Fock space: squarefree `n` ↔ finite sets of primes (occupied levels), via
+  `n ↦ primeFactors n`, `S ↦ ∏ S` — `fockEquiv`; energy is additive (`energy_fock`) and the
+  parity of the state `S` is `(-1)^{#S}` (`moebius_fock`). (The fermionic Hilbert space with basis
+  indexed by squarefree `n` is thus the exterior algebra on the span of the primes; we formalize
+  only the basis-level bijection.)
+
+All identities are for `re s > 1`, where the series converge absolutely.
+
+The functional equation of `ζ` (`bosonic_duality`, a restatement of Mathlib's
+`riemannZeta_one_sub`) then reads as a formal "temperature duality" `s ↔ 1 - s` of the bosonic
+gas; **no physical interpretation is implied**.
+
+**Caveat.** This is an analogy made precise — the statistical mechanics of a toy gas whose
+"spectrum" is `{log p}` — and not a statement about the physics of real fermions. What is proved
+here is exactly the classical Dirichlet-series identities above, phrased in that dictionary.
+
+Uses `sqPow`, `P`, `Q`, `G`, `toC`, `LSeriesHasSum_pow`, `LSeriesHasSum_sqPow` from
+`Fugue.RankinSelberg`.
+-/
+
 namespace Fugue.PrimonGas
 
 open ArithmeticFunction LSeries PowerSeries Fugue.RankinSelberg
@@ -87,6 +126,13 @@ theorem fermionic_partition {s : ℂ} (hs : 1 < s.re) :
   rw [← toC_sqf]
   simpa using h3.unique h4
 
+/-- **Fermionic primon gas**, division form: `Z_F(s) = ζ(s)/ζ(2s)`. -/
+theorem fermionic_partition_div {s : ℂ} (hs : 1 < s.re) :
+    LSeries (fun n => if Squarefree n then 1 else 0) s = riemannZeta s / riemannZeta (2 * s) := by
+  have h2 : riemannZeta (2 * s) ≠ 0 :=
+    riemannZeta_ne_zero_of_one_lt_re (by simp [Complex.mul_re]; linarith)
+  rw [eq_div_iff h2, fermionic_partition hs]
+
 /-- **Witten index of the primon gas**: `(∑ μ(n) n^{-s}) · ζ(s) = 1`. -/
 theorem witten_index {s : ℂ} (hs : 1 < s.re) :
     LSeries (fun n => (μ n : ℂ)) s * riemannZeta s = 1 := by
@@ -107,6 +153,7 @@ theorem squarefree_prod_primes {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime) :
     Squarefree (∏ p ∈ S, p) := by
   refine Finset.squarefree_prod_of_pairwise_isCoprime (fun p hp q hq hpq => ?_)
     fun p hp => (hS p hp).squarefree
+  show IsRelPrime p q
   rw [← Nat.coprime_iff_isRelPrime]
   exact (Nat.coprime_primes (hS p hp) (hS q hq)).2 hpq
 
@@ -142,11 +189,3 @@ theorem bosonic_duality {s : ℂ} (hs : ∀ n : ℕ, s ≠ -n) (hs' : s ≠ 1) :
   riemannZeta_one_sub hs hs'
 
 end Fugue.PrimonGas
-
-#print axioms Fugue.PrimonGas.fermionic_partition
-#print axioms Fugue.PrimonGas.witten_index
-#print axioms Fugue.PrimonGas.bosonic_partition
-#print axioms Fugue.PrimonGas.moebius_eq_parity
-#print axioms Fugue.PrimonGas.fockEquiv
-#print axioms Fugue.PrimonGas.energy_fock
-#print axioms Fugue.PrimonGas.moebius_fock

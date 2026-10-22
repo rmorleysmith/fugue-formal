@@ -178,3 +178,9 @@ example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 :=
 -- 19. Witt: D16⁺ and E8⊕E8 are isospectral (same theta series = E₈).
 #print axioms Fugue.thetaD16_eq_E₈
 #print axioms Fugue.thetaD16_eq_thetaE8_sq
+
+-- 20. Ramanujan's L-function of Δ = η²⁴: entire, Λ(12−s) = Λ(s); τ(3) = 252.
+#print axioms Fugue.RamanujanL.ramanujanΛ_functional_equation
+#print axioms Fugue.RamanujanL.ramanujanΛ_differentiable
+#print axioms Fugue.RamanujanL.ramanujanΛ_eq
+#print axioms Fugue.RamanujanL.τ_three

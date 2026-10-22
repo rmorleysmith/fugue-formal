@@ -45,7 +45,7 @@ open scoped MatrixGroups Real ArithmeticFunction.sigma
 
 namespace Fugue.RamanujanL
 
-/-- Ramanujan's `τ`. -/
+/-- Ramanujan's `τ(n)` (`ramanujanTau`): the `qⁿ`-coefficient of `Δ = q ∏ (1 - qⁿ)²⁴`. -/
 noncomputable def τ (n : ℕ) : ℂ := (qExpansion 1 ModularForm.discriminant).coeff n
 
 theorem τ_zero : τ 0 = 0 := coeff_small_discriminant.1
