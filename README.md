@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **45** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **47** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -65,6 +65,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **45** headline theorems (al
 | `Fugue/Theta.lean` | `Θ_{L⊕M} = Θ_L·Θ_M` as a Cauchy product (C13; settles B9) | ✅ |
 | `Fugue/TwoSquares.lean` | **Jacobi's two-square theorem** `r₂(n) = 4·Σ_{d∣n} χ₋₄(d)` (C6) — not in Mathlib; via Gaussian integers, strong induction on the least prime factor | ✅ |
 | `Fugue/LeibnizL.lean` | **`L(1, χ₋₄) = π/4`** (D6) — not in Mathlib (which has no `s = 1` values of odd Hurwitz/sine zeta) | ✅ |
+| `Fugue/Ramanujan.lean` | **`E₄² = E₈`** and Ramanujan's **`σ₇(n) = σ₃(n) + 120 Σ σ₃(a)σ₃(n−a)`** — Ring A (Cauchy) of Ring B (Dirichlet) objects | ✅ |
 | `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
 
 ### `../FormalPNT` — chapter 6, the hard direction (✅ complete)

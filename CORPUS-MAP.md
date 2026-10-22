@@ -22,6 +22,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C5 | `ζ * ζ = d` | PROVEN | `zeta_mul_zeta_eq_sigma_zero` | same |
 | C6 | `r₂(n) = 4 Σ χ₋₄(d)` | PROVEN (numerically) | **`Fugue.card_sq_add_sq`** — Jacobi's two-square theorem (not in Mathlib) | `Fugue/TwoSquares.lean` |
 | C8 | `σ₃ = ζ⁴` | REFUTED | `sigma_three_ne_zeta_pow_four`; correct form `sigma_three_eq` | same |
+| C1×C8 | Ramanujan's Eisenstein identities link the rings | (corpus prose, Q2) | **`Fugue.E₄sq_eq`** (`E₄² = E₈`, via `dim M₈ = 1`) and **`sigma_seven_eq`**: `σ₇ = σ₃ + 120 σ₃⋆σ₃` | `Fugue/Ramanujan.lean` |
 | C9 | `·log` is a derivation; `log * μ = Λ` | PROVEN | `pmul_log_mul`; Mathlib `log_mul_moebius_eq_vonMangoldt` | same |
 | C10 | Ramanujan's `E₂, E₄, E₆` system | PROVEN | Mathlib `normalizedDerivOfComplex_E₂/E₄/E₆`, `serreDerivative_E₄/E₆` | — |
 | C11 | multiplicative functions form a submonoid | PROVEN | `multiplicativeSubmonoid`; not closed under `+`: `zeta_add_zeta_not_multiplicative` | same |

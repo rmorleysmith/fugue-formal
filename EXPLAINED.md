@@ -302,6 +302,18 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   dominated convergence lets `s → 1⁺` inside the sum, giving Leibniz's `1 − 1/3 + 1/5 − … = π/4`;
   and `L` is continuous at `1` because it is entire (`χ₋₄ ≠ 1`).
 
+### `Fugue/Ramanujan.lean` — where the two rings meet
+
+* **`E₄sq_eq`** — `E₄² = E₈`. *Why:* level-one modular forms of weight 8 form a one-dimensional
+  space (Mathlib's dimension formula), both sides lie in it, and both have constant term 1.
+* **`sigma_seven_eq`** — `σ₇(n) = σ₃(n) + 120 Σ_{0<a<n} σ₃(a) σ₃(n−a)`. *Why:* read off the
+  `qⁿ`-coefficient of `E₄² = E₈`, with `E₄ = 1 + 240Σσ₃(n)qⁿ`, `E₈ = 1 + 480Σσ₇(n)qⁿ`. The left
+  side multiplies power series (Ring A, Cauchy product); the coefficients `σ_k = ζ * Id^k` are
+  Dirichlet products (Ring B). This is the precise version of the corpus' claim that Ramanujan's
+  Eisenstein identities "link back to divisors and zeta": the rings are *different* (see
+  `not_ringEquiv_powerSeries`), and modularity is what makes a Ring-A product of Ring-B objects land
+  back in Ring B. Check at `n = 2`: `129 = 9 + 120·1`.
+
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
 * **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the

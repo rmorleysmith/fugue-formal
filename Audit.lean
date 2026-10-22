@@ -124,3 +124,13 @@ example : Fugue.reprCount Fugue.e8Norm 0 = 1 := by
 #print axioms Fugue.LFunction_chi4_one
 -- Non-vacuity: χ₄' is not the trivial character (so this is not ζ's pole value).
 example : Fugue.χ₄' ≠ 1 := Fugue.χ₄'_ne_one
+
+-- 10. Ramanujan's σ₇ = σ₃ + 120 σ₃⋆σ₃ via E₄² = E₈ (the two rings meet).
+#print axioms Fugue.E₄sq_eq
+#print axioms Fugue.sigma_seven_eq
+-- Non-vacuity: at n = 2: σ₇(2) = 129 = σ₃(2) + 120·σ₃(1)² = 9 + 120.
+example : ArithmeticFunction.sigma 7 2 = 129 := by decide
+example : ArithmeticFunction.sigma 7 2 =
+    ArithmeticFunction.sigma 3 2 + 120 * ∑ i ∈ Finset.range 1,
+      ArithmeticFunction.sigma 3 (i + 1) * ArithmeticFunction.sigma 3 (2 - 1 - i) :=
+  Fugue.sigma_seven_eq 2 (by norm_num)
