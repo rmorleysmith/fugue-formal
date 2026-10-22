@@ -33,6 +33,7 @@ File: [`formal-conjectures/QuasiRiemannHypothesis.lean`](formal-conjectures/Quas
 | `QuasiRH.zeroFreeRight_of_psiError`, `riemannHypothesis_of_psiError` | `NumberTheory/Chebyshev.lean` or a new file | "PNT error `O(x^θ)` ⇒ no zeros right of θ"; uses only Mathlib (`LSeries_eq_mul_integral`, Mellin holomorphy) |
 | `QuasiRH.zeroFree_iff_differentiableOn_negLogDeriv` | `Analysis/Meromorphic/…` | general: zero-free ⟺ `−f′/f` holomorphic |
 | **`Fugue.card_sq_add_sq`** (Jacobi two squares) | `NumberTheory/SumTwoSquares.lean` | the strongest Mathlib candidate here: a named classical theorem absent from Mathlib, 486 lines, needs Mathlib-style cleanup |
+| **`Fugue.LFunction_chi4_one`** (`L(1,χ₋₄) = π/4`) | `NumberTheory/LSeries/…` | Mathlib has no `s = 1` special values of odd `L`-functions yet; 178 lines |
 | `Fugue.ArithmeticFunction.not_isPrincipalIdealRing` | `NumberTheory/ArithmeticFunction/…` | curiosity; short |
 | `Fugue.pmul_log_mul` | `NumberTheory/ArithmeticFunction/VonMangoldt.lean` | `·log` is a derivation of the Dirichlet ring; check it is not already there under another name |
 

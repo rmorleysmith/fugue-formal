@@ -29,6 +29,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | D2 | functional equation | PROVEN | Mathlib `riemannZeta_one_sub`; used in `QuasiRH.riemannHypothesis_iff_zeroFreeRight_half` | `QuasiRH/Reflection.lean` |
 | D3 | symmetry alone does not force RH; Euler product is load-bearing | PROVEN | the reflection theorem shows exactly what symmetry *does* give: RH ⟺ no zeros right of ½ | same |
 | D4 | zeros ↔ primes (explicit formula) | PROVEN (classical) | qualitative form: `zeroFreeRight_iff_differentiableOn`, `zeroFreeRight_of_psiError`; quantitative: `Ingham.*` | `QuasiRH/*`, `../FormalPNT` |
+| D6 | `L(1,χ₋₄) = π/4` | PROVEN (numerically) | **`Fugue.LFunction_chi4_one`** (Leibniz series + dominated convergence + continuity of the entire `L`) | `Fugue/LeibnizL.lean` |
 | D12 | `Σ e^{2πijN/k} = k·[k∣N]` | PROVEN | `Fugue.sum_exp_eq`, `detector_iff` | `Fugue/Factoring.lean` |
 | D13 | "E8 torsion" reveals factors | REFUTED as mechanism | `first_spike_is_minFac` (it is trial division) | same |
 | E2/E5 | coupling `K(κ)` PSD ⟺ `|κ| ≤ 1`; prose vs Lean (PSD vs PD) | PROVEN / REFUTED | `couplingMatrix_posSemidef_iff`, `couplingMatrix_posDef_iff` | `Fugue/Dynamics.lean` |
@@ -46,5 +47,5 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | A6 (zeros of `E₄` are exactly the orbit of `ρ`) | needs the valence formula or the `j`-function's bijectivity, neither in Mathlib |
 | C16 (`η²(τ)η²(11τ)` ↔ `11a1`) | modularity of a specific curve; far out of reach |
 | D5, D16, D17, D19 | numerical (GUE statistics, `L(E,1)` values, Erdős–Kac measurements) |
-| D6, D7 (`L(1,χ₋₄) = π/4`, Catalan) | needs Abel's theorem for Dirichlet series at `s = 1` (not in Mathlib); a good next Mathlib project |
+| D7 (`L(2,χ₋₄) = G`) | Catalan's constant is *defined* by that series; nothing to prove beyond `LFunction_eq_LSeries` |
 | F, G, most of H | machine-learning measurements and cryptographic demos — not mathematical theorems; the negative results that *are* theorems (H12, D12, D13) are formalised above |

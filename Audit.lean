@@ -119,3 +119,8 @@ example : Fugue.reprCount Fugue.e8Norm 0 = 1 := by
     · intro h; by_contra hx; have := Fugue.e8Form_pos hx; omega
     · rintro rfl; simp [Fugue.e8Form]
   rw [Fugue.reprCount, ← Set.coe_ofPred, this, Nat.card_coe_set_eq, Set.ncard_singleton]
+
+-- 9. L(1, χ₋₄) = π/4 (D6).
+#print axioms Fugue.LFunction_chi4_one
+-- Non-vacuity: χ₄' is not the trivial character (so this is not ζ's pole value).
+example : Fugue.χ₄' ≠ 1 := Fugue.χ₄'_ne_one

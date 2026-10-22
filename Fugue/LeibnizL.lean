@@ -107,4 +107,72 @@ lemma tendsto_tsum_a :
     rw [Real.norm_eq_abs, abs_of_nonneg (a_nonneg k (by linarith [hs.1]))]
     exact a_le k hs.1.le hs.2.le
 
+lemma χ₄'_nat (n : ℕ) :
+    χ₄' (n : ZMod 4) = if n % 2 = 0 then 0 else if n % 4 = 1 then 1 else -1 := by
+  rw [χ₄'_apply, ZMod.χ₄_nat_eq_if_mod_four]
+  split_ifs <;> simp
+
+lemma term_even (s : ℂ) (n : ℕ) (hn : n % 2 = 0) :
+    LSeries.term (fun n : ℕ => χ₄' n) s n = 0 := by
+  rw [LSeries.term_def]; split_ifs <;> simp [χ₄'_nat, hn]
+
+lemma term_one (s : ℝ) (m : ℕ) :
+    LSeries.term (fun n : ℕ => χ₄' n) s (1 + 4 * m) = (((4 * m + 1 : ℝ) ^ (-s) : ℝ) : ℂ) := by
+  rw [LSeries.term_def, ite_eq_right (by omega), χ₄'_nat, ite_eq_right (by omega), ite_eq_left (by omega),
+    Real.rpow_neg (by positivity), Complex.ofReal_inv, Complex.ofReal_cpow (by positivity)]
+  push_cast; ring_nf
+
+lemma term_three (s : ℝ) (m : ℕ) :
+    LSeries.term (fun n : ℕ => χ₄' n) s (3 + 4 * m) = -(((4 * m + 3 : ℝ) ^ (-s) : ℝ) : ℂ) := by
+  rw [LSeries.term_def, ite_eq_right (by omega), χ₄'_nat, ite_eq_right (by omega), ite_eq_right (by omega),
+    Real.rpow_neg (by positivity), Complex.ofReal_inv, Complex.ofReal_cpow (by positivity)]
+  push_cast; ring_nf
+
+lemma summable_shift (s : ℝ) (hs : 1 < s) (r : ℕ) (hr : 0 < r) :
+    Summable (fun m : ℕ => (4 * m + r : ℝ) ^ (-s)) := by
+  have h := (Real.summable_nat_rpow_inv.mpr hs).comp_injective
+    (show Function.Injective (fun m : ℕ => 4 * m + r) from fun a b h => by simp at h; omega)
+  refine h.congr fun m => ?_
+  simp only [Function.comp_apply]
+  rw [Real.rpow_neg (by positivity)]
+  push_cast; ring_nf
+
+lemma LFunction_eq_tsum_a (s : ℝ) (hs : 1 < s) :
+    DirichletCharacter.LFunction χ₄' s = ((∑' k, a k s : ℝ) : ℂ) := by
+  have hs' : 1 < (s : ℂ).re := by simpa using hs
+  rw [DirichletCharacter.LFunction_eq_LSeries _ hs', LSeries,
+    Nat.sumByResidueClasses (ZMod.LSeriesSummable_of_one_lt_re _ hs') 4]
+  change ∑ j : Fin 4, ∑' m : ℕ, LSeries.term (fun x => χ₄' x) s ((j : ℕ) + 4 * m) = _
+  rw [Fin.sum_univ_four]
+  simp only [Fin.val_zero, Fin.val_one, Fin.val_two]
+  rw [show ((3 : Fin 4) : ℕ) = 3 from rfl]
+  have h0 : ∀ m : ℕ, LSeries.term (fun x : ℕ => χ₄' x) s (4 * m) = 0 :=
+    fun m => term_even _ _ (by omega)
+  have h2 : ∀ m : ℕ, LSeries.term (fun x : ℕ => χ₄' x) s (2 + 4 * m) = 0 :=
+    fun m => term_even _ _ (by omega)
+  simp only [h0, h2, term_one, term_three, tsum_zero,
+    zero_add, add_zero, tsum_neg, ← Complex.ofReal_tsum]
+  rw [← sub_eq_add_neg, ← Complex.ofReal_sub, ← Summable.tsum_sub]
+  · rfl
+  · exact_mod_cast summable_shift s hs 1 one_pos
+  · exact_mod_cast summable_shift s hs 3 (by norm_num)
+
+/-- **Leibniz / class number formula for `ℚ(i)`**: `L(1, χ₋₄) = π / 4`. -/
+theorem LFunction_chi4_one :
+    DirichletCharacter.LFunction (χ₄' : DirichletCharacter ℂ 4) 1 = (Real.pi / 4 : ℂ) := by
+  have hcont : Tendsto (fun s : ℝ => DirichletCharacter.LFunction χ₄' (s : ℂ)) (𝓝[>] 1)
+      (𝓝 (DirichletCharacter.LFunction χ₄' 1)) := by
+    apply tendsto_nhdsWithin_of_tendsto_nhds
+    have := ((DirichletCharacter.differentiable_LFunction χ₄'_ne_one).continuous.comp
+      Complex.continuous_ofReal).tendsto 1
+    simpa [Function.comp_def] using this
+  have hlim : Tendsto (fun s : ℝ => DirichletCharacter.LFunction χ₄' (s : ℂ)) (𝓝[>] 1)
+      (𝓝 ((π / 4 : ℝ) : ℂ)) := by
+    have := (Complex.continuous_ofReal.tendsto _).comp tendsto_tsum_a
+    refine this.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with s hs
+    exact (LFunction_eq_tsum_a s hs).symm
+  have := tendsto_nhds_unique hcont hlim
+  rw [this]; push_cast; rfl
+
 end Fugue

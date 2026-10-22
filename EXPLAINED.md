@@ -292,6 +292,16 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   finiteness (`e8_finite_fibre`) comes from the same completed squares bounding every coordinate.
   (That `Θ_{E8} = E₄` is *not* formalised — it needs theta functions as modular forms.)
 
+### `Fugue/LeibnizL.lean` — `L(1, χ₋₄) = π/4`
+
+* **`LFunction_chi4_one`** — the Dirichlet `L`-function of the character mod 4 takes the value
+  `π/4` at `s = 1` (ledger D6; Dirichlet's class number formula for `ℚ(i)`: `h = 1`, `w = 4`).
+  *Why it is not a one-liner:* `L(s, χ)` is *defined* by its series only for `Re s > 1`; at `s = 1`
+  it is the value of the analytic continuation. *The proof:* for real `s > 1`,
+  `L(s, χ₋₄) = Σ_k ((4k+1)^{−s} − (4k+3)^{−s})`; each bracket is between `0` and `8/(k+1)²`, so
+  dominated convergence lets `s → 1⁺` inside the sum, giving Leibniz's `1 − 1/3 + 1/5 − … = π/4`;
+  and `L` is continuous at `1` because it is entire (`χ₋₄ ≠ 1`).
+
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
 * **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the
