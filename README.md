@@ -67,9 +67,11 @@ Two libraries, both sorry-free; `Audit.lean` checks **40** headline theorems (al
 
 ### `../FormalPNT` — chapter 6, the hard direction (✅ complete)
 
-Same Lean and Mathlib pins, plus `PrimeNumberTheoremAnd` at OpenAI's pinned commit `c39a751`
-(its `MediumPNT` builds cleanly here, axioms standard). `math-inc/strongpnt` at OpenAI's pin does
-**not** compile against this Mathlib (`EMetric.ball` renamed etc.), so it is not used.
+Same pins plus PrimeNumberTheoremAnd at OpenAI's commit `c39a751` and this project as a path
+dependency. **`Ingham.zeroFreeRight_iff_psiError`**: for `1/2 ≤ θ < 1`, *no zeros right of θ ⟺
+`ψ(x) = x + O(x^{θ+δ})` for all δ > 0*; hence RH ⟺ square-root error, and **OpenAI's 7/8 ⟺
+`ψ(x) = x + O(x^{7/8+δ})`**. 11 theorems audited, standard axioms. See
+[`../FormalPNT/README.md`](../FormalPNT/README.md).
 
 Every claim in these tables was established by `lake build` + `lake env lean Audit.lean`.
 
