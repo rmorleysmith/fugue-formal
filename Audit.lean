@@ -84,3 +84,16 @@ example : Nat.totient 15 = 8 := by decide
 example {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) : ZeroFreeRightL χ 1 :=
   fun _ hs hpole => DirichletCharacter.LFunction_ne_zero_of_one_le_re χ
     (by tauto) hs.le
+
+-- 6. Theta series of direct sums (C13, B9).
+#print axioms Fugue.reprCount_directSum
+#print axioms Fugue.theta_directSum
+-- Non-vacuity: r₁(1) = 2 (x = ±1), so the theta series are not trivially zero.
+example : Fugue.reprCount Fugue.sq 1 = 2 := by
+  have : {x : ℤ | Fugue.sq x = 1} = {1, -1} := by
+    ext x; simp only [Fugue.sq, Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+    constructor
+    · intro h; have : x.natAbs = 1 := by nlinarith [Nat.zero_le x.natAbs]
+      omega
+    · rintro (rfl | rfl) <;> rfl
+  rw [Fugue.reprCount, ← Set.coe_ofPred, this, Nat.card_coe_set_eq, Set.ncard_pair (by decide)]
