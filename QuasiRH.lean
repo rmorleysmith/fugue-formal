@@ -3,3 +3,4 @@ import QuasiRH.Characterisation
 import QuasiRH.Continuation
 import QuasiRH.Reflection
 import QuasiRH.InghamEasy
+import QuasiRH.Dirichlet

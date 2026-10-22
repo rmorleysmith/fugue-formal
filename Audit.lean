@@ -72,3 +72,15 @@ example : Fugue.pos 6 = Fugue.pos 3 := by
   have := Fugue.pos_two_mul (x := 3) (by norm_num); norm_num at this; exact this
 -- The Miller identity on an actual semiprime: 15 = 3·5, φ(15) = 8, 3 + 5 = 15 + 1 - 8.
 example : Nat.totient 15 = 8 := by decide
+
+-- 5. Chapter 3 (Dirichlet L-functions).
+#print axioms zeroFree_iff_differentiableOn_negLogDeriv
+#print axioms zeroFreeRightL_iff
+#print axioms LSeries_twist_vonMangoldt_eq_negLogDerivL
+#print axioms twistedVonMangoldt_continuation_of_openAI
+#print axioms openAIStatement_of_dirichlet
+-- Non-vacuity: every Dirichlet L-function is zero-free right of 1 (Mathlib), so the
+-- characterisation has content at θ = 1 for every χ.
+example {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) : ZeroFreeRightL χ 1 :=
+  fun _ hs hpole => DirichletCharacter.LFunction_ne_zero_of_one_le_re χ
+    (by tauto) hs.le
