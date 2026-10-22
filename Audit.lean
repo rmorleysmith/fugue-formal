@@ -169,3 +169,8 @@ example : ArithmeticFunction.sigma 7 2 =
 #print axioms Fugue.reprCount_e8
 #print axioms Fugue.reprCount_e8_three
 example : Fugue.reprCount Fugue.e8Norm 2 = 2160 := Fugue.reprCount_e8_two
+
+-- 18. Heterotic E8⊕E8: Θ = E₈, 480σ₇(n) vectors of norm 2n.
+#print axioms Fugue.thetaE8_sq_eq_E₈
+#print axioms Fugue.reprCount_e8e8
+example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 := Fugue.reprCount_e8e8_one

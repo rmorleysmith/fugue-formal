@@ -18,3 +18,4 @@ import Fugue.ThetaE8Modular
 import Fugue.ThetaE8Lattice
 import Fugue.ThetaE8
 import Fugue.ThetaE8Count
+import Fugue.HeteroticE8
