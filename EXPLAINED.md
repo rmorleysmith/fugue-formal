@@ -177,6 +177,30 @@ character mod 1 has `L(s, χ) = ζ(s)`).
 
 ---
 
+## Chapter 6 (in progress) — `../FormalPNT/Ingham/`: zero-free ⇒ primes are regular
+
+**Target:** if `ζ(s) ≠ 0` for `Re s > θ` (`1/2 ≤ θ < 1`), then `ψ(x) = x + O(x^{θ+δ})` for every
+`δ > 0`. With OpenAI's theorem: `ψ(x) = x + O(x^{7/8+δ})`.
+
+*The proof in one paragraph.* Replace `ψ(X)` by a smoothed version `ψ_ε(X)`, which costs
+`O(εX log X)`. The smoothed version is a contour integral `(1/2πi)∫ −ζ′/ζ(s) M_ε(s) X^s ds` over
+the line `Re s = 1 + 1/log X`. Move the line left to `Re s = σ₁` (just right of `θ`): the only
+singularity crossed is the pole at `s = 1`, whose residue is `X·M_ε(1) ≈ X` — the main term.
+What is left are integrals on the new line and two short horizontal pieces. On the new line
+`|X^s| = X^{σ₁}`, so if `−ζ′/ζ` is not too large there, everything left is `O(X^{σ₁+small})`.
+The zero-free hypothesis is what makes `−ζ′/ζ` small: it gives `|ζ′/ζ(σ + it)| ≤ K log|t|` for
+`σ ≥ σ₁` (Borel–Carathéodory applied to `log ζ`, which exists because `ζ` has no zeros there).
+Choosing `ε = X^{σ₁−1}` balances the smoothing error against the main error.
+
+*What is reused:* PrimeNumberTheoremAnd provides the smoothing, the contour shift with its
+residue, and bounds for the far vertical pieces. *What is new:* the log-derivative bound on a
+whole half-plane, the bounds on the new line and horizontal pieces, and the assembly.
+
+*State:* assembly ✅, contour bounds ✅ (both sorry-free, standard axioms); log-derivative bound in
+progress. This chapter will be updated when it closes.
+
+---
+
 ## The Fugue library — theorems extracted from the corpus
 
 Each file cites the ledger rows (`Fugue/02-threads/evidence-ledger.md`) it settles.
@@ -219,6 +243,15 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   `xᵀKx = (y₁x₀ + κy₂x₁)² + (1−κ²)(y₂x₁)²`.
 * **`equilibrium_preserved`** (E3, sharpened) — common zeros stay equilibria for *any* `K`;
   positivity is not needed for that. What PSD buys is descent (`descends_iff`).
+
+### `Fugue/Theta.lean` — why direct sums multiply theta series
+
+* **`theta_directSum`** — for any two "norm maps" with finite fibres,
+  `Θ_{Q₁⊕Q₂} = Θ_{Q₁} · Θ_{Q₂}` as power series. *Why:* a vector of the direct sum has norm `n`
+  exactly when its two components have norms `a` and `b` with `a + b = n`, so
+  `r(n) = Σ_{a+b=n} r₁(a) r₂(b)` — and that is the Cauchy product. For `E8 ⊕ E8` this is the
+  corpus' `Θ = E₄²`. It also settles ledger B9: "direct sum" and "tensor product" of DNAs are the
+  same coefficient operation.
 
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
