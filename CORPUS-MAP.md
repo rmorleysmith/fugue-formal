@@ -32,6 +32,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | D3 | symmetry alone does not force RH; Euler product is load-bearing | PROVEN | the reflection theorem shows exactly what symmetry *does* give: RH ⟺ no zeros right of ½ | same |
 | D4 | zeros ↔ primes (explicit formula) | PROVEN (classical) | qualitative form: `zeroFreeRight_iff_differentiableOn`, `zeroFreeRight_of_psiError`; quantitative: `Ingham.*` | `QuasiRH/*`, `../FormalPNT` |
 | D6 | `L(1,χ₋₄) = π/4` | PROVEN (numerically) | **`Fugue.LFunction_chi4_one`** (Leibniz series + dominated convergence + continuity of the entire `L`) | `Fugue/LeibnizL.lean` |
+| D9/D10 | sieving by {2,3,5,7} gives the primes in [11,100]; "new mechanism" | PROVEN / REFUTED | `Fugue.sieve_2357` (it is Eratosthenes) | `Fugue/SieveEta.lean` |
 | D12 | `Σ e^{2πijN/k} = k·[k∣N]` | PROVEN | `Fugue.sum_exp_eq`, `detector_iff` | `Fugue/Factoring.lean` |
 | D13 | "E8 torsion" reveals factors | REFUTED as mechanism | `first_spike_is_minFac` (it is trial division) | same |
 | E2/E5 | coupling `K(κ)` PSD ⟺ `|κ| ≤ 1`; prose vs Lean (PSD vs PD) | PROVEN / REFUTED | `couplingMatrix_posSemidef_iff`, `couplingMatrix_posDef_iff` | `Fugue/Dynamics.lean` |

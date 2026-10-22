@@ -138,3 +138,7 @@ example : ArithmeticFunction.sigma 7 2 =
 -- 11. C12 refuted: a₂(Δ·E₄) = 216 ≠ a₂(Δ)·a₂(E₄); Ramanujan τ(2) = -24.
 #print axioms Fugue.tau_two
 #print axioms Fugue.discriminant_mul_E₄_not_multiplicative_eigenvalue
+
+-- 12. D9 sieve, C15 eta quotients.
+#print axioms Fugue.sieve_2357
+#print axioms Fugue.etaQuotient_ne_zero
