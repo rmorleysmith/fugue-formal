@@ -214,6 +214,28 @@ bound and the smoothing; the sharper `x^θ (log x)²` needs zero-counting, which
 
 ---
 
+## Chapter 7 — `../PalomarIngham/PalomarIngham/Dirichlet/`: primes in arithmetic progressions
+
+**Target and state (✅, sorry-free, Comparator passes):** for a fixed modulus `q` and `a` coprime
+to `q`, if `ζ` and every `L(s, χ)` (`χ ≠ 1` mod `q`) have no zeros right of `θ`, then
+`ψ(x; q, a) = x/φ(q) + O(x^{θ+δ})`. With OpenAI's Dirichlet theorem: error `O(x^{7/8+δ})`.
+
+*The proof in one paragraph.* Characters separate residue classes:
+`ψ(x; q, a) = φ(q)⁻¹ Σ_χ χ̄(a) ψ(x, χ)` with `ψ(x, χ) = Σ_{n≤x} χ(n)Λ(n)`. The trivial character
+gives `ψ(x)` up to `O(log x)` (prime powers dividing `q`), handled by chapter 6. Each `χ ≠ 1` is
+chapter 6 again with `−L′/L(s, χ)` in place of `−ζ′/ζ` — but now there is *no* main term, because
+`L(s, χ)` is entire (no pole at `s = 1`), so the contour shift picks up no residue and `ψ(x, χ)`
+is pure error, `O(x^{θ+δ})`. The one genuinely new analytic input is a polynomial bound for
+`L(s, χ)` on `Re s ≥ 1/2`, obtained by continuing `L` to `Re s > 0` with an explicitly convergent
+series (subtracting a block-constant comparison series whose character sum vanishes).
+
+*Referee questions.* (1) *Is the constant uniform in `q`?* No; the statement is for each fixed `q`.
+Uniformity (Siegel–Walfisz type) is a different and much deeper matter. (2) *Why does OpenAI's
+theorem suffice for every `q` at once?* Their statement is uniform: one `7/8` for every
+Dirichlet character of every modulus.
+
+---
+
 ## The Fugue library — theorems extracted from the corpus
 
 Each file cites the ledger rows (`Fugue/02-threads/evidence-ledger.md`) it settles.

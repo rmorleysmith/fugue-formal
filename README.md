@@ -91,7 +91,7 @@ pin, `formal-conjectures`, PrimeNumberTheoremAnd and OpenAI's repository):
 1. the quasi-Riemann hypothesis as a Lean `Prop` outside OpenAI's repository, and its
    characterisation by holomorphy of `−ζ′/ζ` (chapters 1–3, also for every `L(s,χ)`);
 2. **Ingham's theorem in both directions** (`../FormalPNT`, `../PalomarIngham`): zero-free right of
-   θ ⟺ `ψ(x) = x + O(x^{θ+δ})`; RH ⟺ square-root error; **OpenAI's 7/8 ⟺ `ψ(x) = x + O(x^{7/8+δ})`**.
+   θ ⟺ `ψ(x) = x + O(x^{θ+δ})`; RH ⟺ square-root error; **OpenAI's 7/8 ⟺ `ψ(x) = x + O(x^{7/8+δ})`**; and in `../PalomarIngham/PalomarIngham/Dirichlet/`, **OpenAI's Dirichlet theorem ⇒ `ψ(x; q, a) = x/φ(q) + O(x^{7/8+δ})`** (primes in progressions).
    PrimeNumberTheoremAnd has RH-conditional error terms only as `sorry`'d statements; OpenAI's
    prime-counting files have no error term;
 3. classical theorems absent from Mathlib at our pin, extracted from the corpus: **Jacobi's

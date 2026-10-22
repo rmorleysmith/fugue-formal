@@ -37,7 +37,7 @@ File: [`formal-conjectures/QuasiRiemannHypothesis.lean`](formal-conjectures/Quas
 | `Fugue.ArithmeticFunction.not_isPrincipalIdealRing` | `NumberTheory/ArithmeticFunction/…` | curiosity; short |
 | `Fugue.pmul_log_mul` | `NumberTheory/ArithmeticFunction/VonMangoldt.lean` | `·log` is a derivation of the Dirichlet ring; check it is not already there under another name |
 
-## 3. Palomar — Ingham's theorem (ready, needs a human to publish)
+## 3. Palomar — two entries (ready, need a human to publish)
 
 Project: [`../../PalomarIngham`](../../PalomarIngham/README.md) (Lean v4.35.0, Mathlib v4.35.0,
 every file a `module`, PrimeNumberTheoremAnd vendored under Apache-2.0).
@@ -51,6 +51,10 @@ every file a `module`, PrimeNumberTheoremAnd vendored under Apache-2.0).
 * Palomar's mechanical rules checked by hand: toolchain ≥ v4.35.0-rc2 and equal to Mathlib's;
   `lake-manifest.json` committed; all 27 `.lean` files start with `module`; largest file 3511
   lines; no `sorry`/`native_decide` outside the Challenge.
+* **Second entry, primes in progressions** (same repository, `comparatorAP.json` /
+  `formalization-ap.yaml`): `psi_ap_error_of_zero_free` and `psi_ap_error_of_seven_eighths` —
+  OpenAI's Dirichlet theorem (hypothesis, verbatim) ⇒ `ψ(x; q, a) = x/φ(q) + O(x^{7/8+δ})` for every
+  fixed `q` and unit `a`. `lake comparator --config=comparatorAP.json`: "Your solution is okay!"
 * Remaining human steps: fill the `TEMPLATE` names in `formalization.yaml`, push to a public
   GitHub repository, submit the 40-character SHA at <https://submit.palomar-registry.org/>.
 * Bar check: recent Palomar entries include classical results registered "with no novelty or
