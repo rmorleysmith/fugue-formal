@@ -15,3 +15,5 @@ import Fugue.HeckeEk
 import Fugue.RankinSelberg
 import Fugue.ThetaE8Basic
 import Fugue.ThetaE8Modular
+import Fugue.ThetaE8Lattice
+import Fugue.ThetaE8

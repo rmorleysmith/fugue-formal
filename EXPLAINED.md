@@ -346,6 +346,16 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   `240σ₃(n)`, `−504σ₅(n)`. The correct closure law is about coefficient *sequences* being
   multiplicative (ledger C11), not about eigenvalues multiplying.
 
+### `Fugue/ThetaE8*.lean` — `Θ_{E8} = E₄`
+
+* **`thetaE8_eq_E₄`** — `Σ_{v∈E8} q^{‖v‖²/2} = E₄(τ)`. *Two steps.* (1) In doubled coordinates
+  E8 is `{y ∈ ℤ⁸ : all yᵢ of the same parity, Σyᵢ ≡ 0 mod 4}`, i.e. `D8 ∪ (D8 + ½𝟙)`; splitting by
+  parity and using `(−1)^{Σxᵢ}` to select even sums turns the 8-dimensional sum into products of
+  one-dimensional theta functions: `Θ_{E8} = (θ₂⁸ + θ₃⁸ + θ₄⁸)/2`. (2) That combination is invariant
+  under `τ ↦ τ+1` (θ₃ ↔ θ₄, θ₂ gains `e^{πi/4}`, killed by the 8th power) and transforms with `τ⁴`
+  under `τ ↦ −1/τ`, so it is a weight-4 level-one modular form tending to 1 at `i∞`; `dim M₄ = 1`
+  forces it to be `E₄`.
+
 ### `Fugue/HeckeE4.lean` — the Eisenstein road: E₄ knows ζ's functional equation
 
 * **`heckeE4_functional_equation`, `heckeE4_eq`** — let `Λ` be the Mellin transform of `E₄(iy) − 1`.

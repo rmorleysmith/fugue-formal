@@ -164,3 +164,5 @@ example : ArithmeticFunction.sigma 7 2 =
 
 -- 17. (θ₂⁸ + θ₃⁸ + θ₄⁸)/2 = E₄ (half of Θ_E8 = E₄).
 #print axioms Fugue.thetaCombo_eq_E₄
+#print axioms Fugue.thetaE8_eq_thetaCombo
+#print axioms Fugue.thetaE8_eq_E₄

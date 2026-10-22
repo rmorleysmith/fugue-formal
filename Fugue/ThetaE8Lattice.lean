@@ -2,6 +2,18 @@ import Fugue.ThetaE8Basic
 
 set_option autoImplicit false
 
+/-!
+# `Θ_{E8} = (θ₂⁸ + θ₃⁸ + θ₄⁸)/2` (lattice half of ledger row A2)
+
+Bourbaki simple roots `α₁ = ½(1,−1,−1,−1,−1,−1,−1,1)`, `α₂ = e₁+e₂`, `α_k = e_{k−1} − e_{k−2}`
+(`k ≥ 3`) have Gram matrix exactly Mathlib's `CartanMatrix.E 8`. In doubled coordinates
+`y = 2 Σ vᵢαᵢ` (`toY`) the map `v ↦ y` is a bijection from `ℤ⁸` onto
+`S = {y : all yᵢ of equal parity, Σ yᵢ ≡ 0 mod 4}` with `‖y‖² = 4 vᵀAv` (`sumsq_toY`).
+Splitting `S = 2·D8 ⊔ (2·D8 + 𝟙)` (`G`) and writing `𝟙_{Σz even} = (1 + (−1)^{Σz})/2`,
+the sum factors into eighth powers of one-variable series: `θ₃, θ₄` on `2·D8`, and `θ₂` and
+`Σ (−1)ⁿ e^{πiτ(n+½)²} = 0` (`n ↦ −1−n`) on the odd coset.
+-/
+
 open Complex
 open scoped Real
 
@@ -159,6 +171,129 @@ theorem hasSum_prod_pi {f : ℤ → ℂ} {s : ℂ} (hf : HasSum f s) (n : ℕ) :
       simp only [Function.comp_def, key, norm_mul]
       exact hn.mul_of_nonneg h2 (fun _ => norm_nonneg _) (fun _ => norm_nonneg _)
 
+/-! ### Splitting the doubled lattice by parity -/
+
+/-- The Gaussian weight in doubled coordinates: `e^{πiτ‖y‖²/4}`. -/
+noncomputable def hY (τ : ℂ) (y : Fin 8 → ℤ) : ℂ := cexp (π * I * τ * ((∑ i, y i ^ 2 : ℤ) : ℂ) / 4)
+
+/-- `y = 2z` (the `D8` part) or `y = 2z + 𝟙` (the `D8 + ½𝟙` part). -/
+def G : (Fin 8 → ℤ) ⊕ (Fin 8 → ℤ) → (Fin 8 → ℤ) :=
+  Sum.elim (fun z i => 2 * z i) (fun z i => 2 * z i + 1)
+
+theorem G_injective : Function.Injective G := by
+  rintro (z | z) (w | w) h <;> simp only [G, Sum.elim_inl, Sum.elim_inr] at h
+  · congr 1; funext i; have := congrFun h i; omega
+  · have := congrFun h 0; omega
+  · have := congrFun h 0; omega
+  · congr 1; funext i; have := congrFun h i; omega
+
+theorem S_parity {y : Fin 8 → ℤ} (hy : y ∈ S) (i : Fin 8) : y i % 2 = y 0 % 2 := by
+  simp only [S, Set.mem_ofPred_eq] at hy
+  fin_cases i <;> simp <;> omega
+
+theorem S_subset_range_G : S ⊆ Set.range G := by
+  intro y hy
+  rcases Int.emod_two_eq_zero_or_one (y 0) with h | h
+  · refine ⟨Sum.inl (fun i => y i / 2), ?_⟩
+    funext i; have := S_parity hy i; simp only [G, Sum.elim_inl]; omega
+  · refine ⟨Sum.inr (fun i => y i / 2), ?_⟩
+    funext i; have := S_parity hy i; simp only [G, Sum.elim_inr]; omega
+
+theorem cexp_pi_I_int (m : ℤ) : cexp (π * I * m) = if m % 2 = 0 then 1 else -1 := by
+  split_ifs with h
+  · have e : (m : ℂ) = 2 * ((m / 2 : ℤ) : ℂ) := by exact_mod_cast (by omega : m = 2 * (m / 2))
+    have : π * I * (m : ℂ) = ((m / 2 : ℤ) : ℂ) * (2 * π * I) := by rw [e]; ring
+    rw [this, exp_int_mul_two_pi_mul_I]
+  · have e : (m : ℂ) = 2 * ((m / 2 : ℤ) : ℂ) + 1 := by
+      exact_mod_cast (by omega : m = 2 * (m / 2) + 1)
+    have : π * I * (m : ℂ) = ((m / 2 : ℤ) : ℂ) * (2 * π * I) + π * I := by rw [e]; ring
+    rw [this, Complex.exp_add, exp_int_mul_two_pi_mul_I, exp_pi_mul_I, one_mul]
+
+theorem prod_ta (τ : ℂ) (z : Fin 8 → ℤ) :
+    ∏ i, ta τ (z i) = cexp (π * I * τ * ((∑ i, z i ^ 2 : ℤ) : ℂ)) := by
+  simp only [ta, ← Complex.exp_sum]
+  congr 1; push_cast; rw [Finset.mul_sum]
+
+theorem prod_tc (τ : ℂ) (z : Fin 8 → ℤ) :
+    ∏ i, tc τ (z i) = hY τ (fun i => 2 * z i + 1) := by
+  simp only [tc, hY, ← Complex.exp_sum]
+  congr 1; push_cast; rw [Finset.mul_sum, Finset.sum_div]
+  congr 1; funext i; ring
+
+theorem prod_sign (z : Fin 8 → ℤ) :
+    ∏ i, cexp (π * I * (z i : ℂ)) = cexp (π * I * ((∑ i, z i : ℤ) : ℂ)) := by
+  rw [← Complex.exp_sum]
+  congr 1; push_cast; rw [Finset.mul_sum]
+
+theorem F_G_inl (τ : ℂ) (z : Fin 8 → ℤ) :
+    S.indicator (hY τ) (G (Sum.inl z)) =
+      1 / 2 * ∏ i, ta τ (z i) + 1 / 2 * ∏ i, tb τ (z i) := by
+  have hb : ∏ i, tb τ (z i) = cexp (π * I * ((∑ i, z i : ℤ) : ℂ)) * ∏ i, ta τ (z i) := by
+    simp only [tb, Finset.prod_mul_distrib, prod_sign]
+  have hh : hY τ (G (Sum.inl z)) = ∏ i, ta τ (z i) := by
+    rw [prod_ta]
+    simp only [hY, G, Sum.elim_inl]
+    congr 1
+    have : ∑ i, (2 * z i) ^ 2 = 4 * ∑ i, z i ^ 2 := by
+      rw [Finset.mul_sum]; congr 1; funext i; ring
+    rw [this]; push_cast; ring
+  have hmem : G (Sum.inl z) ∈ S ↔ (∑ i, z i) % 2 = 0 := by
+    simp only [S, G, Sum.elim_inl, Set.mem_ofPred_eq, Fin.sum_univ_eight]
+    omega
+  rw [hb, cexp_pi_I_int]
+  by_cases h : (∑ i, z i) % 2 = 0
+  · rw [Set.indicator_of_mem (hmem.mpr h), hh]; simp only [h, ↓reduceIte]; ring
+  · rw [Set.indicator_of_notMem (fun h' => h (hmem.mp h'))]; simp only [h, ↓reduceIte]; ring
+
+theorem F_G_inr (τ : ℂ) (z : Fin 8 → ℤ) :
+    S.indicator (hY τ) (G (Sum.inr z)) =
+      1 / 2 * ∏ i, tc τ (z i) + 1 / 2 * ∏ i, td τ (z i) := by
+  have hd : ∏ i, td τ (z i) = cexp (π * I * ((∑ i, z i : ℤ) : ℂ)) * ∏ i, tc τ (z i) := by
+    simp only [td, Finset.prod_mul_distrib, prod_sign]
+  have hh : hY τ (G (Sum.inr z)) = ∏ i, tc τ (z i) := by
+    rw [prod_tc]; rfl
+  have hmem : G (Sum.inr z) ∈ S ↔ (∑ i, z i) % 2 = 0 := by
+    simp only [S, G, Sum.elim_inr, Set.mem_ofPred_eq, Fin.sum_univ_eight]
+    omega
+  rw [hd, cexp_pi_I_int]
+  by_cases h : (∑ i, z i) % 2 = 0
+  · rw [Set.indicator_of_mem (hmem.mpr h), hh]; simp only [h, ↓reduceIte]; ring
+  · rw [Set.indicator_of_notMem (fun h' => h (hmem.mp h'))]; simp only [h, ↓reduceIte]; ring
+
+theorem hasSum_indicator {τ : ℂ} (hτ : 0 < τ.im) :
+    HasSum (S.indicator (hY τ)) (thetaCombo τ) := by
+  have hl : HasSum (S.indicator (hY τ) ∘ G ∘ Sum.inl) (1 / 2 * θ₃ τ ^ 8 + 1 / 2 * θ₄ τ ^ 8) := by
+    have := ((hasSum_prod_pi (hasSum_ta hτ) 8).1.mul_left (1 / 2)).add
+      ((hasSum_prod_pi (hasSum_tb hτ) 8).1.mul_left (1 / 2))
+    convert this using 1
+    funext z
+    exact F_G_inl τ z
+  have hr : HasSum (S.indicator (hY τ) ∘ G ∘ Sum.inr) (1 / 2 * θ₂ τ ^ 8 + 1 / 2 * 0 ^ 8) := by
+    have := ((hasSum_prod_pi (hasSum_tc hτ) 8).1.mul_left (1 / 2)).add
+      ((hasSum_prod_pi (hasSum_td hτ) 8).1.mul_left (1 / 2))
+    convert this using 1
+    funext z
+    exact F_G_inr τ z
+  have hsum := HasSum.sum (f := S.indicator (hY τ) ∘ G) hl hr
+  rw [G_injective.hasSum_iff] at hsum
+  · convert hsum using 1
+    rw [thetaCombo]; ring
+  · intro y hy
+    exact Set.indicator_of_notMem (fun h => hy (S_subset_range_G h)) _
+
 end E8Lattice
+
+open E8Lattice in
+/-- **`Θ_{E8} = (θ₂⁸ + θ₃⁸ + θ₄⁸)/2`**, via `E8 = D8 ∪ (D8 + ½𝟙)`. -/
+theorem thetaE8_eq_thetaCombo {τ : ℂ} (hτ : 0 < τ.im) : thetaE8 τ = thetaCombo τ := by
+  have h := hasSum_indicator hτ
+  rw [← toY_injective.hasSum_iff] at h
+  · rw [thetaE8]
+    convert h.tsum_eq using 2
+    funext v
+    rw [Function.comp_apply, Set.indicator_of_mem (toY_mem v), hY, sumsq_toY]
+    congr 1; push_cast; ring
+  · intro y hy
+    exact Set.indicator_of_notMem (fun h => hy (S_subset_range_toY h)) _
 
 end Fugue

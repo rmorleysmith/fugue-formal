@@ -9,6 +9,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | Ledger | Corpus claim | Verdict in ledger | Lean | Where |
 |---|---|---|---|---|
 | A1 | E8 is even unimodular (positive definite) | PROVEN (numerically) | `Fugue.e8Form_even`, `e8Form_pos` (LDLᵀ certificate), Mathlib `E₈_det`; finite fibres `e8_finite_fibre`; **`theta_e8_sum_e8`**: `Θ_{E8⊕E8} = Θ_{E8}²` | `Fugue/E8Lattice.lean` |
+| A2 | `Θ_{E8} = E₄` | PROVEN (numerically) | **`Fugue.thetaE8_eq_E₄`** — via `Θ_{E8} = (θ₂⁸+θ₃⁸+θ₄⁸)/2` (E8 = D8 ∪ (D8+½𝟙), `thetaE8_eq_thetaCombo`) and modularity + `dim M₄ = 1` (`thetaCombo_eq_E₄`) | `Fugue/ThetaE8*.lean` |
 | A3 | `E₄(ρ) = 0` | PROVEN | `Fugue.E₄_rho`; general `eq_zero_at_rho` (all weights `6 ∤ k`) | `Fugue/EllipticPoints.lean` |
 | A3′ | (not in corpus) `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` | — | `E₆_I`, `E₄_I_ne_zero`, `E₆_rho_ne_zero`, `eq_zero_at_I` | same |
 | A4 | `Δ = (E₄³ − E₆²)/1728` | PROVEN | Mathlib `ModularForm.discriminant_eq_E₄_cube_sub_E₆_sq` | used in `EllipticPoints` |
@@ -48,7 +49,6 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 
 | Ledger | Reason |
 |---|---|
-| A2 (`Θ_{E8} = E₄`) | needs theta functions of lattices as modular forms; a project in itself (the Lean sphere-packing project has the machinery) |
 | A5 (Hecke eigenform) | Mathlib has no Hecke operators at this commit |
 | A6 (zeros of `E₄` are exactly the orbit of `ρ`) | needs the valence formula or the `j`-function's bijectivity, neither in Mathlib |
 | C16 (`η²(τ)η²(11τ)` ↔ `11a1`) | modularity of a specific curve; far out of reach |
