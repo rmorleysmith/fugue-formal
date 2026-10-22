@@ -13,3 +13,4 @@ import Fugue.HeckeE4
 import Fugue.HexagonalCount
 import Fugue.HeckeEk
 import Fugue.RankinSelberg
+import Fugue.ThetaE8Basic
