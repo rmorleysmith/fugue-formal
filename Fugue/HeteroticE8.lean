@@ -9,8 +9,8 @@ Sturm/valence bound *one* coefficient determines a weight-8 form). Consequently 
 vectors of norm `2n` in `E8 ⊕ E8` is `480 σ₇(n)` — e.g. 480 roots.
 
 (The other even unimodular lattice of rank 16, `D16⁺`, of the `Spin(32)/ℤ₂` heterotic string, has
-the *same* theta series — Witt's observation behind Milnor's isospectral 16-dimensional tori. That
-is not formalised here.)
+the *same* theta series — Witt's observation behind Milnor's isospectral 16-dimensional tori; see
+`Fugue/D16Plus.lean`, `thetaD16_eq_thetaE8_sq`.)
 -/
 
 open ModularForm

@@ -174,3 +174,7 @@ example : Fugue.reprCount Fugue.e8Norm 2 = 2160 := Fugue.reprCount_e8_two
 #print axioms Fugue.thetaE8_sq_eq_E₈
 #print axioms Fugue.reprCount_e8e8
 example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 := Fugue.reprCount_e8e8_one
+
+-- 19. Witt: D16⁺ and E8⊕E8 are isospectral (same theta series = E₈).
+#print axioms Fugue.thetaD16_eq_E₈
+#print axioms Fugue.thetaD16_eq_thetaE8_sq
