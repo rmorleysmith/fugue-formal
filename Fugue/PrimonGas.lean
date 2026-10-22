@@ -67,7 +67,7 @@ theorem LSeriesSummable_sqf {s : ℂ} (hs : 1 < s.re) : LSeriesSummable (toC sqf
     (LSeriesHasSum_pow 0 (by push_cast; linarith)).LSeriesSummable
   rcases eq_or_ne n 0 with rfl | hn
   · simp
-  · simp only [sqf_apply, pow_apply, hn, and_false, if_false, pow_zero]
+  · simp only [sqf_apply, pow_apply, hn, and_false, ite_false, pow_zero]
     split_ifs <;> simp
 
 /-- **Bosonic primon gas**: `Z_B(s) = ∑ n^{-s} = ζ(s)`. -/
@@ -100,4 +100,53 @@ theorem moebius_eq_parity (n : ℕ) (hn : Squarefree n) :
   rw [moebius_apply_of_squarefree hn, cardFactors_apply, Nat.primeFactors,
     List.toFinset_card_of_nodup hn.nodup_primeFactorsList]
 
+/-! ### Fock space: fermionic occupation states = finite sets of primes -/
+
+/-- A finite set of primes multiplies to a squarefree number. -/
+theorem squarefree_prod_primes {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime) :
+    Squarefree (∏ p ∈ S, p) := by
+  refine Finset.squarefree_prod_of_pairwise_isCoprime (fun p hp q hq hpq => ?_)
+    fun p hp => (hS p hp).squarefree
+  rw [← Nat.coprime_iff_isRelPrime]
+  exact (Nat.coprime_primes (hS p hp) (hS q hq)).2 hpq
+
+/-- **Fermionic Fock states.** Squarefree positive integers (fermionic multi-particle states of
+the primon gas) are in bijection with finite sets of primes (sets of occupied single-particle
+levels), via `n ↦ primeFactors n` with inverse `S ↦ ∏_{p ∈ S} p`. -/
+def fockEquiv : {n : ℕ // Squarefree n} ≃ {S : Finset ℕ // ∀ p ∈ S, p.Prime} where
+  toFun n := ⟨n.1.primeFactors, fun _ hp => Nat.prime_of_mem_primeFactors hp⟩
+  invFun S := ⟨∏ p ∈ S.1, p, squarefree_prod_primes S.2⟩
+  left_inv n := Subtype.ext (Nat.prod_primeFactors_of_squarefree n.2)
+  right_inv S := Subtype.ext (Nat.primeFactors_prod S.2)
+
+theorem fockEquiv_symm_apply (S : {S : Finset ℕ // ∀ p ∈ S, p.Prime}) :
+    (fockEquiv.symm S : ℕ) = ∏ p ∈ S.1, p := rfl
+
+/-- The energy of a Fock state is additive: `E(∏_{p ∈ S} p) = ∑_{p ∈ S} log p`. -/
+theorem energy_fock (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime) :
+    Real.log ((∏ p ∈ S, p : ℕ) : ℝ) = ∑ p ∈ S, Real.log p := by
+  rw [Nat.cast_prod, Real.log_prod]
+  intro p hp
+  exact_mod_cast (hS p hp).ne_zero
+
+/-- The parity `(-1)^F` of a Fock state with occupied set `S` is `μ(∏_{p ∈ S} p) = (-1)^{#S}`. -/
+theorem moebius_fock (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime) :
+    μ (∏ p ∈ S, p) = (-1) ^ S.card := by
+  rw [moebius_eq_parity _ (squarefree_prod_primes hS), Nat.primeFactors_prod hS]
+
+/-- The bosonic "temperature duality" `s ↔ 1 - s`: the functional equation of `ζ` (Mathlib's
+`riemannZeta_one_sub`), restated; no physical interpretation is implied. -/
+theorem bosonic_duality {s : ℂ} (hs : ∀ n : ℕ, s ≠ -n) (hs' : s ≠ 1) :
+    riemannZeta (1 - s) = 2 * (2 * Real.pi) ^ (-s) * Complex.Gamma s *
+      Complex.cos (Real.pi * s / 2) * riemannZeta s :=
+  riemannZeta_one_sub hs hs'
+
 end Fugue.PrimonGas
+
+#print axioms Fugue.PrimonGas.fermionic_partition
+#print axioms Fugue.PrimonGas.witten_index
+#print axioms Fugue.PrimonGas.bosonic_partition
+#print axioms Fugue.PrimonGas.moebius_eq_parity
+#print axioms Fugue.PrimonGas.fockEquiv
+#print axioms Fugue.PrimonGas.energy_fock
+#print axioms Fugue.PrimonGas.moebius_fock

@@ -1,6 +1,42 @@
 import Fugue.HeckeEk
 import Fugue.HeckeRefutation
 
+/-!
+# Hecke's theorem for the cusp form `Δ`: Ramanujan's `L`-function
+
+Ramanujan's `τ(n)` is the `n`-th `q`-expansion coefficient of the modular discriminant
+`Δ = q ∏ (1 - qⁿ)²⁴ = η²⁴` (Mathlib's `ModularForm.discriminant`, *defined* as `η²⁴` with `η` the
+Dedekind eta function, see `F_eq_eta`; it is the weight-12 cusp form `CuspForm.discriminant`).
+Ramanujan's `L`-function is `L(Δ, s) = ∑ τ(n) n^{-s}`.
+
+* `τ_zero`, `τ_one`, `τ_two`, `τ_three` : `τ(0) = 0`, `τ(1) = 1`, `τ(2) = -24`, `τ(3) = 252`
+  (from `Δ = (E₄³ - E₆²)/1728`, with `E₄ = 1 + 240q + 2160q² + 6720q³ + …`,
+  `E₆ = 1 - 504q - 16632q² - 122976q³ - …`);
+* `τ_isBigO` : Hecke's bound `τ(n) = O(n⁶)` (Mathlib's `CuspFormClass.qExpansion_isBigO`);
+* `P` : the weak — in fact strong (`P_strong`, `f₀ = g₀ = 0`) — FE-pair `(F, F)`,
+  `F(t) = Δ(it)`, weight `12`, root number `i¹² = (-1)⁶ = 1`, self-dual (`P_symm`).
+  The `S`-transformation `F(1/t) = t¹² F(t)` (`F_feq`) and the rapid decay at `∞` come from
+  Mathlib's `ModularForm.weakFEPair` of the cusp form `Δ` (with `Δ ∣ S = Δ`,
+  `discriminant_S_invariant`); `Λ_eq_mathlib` identifies our `Λ := P.Λ` with Mathlib's
+  `ModularForm.Λ` of `Δ`, and `Λ_eq_mellin` with the Mellin transform of `t ↦ Δ(it)`;
+* `ramanujanΛ_functional_equation` : `Λ(12 - s) = Λ(s)` — the symmetry `s ↔ 12 - s` about the
+  critical line `re s = 6`;
+* `ramanujanΛ_differentiable` : `Λ` is **entire**. Since `Δ` is a cusp form there is no constant
+  term and hence no pole — unlike `ζ(s) ζ(s - k + 1)`, the Eisenstein analogue in
+  `Fugue.HeckeEk`, whose completed `L`-function has simple poles at `0` and `k`;
+* `LSeriesHasSum_τ`, `LSeriesSummable_τ` : `∑ τ(n) n^{-s}` converges absolutely for `re s > 7`
+  (threshold `k/2 + 1 = 7`, from Hecke's bound);
+* `ramanujanΛ_eq` : for `re s > 7`, `Λ(s) = (2π)^{-s} Γ(s) L(Δ, s)`, `L(Δ, s) = LSeries τ s`;
+* `ramanujanΛ_eq_of_re_lt` : the reflected formula for `re s < 5`.
+
+Thus `(2π)^{-s} Γ(s) L(Δ, s)` continues to an entire function invariant under `s ↦ 12 - s`.
+
+**Not formalised.** Ramanujan's conjectures: the multiplicativity of `τ` and the Hecke recursion
+`τ(p^{n+1}) = τ(p) τ(pⁿ) - p¹¹ τ(p^{n-1})` (Mordell 1917, via Hecke operators — not in Mathlib),
+equivalently the Euler product `L(Δ, s) = ∏_p (1 - τ(p) p^{-s} + p^{11-2s})⁻¹`; and the bound
+`|τ(p)| ≤ 2 p^{11/2}` (Deligne 1974). Only the much weaker `τ(n) = O(n⁶)` is used here.
+-/
+
 set_option autoImplicit false
 
 open UpperHalfPlane hiding I
@@ -44,6 +80,9 @@ noncomputable abbrev Q : WeakFEPair ℂ := weakFEPair twelve_pos CuspForm.discri
 
 /-- `F t = Δ(it)`. -/
 noncomputable def F (t : ℝ) : ℂ := ModularForm.discriminant (ofComplex (I * t))
+
+/-- `Δ = η²⁴`: on the imaginary axis `F t = η(it)²⁴` (Mathlib's definition of `Δ`). -/
+theorem F_eq_eta (t : ℝ) : F t = ModularForm.eta (ofComplex (I * t)) ^ 24 := rfl
 
 theorem Q_f : Q.f = F := rfl
 
@@ -151,5 +190,12 @@ theorem ramanujanΛ_eq {s : ℂ} (hs : 7 < s.re) :
   have h2 : (2 * (π : ℂ)) ^ (-s) ≠ 0 := by
     rw [Ne, cpow_eq_zero_iff]; push Not; intro h; exact absurd h (by simp [Real.pi_ne_zero])
   field_simp
+
+
+/-- The reflected formula: for `re s < 5`,
+`Λ(s) = (2π)^{-(12-s)} Γ(12-s) ∑ τ(n) n^{-(12-s)}`. -/
+theorem ramanujanΛ_eq_of_re_lt {s : ℂ} (hs : s.re < 5) :
+    Λ s = (2 * π) ^ (-(12 - s)) * Gamma (12 - s) * LSeries τ (12 - s) := by
+  rw [← ramanujanΛ_eq (by simp; linarith), ramanujanΛ_functional_equation]
 
 end Fugue.RamanujanL
