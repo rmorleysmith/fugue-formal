@@ -65,7 +65,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **40** headline theorems (al
 | `Fugue/TwoSquares.lean` | **Jacobi's two-square theorem** `r₂(n) = 4·Σ_{d∣n} χ₋₄(d)` (C6) — not in Mathlib; via Gaussian integers, strong induction on the least prime factor | ✅ |
 | `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
 
-### `../FormalPNT` — sibling project for the hard direction (in progress)
+### `../FormalPNT` — chapter 6, the hard direction (✅ complete)
 
 Same Lean and Mathlib pins, plus `PrimeNumberTheoremAnd` at OpenAI's pinned commit `c39a751`
 (its `MediumPNT` builds cleanly here, axioms standard). `math-inc/strongpnt` at OpenAI's pin does
@@ -115,6 +115,6 @@ That is a modest contribution. It is a correct, checked, reusable first step —
 | 3 | `Dirichlet` | the same for every `L(s,χ)` | ✅ |
 | 4 | `Continuation`, `Reflection` | any continuation suffices; RH ⟺ `ZeroFreeRight ½` | ✅ |
 | 5 | `InghamEasy` | `ψ(x) − x = O(x^θ) ⇒ ZeroFreeRight θ` | ✅ |
-| 6 | `InghamHard` (in `../FormalPNT`) | `ZeroFreeRight θ ⇒ ψ(x) = x + O(x^{θ+ε})` for `½ ≤ θ < 1`. With OpenAI's proof: **`ψ(x) = x + O(x^{7/8+ε})`**. As far as we could find, no proof assistant has a machine-checked power-saving error term in the PNT (PrimeNumberTheoremAnd contains RH-conditional ones only as `sorry`'d blueprint statements). Plan: smoothed Chebyshev function from PNT+'s `MediumPNT`, contour moved to the straight line `Re s = θ + δ`, with a new bound `ζ′/ζ ≪ log|t|` there from Borel–Carathéodory | in progress |
+| 6 | ✅ `Ingham` (in `../FormalPNT`) | `ZeroFreeRight θ ⇒ ψ(x) = x + O(x^{θ+ε})` for `½ ≤ θ < 1`. With OpenAI's proof: **`ψ(x) = x + O(x^{7/8+ε})`**. As far as we could find, no proof assistant has a machine-checked power-saving error term in the PNT (PrimeNumberTheoremAnd contains RH-conditional ones only as `sorry`'d blueprint statements). Plan: smoothed Chebyshev function from PNT+'s `MediumPNT`, contour moved to the straight line `Re s = θ + δ`, with a new bound `ζ′/ζ ≪ log|t|` there from Borel–Carathéodory | ✅ |
 
-Chapter 6 is the Palomar candidate. Chapters 1–5 are the honest steps toward it.
+Chapter 6 is the Palomar candidate; the Palomar-ready port is `../PalomarIngham` (in progress). Chapters 1–5 are the honest steps toward it.

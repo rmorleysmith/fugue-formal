@@ -177,7 +177,7 @@ character mod 1 has `L(s, χ) = ζ(s)`).
 
 ---
 
-## Chapter 6 (in progress) — `../FormalPNT/Ingham/`: zero-free ⇒ primes are regular
+## Chapter 6 — `../FormalPNT/Ingham/`: zero-free ⇒ primes are regular
 
 **Target:** if `ζ(s) ≠ 0` for `Re s > θ` (`1/2 ≤ θ < 1`), then `ψ(x) = x + O(x^{θ+δ})` for every
 `δ > 0`. With OpenAI's theorem: `ψ(x) = x + O(x^{7/8+δ})`.
@@ -196,8 +196,21 @@ Choosing `ε = X^{σ₁−1}` balances the smoothing error against the main erro
 residue, and bounds for the far vertical pieces. *What is new:* the log-derivative bound on a
 whole half-plane, the bounds on the new line and horizontal pieces, and the assembly.
 
-*State:* assembly ✅, contour bounds ✅ (both sorry-free, standard axioms); log-derivative bound in
-progress. This chapter will be updated when it closes.
+*State:* ✅ complete and sorry-free (`../FormalPNT/Audit.lean`: 11 theorems, standard axioms).
+Headline theorems:
+
+* `Ingham.zeroFreeRight_iff_psiError` — for `1/2 ≤ θ < 1`: **no zeros right of `θ` ⟺
+  `ψ(x) = x + O(x^{θ+δ})` for every `δ > 0`.** (Hard direction here, easy direction chapter 5.)
+* `Ingham.riemannHypothesis_iff_psiError` — RH ⟺ `ψ(x) = x + O(x^{1/2+δ})` for every `δ > 0`.
+* `Ingham.openAIStatement_iff_psiError` — OpenAI's theorem ⟺ `ψ(x) = x + O(x^{7/8+δ})`.
+
+*Referee questions.* (1) *Why `1/2 ≤ θ`?* Only to get a polynomial bound `|ζ(s)| ≪ |t|` on the
+discs used by Borel–Carathéodory; no zero-free half-plane with `θ < 1/2` can exist anyway (there
+are zeros on the critical line), though Lean does not know that. (2) *Where exactly is OpenAI's
+theorem used?* Only as the hypothesis `ZeroFreeRight (7/8)`; their proof is not imported, so the
+unconditional `ψ(x) = x + O(x^{7/8+δ})` is "our Lean proof + their Lean proof", not a single
+checked artefact yet. (3) *Why `δ` and not `(log x)²`?* The `ε`-loss comes from the log-derivative
+bound and the smoothing; the sharper `x^θ (log x)²` needs zero-counting, which we avoided.
 
 ---
 
