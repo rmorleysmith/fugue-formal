@@ -419,3 +419,41 @@ Short answers at the bottom. If you can answer these without looking, you can de
    qualitative (holomorphic or not). Chapter 6 needs growth bounds on `ζ′/ζ` in vertical strips
    and a contour-integration (Perron) argument.
 </details>
+
+### Round two — the later chapters and the corpus library
+
+6. In chapter 6, where exactly is the zero-free hypothesis used, and why does the proof lose an
+   `x^δ`?
+7. In chapter 7, why is there no main term `x` for `ψ(x, χ)` when `χ ≠ 1`, and where does `x/φ(q)`
+   come from in `ψ(x; q, a)`?
+8. `r₂(n) = 4 Σ_{d∣n} χ₋₄(d)`: why is `r₂(p) = 0` for a prime `p ≡ 3 (mod 4)`, and `r₂(p) = 8` for
+   `p ≡ 1 (mod 4)`?
+9. Why does `E₄² = E₈` follow from "weight-8 level-1 forms are one-dimensional", and why is the
+   resulting identity `σ₇ = σ₃ + 120 σ₃⋆σ₃` a statement about *both* of the corpus' rings?
+10. The appendix said `pos(n) = frac(log₂ n)` "loses the information needed to factor". What did
+    `pos_injective_odd` show, and what is the correct reason the factoring demos fail?
+11. Why can a functional equation (like the one Hecke's method gives from `E₄`) never by itself
+    prove a zero-free region?
+
+<details><summary>Answers</summary>
+
+6. Only in the bound `|ζ′/ζ(σ + it)| ≤ K log |t|` on `σ ≥ σ₁ > θ` (Borel–Carathéodory needs a
+   holomorphic `log ζ`, i.e. no zeros, on discs reaching left to `σ₁`), and in the holomorphy
+   needed to move the contour to `Re s = σ₁`. The `δ` is the gap `σ₁ − θ` (the discs must stay
+   inside the zero-free region) plus the smoothing/`log` losses; removing it needs zero-counting.
+7. `L(s, χ)` is entire for `χ ≠ 1`, so moving the contour crosses no pole and picks up no residue;
+   the main term of `ψ(x)` *is* the residue of `−ζ′/ζ` at `s = 1`. In `ψ(x; q, a) = φ(q)⁻¹ Σ_χ χ̄(a)ψ(x,χ)`
+   only the trivial character has a main term, `x`, hence `x/φ(q)`.
+8. The divisors of `p` are `1, p`. For `p ≡ 3`: `χ₋₄(1) + χ₋₄(p) = 1 − 1 = 0` (and indeed `a² + b²`
+   is never `3 mod 4`). For `p ≡ 1`: `1 + 1 = 2`, so `r₂ = 8`: `p = a² + b²` in essentially one way
+   (Fermat), times 8 sign/order choices.
+9. Both `E₄²` and `E₈` lie in the one-dimensional space `M₈` and both have constant term `1`, so
+   they are equal. Comparing `qⁿ`-coefficients: the left side is a *Cauchy* product of power series
+   (Ring A) whose coefficients `σ_k = ζ * Id^k` are *Dirichlet* products (Ring B).
+10. That `pos` is injective on odd numbers: `pos(N)` determines `N`, hence its factors. Nothing is
+    lost; the demos fail because computing the factors from `N` (or from `pos(N)`) is no easier —
+    every route they tried was trial division in disguise (`first_spike_is_minFac`).
+11. A functional equation is a symmetry `s ↔ k − s`; functions with the same symmetry can have
+    zeros anywhere (Davenport–Heilbronn has zeros off the line). Excluding zeros needs size or
+    positivity information — ledger D3 and H8, and the large-sieve/moment input in OpenAI's proof.
+</details>
