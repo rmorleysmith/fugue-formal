@@ -101,3 +101,10 @@ example : Fugue.reprCount Fugue.sq 1 = 2 := by
 -- 7. Jacobi's two-square theorem (C6).
 #print axioms Fugue.card_sq_add_sq
 -- Non-vacuity: concrete counts r₂(5) = 8, r₂(3) = 0 follow (examples inside the file).
+
+-- 8. The E8 lattice (A1).
+#print axioms Fugue.e8Form_even
+#print axioms Fugue.e8Form_pos
+-- Non-vacuity: the root e₀ has norm 2 (so the form is not identically zero and the
+-- positivity statement is not about an empty set of vectors).
+example : Fugue.e8Form (Pi.single 0 1) = 2 := by rw [Fugue.e8Form_eq]; simp

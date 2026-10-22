@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **40** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **42** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -58,6 +58,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **40** headline theorems (al
 
 | File | Content | Status |
 |---|---|---|
+| `Fugue/E8Lattice.lean` | E8 Cartan form is even and positive definite (with Mathlib's `det = 1`: even unimodular), A1 | ✅ |
 | `Fugue/TwoRings.lean` | Ring A (Cauchy, `K⟦X⟧`) and Ring B (Dirichlet) are **not isomorphic** (Dirichlet ring not a PID); C1, C3, C4, C5, C8 (refutation `σ₃ ≠ ζ⁴`), C9 (log is a derivation), C11 | ✅ |
 | `Fugue/EllipticPoints.lean` | every level-1 form of weight `6 ∤ k` vanishes at `ρ`, of weight `4 ∤ k` at `i`; `E₄(ρ) = 0`, `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` (A3, A8) | ✅ |
 | `Fugue/Dynamics.lean` | minimum modulus: attractors of `|F|` are the zeros (A9); coupling matrix PSD ⟺ `|κ| ≤ 1`, PD ⟺ `|κ| < 1`; equilibria preserved for *any* `K` (E2, E3, E5) | ✅ |
@@ -119,4 +120,4 @@ That is a modest contribution. It is a correct, checked, reusable first step —
 | 5 | `InghamEasy` | `ψ(x) − x = O(x^θ) ⇒ ZeroFreeRight θ` | ✅ |
 | 6 | ✅ `Ingham` (in `../FormalPNT`) | `ZeroFreeRight θ ⇒ ψ(x) = x + O(x^{θ+ε})` for `½ ≤ θ < 1`. With OpenAI's proof: **`ψ(x) = x + O(x^{7/8+ε})`**. As far as we could find, no proof assistant has a machine-checked power-saving error term in the PNT (PrimeNumberTheoremAnd contains RH-conditional ones only as `sorry`'d blueprint statements). Plan: smoothed Chebyshev function from PNT+'s `MediumPNT`, contour moved to the straight line `Re s = θ + δ`, with a new bound `ζ′/ζ ≪ log|t|` there from Borel–Carathéodory | ✅ |
 
-Chapter 6 is the Palomar candidate; the Palomar-ready port is `../PalomarIngham` (in progress). Chapters 1–5 are the honest steps toward it.
+Chapter 6 is the Palomar candidate; the Palomar-ready port is `../PalomarIngham` (✅ `lake comparator` passes; awaiting a public repo + human submission). Chapters 1–5 are the honest steps toward it.

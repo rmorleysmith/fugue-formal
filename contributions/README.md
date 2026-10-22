@@ -36,16 +36,23 @@ File: [`formal-conjectures/QuasiRiemannHypothesis.lean`](formal-conjectures/Quas
 | `Fugue.ArithmeticFunction.not_isPrincipalIdealRing` | `NumberTheory/ArithmeticFunction/…` | curiosity; short |
 | `Fugue.pmul_log_mul` | `NumberTheory/ArithmeticFunction/VonMangoldt.lean` | `·log` is a derivation of the Dirichlet ring; check it is not already there under another name |
 
-## 3. Palomar — the candidate (in progress, `../../FormalPNT`)
+## 3. Palomar — Ingham's theorem (ready, needs a human to publish)
 
-**Statement** (Challenge imports only Mathlib):
+Project: [`../../PalomarIngham`](../../PalomarIngham/README.md) (Lean v4.35.0, Mathlib v4.35.0,
+every file a `module`, PrimeNumberTheoremAnd vendored under Apache-2.0).
 
-> If `ζ(s) ≠ 0` for `Re s > θ` with `1/2 ≤ θ < 1`, then `ψ(x) = x + O(x^{θ+δ})` for every
-> `δ > 0`. Combined with OpenAI's theorem: `ψ(x) = x + O(x^{7/8+δ})`.
-
-Status: interfaces fixed and building (`FormalPNT/Ingham/Basic.lean`); the three proof pieces
-are being written. "Credible research interest": the unconditional instance is a new
-consequence of a 2026 result, and — as far as we could find — no proof assistant has a
-machine-checked power-saving error term in the prime number theorem (PrimeNumberTheoremAnd has
-RH-conditional ones only as `sorry`'d blueprint statements; OpenAI's `PrimeCounting` files use
-Wiener–Ikehara, i.e. no error term).
+* `Challenge.lean` (Mathlib only, no new definitions) states:
+  `zeta_ne_zero_iff_psi_error` (1/2 ≤ θ < 1: zero-free right of θ ⟺ ψ(x) = x + O(x^{θ+δ}) ∀δ>0),
+  `riemannHypothesis_iff_psi_error`, and `psi_error_of_zeta_ne_zero_seven_eighths` (OpenAI's
+  hypothesis verbatim ⇒ ψ(x) = x + O(x^{7/8+δ})).
+* `lake comparator` (built into Lean v4.35.0, sandboxed with bubblewrap): **"Lean default kernel
+  accepts the solution — Your solution is okay!"**
+* Palomar's mechanical rules checked by hand: toolchain ≥ v4.35.0-rc2 and equal to Mathlib's;
+  `lake-manifest.json` committed; all 27 `.lean` files start with `module`; largest file 3511
+  lines; no `sorry`/`native_decide` outside the Challenge.
+* Remaining human steps: fill the `TEMPLATE` names in `formalization.yaml`, push to a public
+  GitHub repository, submit the 40-character SHA at <https://submit.palomar-registry.org/>.
+* Bar check: recent Palomar entries include classical results registered "with no novelty or
+  priority claim", so a classical theorem is admissible; the new ingredient here is the
+  conditional consequence of OpenAI's 2026 result, and (as far as we found) the first
+  machine-checked power-saving PNT error term statement.
