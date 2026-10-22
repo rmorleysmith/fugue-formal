@@ -35,6 +35,7 @@ File: [`formal-conjectures/QuasiRiemannHypothesis.lean`](formal-conjectures/Quas
 | **`Fugue.card_sq_add_sq`** (Jacobi two squares) | `NumberTheory/SumTwoSquares.lean` | the strongest Mathlib candidate here: a named classical theorem absent from Mathlib, 486 lines, needs Mathlib-style cleanup |
 | **`Fugue.card_hexagonal`** (Eisenstein-integer count) | `NumberTheory/…` | companion to Jacobi; includes a Euclidean-domain instance on `QuadraticAlgebra ℤ (-1) (-1)` |
 | **`Fugue.Partitions.ramanujan_congruence_five`**, **`pentagonalSeries_pow_three`** (Jacobi's identity) | `Combinatorics/Enumerative/Partition/…`, next to Mathlib's pentagonal theorem | both absent from Mathlib; natural follow-ups to the existing pentagonal-number development |
+| **`Fugue.tau_congr_691`**, `Tau691.qExpansion_discriminant_eq` (q-expansion of Δ = X·∏(1−Xⁿ)²⁴, integrality of τ) | `NumberTheory/ModularForms/Discriminant.lean` | Ramanujan 1916; uses only Mathlib's Δ, Eisenstein series and pentagonal theorem |
 | **`Fugue.LFunction_chi4_one`** (`L(1,χ₋₄) = π/4`) | `NumberTheory/LSeries/…` | Mathlib has no `s = 1` special values of odd `L`-functions yet; 178 lines |
 | `Fugue.ArithmeticFunction.not_isPrincipalIdealRing` | `NumberTheory/ArithmeticFunction/…` | curiosity; short |
 | `Fugue.pmul_log_mul` | `NumberTheory/ArithmeticFunction/VonMangoldt.lean` | `·log` is a derivation of the Dirichlet ring; check it is not already there under another name |

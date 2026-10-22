@@ -208,3 +208,8 @@ example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 :=
 #print axioms Fugue.Partitions.ramanujan_congruence_five
 example : (List.range 11).map (fun n => Fintype.card (Nat.Partition n)) =
     [1,1,2,3,5,7,11,15,22,30,42] := Fugue.Partitions.partition_values
+
+-- 25. Ramanujan's τ(n) ≡ σ₁₁(n) (mod 691); τ integral via Δ = q∏(1−qⁿ)²⁴.
+#print axioms Fugue.tau_congr_691
+#print axioms Fugue.Tau691.qExpansion_discriminant_eq
+example : (691 : ℤ) ∣ Fugue.Tau691.tauZ 2 - ArithmeticFunction.sigma 11 2 := Fugue.tau_sub_sigma_dvd 2
