@@ -85,15 +85,22 @@ identity `∑ Λ(n)n^{-s} = −ζ′/ζ` for `Re s > 1` is already in Mathlib
 (`ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div`), as is the theorem that a
 log-derivative has a simple pole at a zero (`meromorphicOrderAt_logDeriv_eq_neg_one`).
 
-**New in the formal sense:** as far as we can find, nobody has formally stated
+**New in the formal sense** (as far as we could find — each claim checked against Mathlib at our
+pin, `formal-conjectures`, PrimeNumberTheoremAnd and OpenAI's repository):
 
-1. the quasi-Riemann hypothesis as a Lean `Prop` outside OpenAI's own repository
-   (Google DeepMind's `formal-conjectures` has no such statement; checked on its `main`);
-2. the **characterisation** `ZeroFreeRight θ ↔ DifferentiableOn ℂ (−ζ′/ζ) {θ < Re s, s ≠ 1}`,
-   which turns OpenAI's statement about *zeros* into an equivalent statement about the
-   *prime-counting series*.
+1. the quasi-Riemann hypothesis as a Lean `Prop` outside OpenAI's repository, and its
+   characterisation by holomorphy of `−ζ′/ζ` (chapters 1–3, also for every `L(s,χ)`);
+2. **Ingham's theorem in both directions** (`../FormalPNT`, `../PalomarIngham`): zero-free right of
+   θ ⟺ `ψ(x) = x + O(x^{θ+δ})`; RH ⟺ square-root error; **OpenAI's 7/8 ⟺ `ψ(x) = x + O(x^{7/8+δ})`**.
+   PrimeNumberTheoremAnd has RH-conditional error terms only as `sorry`'d statements; OpenAI's
+   prime-counting files have no error term;
+3. classical theorems absent from Mathlib at our pin, extracted from the corpus: **Jacobi's
+   two-square theorem**, **`L(1,χ₋₄) = π/4`**, the elliptic-point vanishing of level-one forms
+   (`E₄(ρ) = 0`, `E₆(i) = 0`), Ramanujan's `σ₇` identity via `E₄² = E₈`, positive definiteness of
+   the E8 form and `Θ_{E8⊕E8} = Θ_{E8}²`, and non-isomorphism of the Cauchy and Dirichlet rings.
 
-That is a modest contribution. It is a correct, checked, reusable first step — not a result.
+None of the *mathematics* is new; it is classical. What is new is that it is now machine-checked,
+connected to the corpus' claims, and (for item 2) packaged for the Palomar registry.
 
 ## Contribution paths found during the research
 
