@@ -357,6 +357,13 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   into `Σσ₃(n)n^{−s} = ζ(s)ζ(s−3)`. *Lesson (D3):* the symmetry is genuine and the zeros are not on
   its axis `Re s = 2` at all — symmetry does not locate zeros.
 
+### `Fugue/HeckeEk.lean` — all weights, and a forced zero
+
+* **`heckeEk_functional_equation`** — for `E_k` the symmetry is `Λ_k(k − s) = (−1)^{k/2} Λ_k(s)`
+  (the sign is `i^k`, from `E_k(i/y) = (iy)^k E_k(iy)`). **`heckeE6_centre_eq_zeta`**: at `k = 6`
+  the sign `−1` forces `Λ₆(3) = −Λ₆(3)`, so `Λ₆(3) = 0`; unfolding, `Λ₆(3)` contains the factor
+  `ζ(3 − 5) = ζ(−2) = 0` — the forced zero is a trivial zero.
+
 ### `Fugue/HexagonalCount.lean` — the Eisenstein integers
 
 * **`card_hexagonal`** — `#{(a,b) : a² − ab + b² = n} = 6 Σ_{d∣n} χ₋₃(d)`; e.g. `n = 7`: `12`. Same

@@ -150,3 +150,9 @@ example : ArithmeticFunction.sigma 7 2 =
 
 -- 14. Eisenstein integers: #{a² − ab + b² = n} = 6 Σ_{d∣n} χ₋₃(d) (C7), ζ_{ℚ(√−3)} coefficients.
 #print axioms Fugue.card_hexagonal
+
+-- 15. Hecke for all E_k (root number (−1)^{k/2}); E₆'s centre zero = trivial zero ζ(−2) = 0.
+#print axioms Fugue.HeckeEk.heckeEk_functional_equation
+#print axioms Fugue.HeckeEk.heckeEk_eq
+#print axioms Fugue.HeckeEk.heckeEk_eq_of_ne
+#print axioms Fugue.HeckeEk.heckeE6_centre_eq_zeta
