@@ -106,7 +106,136 @@ is holomorphic on `{θ < Re s, s ≠ 1}`.
 
 ---
 
-## Why the audit's three sanity checks matter
+## Continuation — `QuasiRH/Continuation.lean`
+
+**`zeroFreeRight_of_eqOn`** — if *any* function `G` is holomorphic on `{θ < Re s, s ≠ 1}` and
+equals `∑ Λ(n) n^{-s}` on `Re s > 1`, then `ζ` has no zeros with `Re s > θ`.
+*Why this is needed:* chapter 2 talks about the specific function `−ζ′/ζ`. In practice you
+never have that in hand to the left of `Re s = 1`; you have some *formula* (an integral, say)
+that agrees with it on `Re s > 1`. This lemma says the formula is enough.
+*One paragraph:* `ζ·G` and `−ζ′` are holomorphic on the region and agree on `Re s > 1`; the
+region is connected, so by the identity theorem they agree everywhere on it. Near a zero `ρ`
+(zeros are isolated) that means `G = −ζ′/ζ` on a punctured disc around `ρ`, so `G` would inherit
+the pole of chapter 2 — but `G` is holomorphic at `ρ`. Contradiction.
+*Referee question: why is the region connected?* It is a half-plane minus one point. The proof
+(`isPreconnected_region`) covers it with four convex pieces — upper half, lower half, right of
+`Re s = 1`, and the strip `θ < Re s < 1` — each meeting the next.
+
+---
+
+## Reflection — `QuasiRH/Reflection.lean`
+
+**`riemannHypothesis_iff_zeroFreeRight_half`** — RH ⟺ `ZeroFreeRight (1/2)`.
+*One paragraph:* suppose no zeros right of `1/2` and `ρ` is a nontrivial zero with
+`Re ρ < 1/2`. The functional equation (Mathlib's `riemannZeta_one_sub`) says
+`ζ(ρ) = 2(2π)^{−(1−ρ)} Γ(1−ρ) cos(π(1−ρ)/2) ζ(1−ρ)`. The left side is `0`; on the right `Γ` never
+vanishes, the power never vanishes, and `ζ(1−ρ) ≠ 0` because `Re(1−ρ) > 1/2`. So the cosine
+would vanish, which forces `ρ` to be an even integer `≤ 0` — that is `0` (but `ζ(0) = −1/2`) or a
+trivial zero (excluded). So nontrivial zeros sit on `Re s = 1/2`.
+
+---
+
+## Chapter 5 — `QuasiRH/InghamEasy.lean`: regular primes force a zero-free region
+
+**`PsiError θ`** — `ψ(x) − x = O(x^θ)`: "the prime number theorem with error exponent `θ`".
+
+**`zeroFreeRight_of_psiError`** — `PsiError θ ⇒ ZeroFreeRight θ`.
+*The proof in four lines:* for `Re s > 1`, partial summation gives
+`∑ Λ(n)n^{-s} = s∫₁^∞ ψ(t) t^{−s−1} dt = s/(s−1) + s∫₁^∞ (ψ(t)−t) t^{−s−1} dt`. If
+`ψ(t) − t = O(t^θ)`, the last integral converges — and is holomorphic — for `Re s > θ`. So the
+right-hand side is a `G` as in the continuation lemma, and that lemma finishes.
+*Which Mathlib tools:* `LSeries_eq_mul_integral` (partial summation for Dirichlet series) and
+`mellin_differentiableAt_of_isBigO_rpow` (a Mellin transform of an `O(t^θ)` function is
+holomorphic where it converges).
+
+**`riemannHypothesis_of_psiError`** — if `ψ(x) = x + O(x^{1/2+ε})` for every `ε > 0`, RH holds.
+This is one direction of the classical "RH ⟺ square-root error in the prime number theorem". The
+other direction (von Koch 1901, ε-version) is the hard one; it is the target below.
+
+**`psiError_one`** — Chebyshev: `ψ(x) − x = O(x)`. Not interesting in itself: it is the
+non-vacuity check. `PsiError` holds at `θ = 1` and *fails* at `θ = −3` (the audit derives
+`¬PsiError(−3)` from the trivial zero `ζ(−2) = 0`). Everything strictly between is the
+mathematics; `θ = 1/2 + ε` is RH.
+
+---
+
+## Chapter 3 — `QuasiRH/Dirichlet.lean`: every Dirichlet L-function
+
+OpenAI's theorem covers every `L(s, χ)`, not only `ζ`. Primes in an arithmetic progression
+`a mod q` are counted by `∑ χ(n)Λ(n)n^{-s} = −L′/L(s, χ)` (Mathlib: `LSeries_twist_vonMangoldt_eq`).
+
+**`zeroFree_iff_differentiableOn_negLogDeriv`** — the chapter-2 argument for *any* `f`
+holomorphic on `ℂ \ {1}` that is not identically zero.
+
+**`zeroFreeRightL_iff`** — `L(s, χ)` zero-free right of `θ` ⟺ `−L′/L` holomorphic on the region.
+
+**`twistedVonMangoldt_continuation_of_openAI`** — granting OpenAI's Dirichlet statement (copied
+from their Lean), every twisted prime series continues to `{7/8 < Re s, s ≠ 1}`.
+
+**`openAIStatement_of_dirichlet`** — the Dirichlet statement contains the `ζ` statement (the
+character mod 1 has `L(s, χ) = ζ(s)`).
+
+---
+
+## The Fugue library — theorems extracted from the corpus
+
+Each file cites the ledger rows (`Fugue/02-threads/evidence-ledger.md`) it settles.
+
+### `Fugue/TwoRings.lean` — the corpus' two products on one carrier
+
+The corpus stores a "DNA" as a sequence `a(n)` and multiplies DNAs two ways: **Ring A** is the
+Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet product
+(multiplying `∑ a(n)n^{-s}`, `ArithmeticFunction`).
+
+* **`not_ringEquiv_powerSeries`** — over a field, the two rings are **not isomorphic**.
+  *Why:* every ideal of `K⟦X⟧` is principal; in the Dirichlet ring the ideal "multiples of `δ₂` or
+  `δ₃`" is not. *The proof, by hand:* if `(δ₂, δ₃) = (g)`, then `g(1) = 0`; write `δ₂ = hg`,
+  `δ₃ = h′g`; at `n = 2`: `h(1)g(2) = 1` and `h′(1)g(2) = 0`, so `h′(1) = 0`; at `n = 3`:
+  `1 = h′(1)g(3) + h′(3)g(1) = 0`. *Conceptually:* Ring A has one generator (`X`); Ring B has one
+  per prime.
+* `cauchy_ne_dirichlet` (ledger C1), `delta_is_X` (C3: the Dirichlet identity is the *variable*
+  `X` in Ring A), `sigma_three_ne_zeta_pow_four` (C8 refutation: `σ₃(2) = 9`, `ζ⁴(2) = 4`),
+  `pmul_log_mul` (C9: multiplying by `log n` is a derivation — the arithmetic shadow of `−d/ds`),
+  `multiplicativeSubmonoid` (C11) and `zeta_add_zeta_not_multiplicative` (it is not closed under
+  addition: "compose" must mean multiply).
+
+### `Fugue/EllipticPoints.lean` — why `E₄(ρ) = 0`
+
+* **`eq_zero_at_rho`** — *every* level-one modular form of weight `k` with `6 ∤ k` vanishes at
+  `ρ = e^{2πi/3}`. *Why:* `γ = [[0,−1],[1,1]]` fixes `ρ` with automorphy factor `ρ + 1 = e^{iπ/3}`,
+  a primitive 6th root of unity `u`; modularity says `f(ρ) = u^k f(ρ)`, and `u^k ≠ 1`.
+* **`eq_zero_at_I`** — weight `k` with `4 ∤ k` vanishes at `i` (`S` fixes `i` with factor `i`).
+* `E₄_rho`, `E₆_I`; and, using Mathlib's `1728Δ = E₄³ − E₆²` and `Δ ≠ 0`: `E₄_I_ne_zero`,
+  `E₆_rho_ne_zero`. At weight 12 both forced zeros disappear (`Δ` never vanishes) — the concrete
+  content of ledger refutation A8.
+
+### `Fugue/Dynamics.lean` — neurons, attractors, and the coupling matrix
+
+* **`eq_zero_of_isLocalMin_norm`** (ledger A9) — a local minimum of `|F|` where `F` is not locally
+  constant is a zero. *Why:* otherwise `1/F` is holomorphic with a local *maximum* of `|1/F|`, and
+  the maximum modulus principle makes it constant.
+* **`couplingMatrix_posSemidef_iff`** / **`couplingMatrix_posDef_iff`** (E2/E5) — the corpus'
+  `K(κ) = [[y₁², κy₁y₂],[κy₁y₂, y₂²]]` is PSD iff `|κ| ≤ 1`, PD iff `|κ| < 1`. *Why:*
+  `xᵀKx = (y₁x₀ + κy₂x₁)² + (1−κ²)(y₂x₁)²`.
+* **`equilibrium_preserved`** (E3, sharpened) — common zeros stay equilibria for *any* `K`;
+  positivity is not needed for that. What PSD buys is descent (`descends_iff`).
+
+### `Fugue/Factoring.lean` — what the factoring scripts really compute
+
+* **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the
+  "E8 torsion detector" is a divisibility test, and scanning `k` upward is trial division
+  (`first_spike_is_minFac`).
+* **`totient_reveals_factors`** (appendix A §1) — for `N = pq`, `p + q = N + 1 − φ(N)`: knowing
+  `φ(N)` is as good as knowing the factors.
+* **`pos_injective_odd`** — **a correction to appendix A §§4, 6.** The encoding
+  `pos(n) = frac(log₂ n)` is a homomorphism (`pos_mul`), and the appendix concluded it "loses
+  exactly the information required to factor". It does not lose it: `pos` is injective on odd
+  numbers, so `pos(N)` determines `N` and hence `p, q`. The real obstruction is *computational*:
+  the homomorphism does not make the factors easier to *compute* than `N` itself does.
+
+---
+
+## Why the audit's sanity checks matter
 
 A formal equivalence can be "true" for a silly reason — for instance if the region were empty,
 both sides would be trivially true. `Audit.lean` rules that out:
@@ -153,11 +282,11 @@ Short answers at the bottom. If you can answer these without looking, you can de
 3. At the step "the zero has *finite* order": if ζ vanished on an open set, the order would be
    `∞`, Mathlib's order-−1 lemma would not apply, and indeed `ζ′/ζ` would be `0/0` there. The
    identity theorem + `ζ(2) ≠ 0` is what excludes this.
-4. Yes, it is an equivalence. The direction we proved is pure logic. The converse needs the
-   **functional equation**: zeros come in pairs `ρ ↔ 1 − ρ`, so a nontrivial zero with
-   `Re ρ < 1/2` would produce one with `Re(1−ρ) > 1/2`, contradicting `ZeroFreeRight(1/2)`.
-   We did not formalise that direction yet; Mathlib has the functional equation
-   (`riemannZeta_one_sub`), so it is a good small exercise. Its moral: **RH is exactly the
+4. Yes, it is an equivalence, and both directions are now proved
+   (`riemannHypothesis_iff_zeroFreeRight_half`, chapter 3½ below). The direction in
+   chapter 1 is pure logic. The converse needs the **functional equation**: zeros come in
+   pairs `ρ ↔ 1 − ρ`, so a nontrivial zero with `Re ρ < 1/2` would produce one with
+   `Re(1−ρ) > 1/2`, contradicting `ZeroFreeRight(1/2)`. Its moral: **RH is exactly the
    strongest possible quasi-RH**, and the "1/2" comes from the symmetry `s ↔ 1 − s` — the same
    point `HSLNZeta.lean` makes.
 5. A **quantitative** statement about primes: `ψ(x) = x + O(x^{θ+ε})`. Chapters 1–2 are

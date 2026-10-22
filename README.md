@@ -11,7 +11,7 @@ For what each theorem means and how to explain it, read [`EXPLAINED.md`](EXPLAIN
 ```bash
 cd /home/rms/Math/Formal
 lake exe cache get      # once; downloads prebuilt Mathlib
-lake build              # builds the QuasiRH library (~10 s after cache)
+lake build              # builds QuasiRH and Fugue (~1 min after cache)
 lake env lean Audit.lean   # axiom audit + sanity checks
 ```
 
@@ -38,18 +38,40 @@ it.
 
 ## Status
 
+Two libraries, both sorry-free; `Audit.lean` checks **37** headline theorems (all
+`[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
+
+### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
+
 | File | Content | Status |
 |---|---|---|
-| `QuasiRH/Basic.lean` | `ZeroFreeRight θ`, `QuasiRiemannHypothesis`, `OpenAIStatement` (verbatim); `RH ⇒ zero-free right of ½`; **zero-free ⇒ `−ζ′/ζ` holomorphic ⇒ the von Mangoldt series continues** | ✅ sorry-free |
-| `QuasiRH/Characterisation.lean` | **The converse**: at a zero of ζ, `−ζ′/ζ` has a simple pole (meromorphic order −1), hence `ZeroFreeRight θ ↔ −ζ′/ζ holomorphic on {θ < Re s, s ≠ 1}`; restatements of OpenAI's theorem and of the quasi-RH as statements about the prime series | ✅ sorry-free |
-| `Audit.lean` | `#print axioms` for all 9 headline theorems + 3 non-vacuity checks (characterisation true at θ = 1, **false** at θ = −3 because ζ(−2) = 0) | ✅ passes |
+| `QuasiRH/Basic.lean` | `ZeroFreeRight θ`, `QuasiRiemannHypothesis`, `OpenAIStatement` (verbatim); `RH ⇒ ZeroFreeRight ½`; zero-free ⇒ `−ζ′/ζ` holomorphic ⇒ the von Mangoldt series continues | ✅ |
+| `QuasiRH/Characterisation.lean` | at a zero of ζ, `−ζ′/ζ` has a simple pole; **`ZeroFreeRight θ ↔ −ζ′/ζ holomorphic on {θ < Re s, s ≠ 1}`** | ✅ |
+| `QuasiRH/Continuation.lean` | *any* holomorphic continuation of `∑Λ(n)n^{-s}` to the region forces `ZeroFreeRight θ` (identity theorem on the connected region) | ✅ |
+| `QuasiRH/Reflection.lean` | **`RH ↔ ZeroFreeRight (1/2)`** via the functional equation | ✅ |
+| `QuasiRH/InghamEasy.lean` | **`ψ(x) − x = O(x^θ) ⇒ ZeroFreeRight θ`** (partial summation + Mellin holomorphy); hence `ψ(x) = x + O(x^{1/2+ε}) ∀ε ⇒ RH`; Chebyshev `PsiError 1` as non-vacuity | ✅ |
+| `QuasiRH/Dirichlet.lean` | the characterisation for every Dirichlet `L(s,χ)`; OpenAI's Dirichlet statement (verbatim) ⇒ every `∑χ(n)Λ(n)n^{-s}` continues to `Re s > 7/8` | ✅ |
 
-Every claim in this table was established by `lake build` + `lake env lean Audit.lean`, not by
-reading the code.
+### `Fugue` — theorems extracted from the HSLN corpus (ledger rows cited in each file)
+
+| File | Content | Status |
+|---|---|---|
+| `Fugue/TwoRings.lean` | Ring A (Cauchy, `K⟦X⟧`) and Ring B (Dirichlet) are **not isomorphic** (Dirichlet ring not a PID); C1, C3, C4, C5, C8 (refutation `σ₃ ≠ ζ⁴`), C9 (log is a derivation), C11 | ✅ |
+| `Fugue/EllipticPoints.lean` | every level-1 form of weight `6 ∤ k` vanishes at `ρ`, of weight `4 ∤ k` at `i`; `E₄(ρ) = 0`, `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` (A3, A8) | ✅ |
+| `Fugue/Dynamics.lean` | minimum modulus: attractors of `|F|` are the zeros (A9); coupling matrix PSD ⟺ `|κ| ≤ 1`, PD ⟺ `|κ| < 1`; equilibria preserved for *any* `K` (E2, E3, E5) | ✅ |
+| `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
+
+### `../FormalPNT` — sibling project for the hard direction (in progress)
+
+Same Lean and Mathlib pins, plus `PrimeNumberTheoremAnd` at OpenAI's pinned commit `c39a751`
+(its `MediumPNT` builds cleanly here, axioms standard). `math-inc/strongpnt` at OpenAI's pin does
+**not** compile against this Mathlib (`EMetric.ball` renamed etc.), so it is not used.
+
+Every claim in these tables was established by `lake build` + `lake env lean Audit.lean`.
 
 ## What is new, and what is not — honestly
 
-**Not new:** the mathematics of chapter 1 and 2 is textbook (Titchmarsh, Davenport). The
+**Not new:** the mathematics of chapters 1–5 is textbook (Titchmarsh, Davenport). The
 identity `∑ Λ(n)n^{-s} = −ζ′/ζ` for `Re s > 1` is already in Mathlib
 (`ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div`), as is the theorem that a
 log-derivative has a simple pole at a zero (`meromorphicOrderAt_logDeriv_eq_neg_one`).
@@ -82,15 +104,13 @@ That is a modest contribution. It is a correct, checked, reusable first step —
 
 ## Roadmap
 
-Each chapter is one file, sorry-free before the next one starts.
-
-| # | Chapter | Mathematical content | Difficulty |
+| # | Chapter | Content | State |
 |---|---|---|---|
-| 1 | ✅ `Basic` | zero-free ⇒ prime series continues | glue |
-| 2 | ✅ `Characterisation` | …and conversely (zeros = poles) | small |
-| 3 | `Dirichlet` | the same for every Dirichlet L-function, `−L′/L(χ) = ∑ χ(n)Λ(n)n^{-s}` — OpenAI's *main* theorem is about all of these, and Mathlib has `LSeries_twist_vonMangoldt_eq` | small, same template |
-| 4 | `PoleAtOne` | `−ζ′/ζ(s) − 1/(s−1)` is holomorphic on `Re s > θ` (removes the pole at 1) — the exact input for prime-counting error terms | medium |
-| 5 | `InghamEasy` | `ψ(x) − x = O(x^{θ+ε}) ⇒ ZeroFreeRight θ`, by Abel summation: regular primes force a zero-free half-plane | medium |
-| 6 | `InghamHard` | `ZeroFreeRight θ ⇒ ψ(x) = x + O(x^{θ+ε})`. **Combined with OpenAI's proof, this gives `ψ(x) = x + O(x^{7/8+ε})` — the first power-saving error term in the prime number theorem in any proof assistant.** That would be Palomar-worthy. Needs contour integration / Perron; `PrimeNumberTheoremAnd` and `math-inc/strongpnt` (both already in OpenAI's dependency set) likely contain most of the analytic machinery | hard |
+| 1 | `Basic` | zero-free ⇒ prime series continues | ✅ |
+| 2 | `Characterisation` | …and conversely (zeros = poles) | ✅ |
+| 3 | `Dirichlet` | the same for every `L(s,χ)` | ✅ |
+| 4 | `Continuation`, `Reflection` | any continuation suffices; RH ⟺ `ZeroFreeRight ½` | ✅ |
+| 5 | `InghamEasy` | `ψ(x) − x = O(x^θ) ⇒ ZeroFreeRight θ` | ✅ |
+| 6 | `InghamHard` (in `../FormalPNT`) | `ZeroFreeRight θ ⇒ ψ(x) = x + O(x^{θ+ε})` for `½ ≤ θ < 1`. With OpenAI's proof: **`ψ(x) = x + O(x^{7/8+ε})`**. As far as we could find, no proof assistant has a machine-checked power-saving error term in the PNT (PrimeNumberTheoremAnd contains RH-conditional ones only as `sorry`'d blueprint statements). Plan: smoothed Chebyshev function from PNT+'s `MediumPNT`, contour moved to the straight line `Re s = θ + δ`, with a new bound `ζ′/ζ ≪ log|t|` there from Borel–Carathéodory | in progress |
 
-Chapter 6 is the real target. Chapters 3–5 are the honest steps toward it.
+Chapter 6 is the Palomar candidate. Chapters 1–5 are the honest steps toward it.
