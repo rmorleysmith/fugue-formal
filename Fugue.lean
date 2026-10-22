@@ -24,3 +24,4 @@ import Fugue.RamanujanL
 import Fugue.PrimonGas
 import Fugue.Epstein
 import Fugue.GoldenPrimes
+import Fugue.Partitions

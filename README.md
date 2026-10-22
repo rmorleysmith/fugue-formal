@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **85** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **89** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -74,6 +74,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **85** headline theorems (al
 | `Fugue/PrimonGas.lean` | **primon gas** (Julia, Spector 1990): bosonic partition function `ζ(s)`, **fermionic** `ζ(s)/ζ(2s)` (Pauli = squarefree), fermion parity `(−1)^F = μ`, Witten index `1/ζ(s)`, fermionic Fock states ↔ finite sets of primes — an analogy made precise | ✅ |
 | `Fugue/Epstein.lean` | **Epstein zeta functions**: `Z_{E8} = 240ζ(s)ζ(s−3)`, `Z_{E8⊕E8} = 480ζ(s)ζ(s−7)`, `Z_{ℤ²} = 4ζ(s)L(s,χ₋₄)`, `Z_{hex} = 6ζ(s)L(s,χ₋₃)` | ✅ |
 | `Fugue/GoldenPrimes.lean` | **golden-ratio primes**: `p = x² + xy − y²` (the norm of `ℤ[φ]`) ⇔ `p = 5` or `p ≡ ±1 (mod 5)`; inert primes stay prime; `√5 = 2φ − 1` ramifies; `φⁿ⁺¹ = F_n + F_{n+1}φ` and Cassini's identity | ✅ |
+| `Fugue/Partitions.lean` | **partitions**: Euler's `Σp(n)qⁿ·∏(1−qⁿ) = 1` and recurrence (p(0..10) checked); **Jacobi's identity** `∏(1−qⁿ)³ = Σ(−1)ᵏ(2k+1)q^{k(k+1)/2}` (not in Mathlib); **Ramanujan's congruence `p(5n+4) ≡ 0 (mod 5)`** for all n | ✅ |
 | `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` (the Eisenstein road; see `EISENSTEIN-ROAD.md`) | ✅ |
 | `Fugue/HeckeEk.lean` | Hecke for **every** `E_k` (`k ≥ 4` even): root number `(−1)^{k/2}`, identification with `−(2k/B_k)(2π)^{−s}Γ(s)ζ(s)ζ(s−k+1)` on `ℂ∖{1,k,0,−1,…}`; `E₆`'s forced centre zero `Λ₆(3) = 0` *is* the trivial zero `ζ(−2) = 0` | ✅ |
 | `Fugue/RankinSelberg.lean` | **Ramanujan's formula** `Σσ_a(n)σ_b(n)n^{−s}·ζ(2s−a−b) = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)` (Re s > a+b+1) — the Rankin–Selberg prototype; C11's "Rankin–Selberg closure" made precise | ✅ |

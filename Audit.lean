@@ -200,3 +200,11 @@ example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 :=
 #print axioms Fugue.golden_prime_iff
 #print axioms Fugue.Golden.prime_of_inert
 #print axioms Fugue.Golden.fib_cassini
+
+-- 24. Partitions: Euler's identity and recurrence, Jacobi's identity, Ramanujan p(5n+4) ≡ 0 mod 5.
+#print axioms Fugue.Partitions.partitionSeries_mul_pentagonalSeries
+#print axioms Fugue.Partitions.partition_recurrence
+#print axioms Fugue.Partitions.pentagonalSeries_pow_three
+#print axioms Fugue.Partitions.ramanujan_congruence_five
+example : (List.range 11).map (fun n => Fintype.card (Nat.Partition n)) =
+    [1,1,2,3,5,7,11,15,22,30,42] := Fugue.Partitions.partition_values
