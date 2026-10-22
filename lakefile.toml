@@ -1,6 +1,6 @@
 name = "Formal"
 version = "0.1.0"
-defaultTargets = ["QuasiRH"]
+defaultTargets = ["QuasiRH", "Fugue"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -17,3 +17,7 @@ rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
 
 [[lean_lib]]
 name = "QuasiRH"
+
+# Theorems extracted from the HSLN / Fugue corpus (see ../Fugue/02-threads/evidence-ledger.md).
+[[lean_lib]]
+name = "Fugue"
