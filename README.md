@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **78** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **82** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -72,6 +72,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **78** headline theorems (al
 | `Fugue/HeteroticE8.lean`, `Fugue/D16Plus.lean` | **heterotic lattices**: `Θ_{E8⊕E8} = E₈` (480σ₇(n) vectors of norm 2n) and **Witt's isospectrality** `Θ_{D16⁺} = Θ_{E8⊕E8}` — the lattices of the `E8×E8` and `Spin(32)/ℤ₂` heterotic strings have the same theta series | ✅ |
 | `Fugue/RamanujanL.lean` | **Ramanujan's L-function** `Σ τ(n)n^{−s}` of `Δ = η²⁴`: completed `Λ` is **entire** with `Λ(12−s) = Λ(s)`; `τ(1..3) = 1, −24, 252`; Hecke's bound `τ(n) = O(n⁶)` (Mordell multiplicativity and Deligne's bound not formalised) | ✅ |
 | `Fugue/PrimonGas.lean` | **primon gas** (Julia, Spector 1990): bosonic partition function `ζ(s)`, **fermionic** `ζ(s)/ζ(2s)` (Pauli = squarefree), fermion parity `(−1)^F = μ`, Witten index `1/ζ(s)`, fermionic Fock states ↔ finite sets of primes — an analogy made precise | ✅ |
+| `Fugue/Epstein.lean` | **Epstein zeta functions**: `Z_{E8} = 240ζ(s)ζ(s−3)`, `Z_{E8⊕E8} = 480ζ(s)ζ(s−7)`, `Z_{ℤ²} = 4ζ(s)L(s,χ₋₄)`, `Z_{hex} = 6ζ(s)L(s,χ₋₃)` | ✅ |
 | `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` (the Eisenstein road; see `EISENSTEIN-ROAD.md`) | ✅ |
 | `Fugue/HeckeEk.lean` | Hecke for **every** `E_k` (`k ≥ 4` even): root number `(−1)^{k/2}`, identification with `−(2k/B_k)(2π)^{−s}Γ(s)ζ(s)ζ(s−k+1)` on `ℂ∖{1,k,0,−1,…}`; `E₆`'s forced centre zero `Λ₆(3) = 0` *is* the trivial zero `ζ(−2) = 0` | ✅ |
 | `Fugue/RankinSelberg.lean` | **Ramanujan's formula** `Σσ_a(n)σ_b(n)n^{−s}·ζ(2s−a−b) = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)` (Re s > a+b+1) — the Rankin–Selberg prototype; C11's "Rankin–Selberg closure" made precise | ✅ |

@@ -45,6 +45,18 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | H16 / App. A §§4, 6 | `pos` homomorphism "loses the information" | (ledger: PROVEN) **corrected here** | `pos_mul`; `pos_injective_odd` — the information is *not* lost, only not made computable | same |
 | (OpenAI link) | quasi-RH, `θ = 7/8` | — | `QuasiRH.OpenAIStatement` (verbatim), `openAIStatement_iff_differentiableOn`, `OpenAIDirichletStatement`, `twistedVonMangoldt_continuation_of_openAI` | `QuasiRH/*` |
 
+## Beyond the ledger (from the follow-up ideas, see `IDEAS-TRIAGE.md`)
+
+| Idea | Lean | File |
+|---|---|---|
+| E8×E8 heterotic lattice | `thetaE8_sq_eq_E₈`, `reprCount_e8e8` (480σ₇) | `Fugue/HeteroticE8.lean` |
+| E8×E8 vs Spin(32)/ℤ₂ | `thetaD16_eq_thetaE8_sq` (Witt isospectrality) | `Fugue/D16Plus.lean` |
+| Ramanujan's L-function from η²⁴ | `RamanujanL.ramanujanΛ_functional_equation`, `ramanujanΛ_differentiable` (entire) | `Fugue/RamanujanL.lean` |
+| Epstein zeta / lattice–zeta bridge | `Epstein.epstein_E8`, `epstein_E8E8`, `epstein_square`, `epstein_hexagonal` | `Fugue/Epstein.lean` |
+| Fermions via the zeta function | `PrimonGas.fermionic_partition` (ζ(s)/ζ(2s)), `witten_index`, `fockEquiv` | `Fugue/PrimonGas.lean` |
+| Rankin–Selberg | `LSeries_sigma_mul_sigma` | `Fugue/RankinSelberg.lean` |
+| Eisenstein road (E_k ↔ ζ) | `HeckeEk.heckeEk_functional_equation`, `heckeE6_centre_eq_zeta` | `Fugue/HeckeE*.lean` |
+
 ## Not formalised, and why
 
 | Ledger | Reason |

@@ -189,3 +189,9 @@ example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 :=
 #print axioms Fugue.PrimonGas.fermionic_partition
 #print axioms Fugue.PrimonGas.witten_index
 #print axioms Fugue.PrimonGas.fockEquiv
+
+-- 22. Epstein zeta functions of E8, E8⊕E8, ℤ², hexagonal lattice.
+#print axioms Fugue.Epstein.epstein_E8
+#print axioms Fugue.Epstein.epstein_E8E8
+#print axioms Fugue.Epstein.epstein_square
+#print axioms Fugue.Epstein.epstein_hexagonal
