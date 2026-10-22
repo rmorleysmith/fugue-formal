@@ -24,3 +24,18 @@ example : ¬ DifferentiableOn ℂ negLogDerivZeta (region (-3)) := by
   rw [← zeroFreeRight_iff_differentiableOn]
   intro h
   exact h (-2) (by norm_num) (by simpa using riemannZeta_neg_two_mul_nat_add_one 0)
+
+-- 3. Chapters 3-5 (continuation, reflection, Ingham easy direction).
+#print axioms zeroFreeRight_of_eqOn
+#print axioms isPreconnected_region
+#print axioms riemannHypothesis_iff_zeroFreeRight_half
+#print axioms LSeries_vonMangoldt_eq_mellin
+#print axioms zeroFreeRight_of_psiError
+#print axioms riemannHypothesis_of_psiError
+#print axioms psiError_one
+
+-- Non-vacuity of `PsiError`: satisfiable at θ = 1 (Chebyshev) …
+example : PsiError 1 := psiError_one
+-- … and false at θ = -3 (it would kill the trivial zero ζ(-2) = 0).
+example : ¬ PsiError (-3) := fun h =>
+  zeroFreeRight_of_psiError h (-2) (by norm_num) (by simpa using riemannZeta_neg_two_mul_nat_add_one 0)
