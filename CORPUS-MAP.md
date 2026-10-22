@@ -55,6 +55,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | Epstein zeta / lattice–zeta bridge | `Epstein.epstein_E8`, `epstein_E8E8`, `epstein_square`, `epstein_hexagonal` | `Fugue/Epstein.lean` |
 | Fermions via the zeta function | `PrimonGas.fermionic_partition` (ζ(s)/ζ(2s)), `witten_index`, `fockEquiv` | `Fugue/PrimonGas.lean` |
 | Rankin–Selberg | `LSeries_sigma_mul_sigma` | `Fugue/RankinSelberg.lean` |
+| Golden ratio and primes | `golden_prime_iff`, `Golden.fib_cassini` | `Fugue/GoldenPrimes.lean` |
 | Eisenstein road (E_k ↔ ζ) | `HeckeEk.heckeEk_functional_equation`, `heckeE6_centre_eq_zeta` | `Fugue/HeckeE*.lean` |
 
 ## Not formalised, and why

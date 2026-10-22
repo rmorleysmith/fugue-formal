@@ -195,3 +195,8 @@ example : Fugue.reprCount (Fugue.directSum Fugue.e8Norm Fugue.e8Norm) 1 = 480 :=
 #print axioms Fugue.Epstein.epstein_E8E8
 #print axioms Fugue.Epstein.epstein_square
 #print axioms Fugue.Epstein.epstein_hexagonal
+
+-- 23. Golden-ratio primes: p = x² + xy − y² ⇔ p = 5 or p ≡ ±1 (mod 5); Cassini.
+#print axioms Fugue.golden_prime_iff
+#print axioms Fugue.Golden.prime_of_inert
+#print axioms Fugue.Golden.fib_cassini

@@ -23,3 +23,4 @@ import Fugue.D16Plus
 import Fugue.RamanujanL
 import Fugue.PrimonGas
 import Fugue.Epstein
+import Fugue.GoldenPrimes
