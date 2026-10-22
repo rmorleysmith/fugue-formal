@@ -1,4 +1,4 @@
-import Mathlib
+import Fugue.Theta
 
 /-!
 # The E8 lattice is even, unimodular and positive definite (ledger row A1)
@@ -95,5 +95,76 @@ theorem e8Form_pos {x : Fin 8 → ℤ} (hx : x ≠ 0) : 0 < e8Form x := by
 
 /-- **E8 is unimodular** (Mathlib's `E₈_det`). -/
 theorem e8_unimodular : (CartanMatrix.E 8).det = 1 := E₈_det
+
+/-- Every coordinate of a vector of E8-norm `≤ 2n` is bounded by `10(4n+1)`. -/
+theorem e8_coord_bound {x : Fin 8 → ℤ} {n : ℕ} (hx : e8Form x ≤ 2 * n) (i : Fin 8) :
+    |(x i : ℝ)| ≤ 10 * (4 * n + 1) := by
+  have hQ : (e8Form x : ℝ) ≤ 2 * n := by exact_mod_cast hx
+  rw [e8Form_ldl] at hQ
+  set y0 : ℝ := (x 0 : ℝ) - x 2 / 2
+  set y1 : ℝ := (x 1 : ℝ) - x 3 / 2
+  set y2 : ℝ := (x 2 : ℝ) - 2 / 3 * x 3
+  set y3 : ℝ := (x 3 : ℝ) - 6 / 5 * x 4
+  set y4 : ℝ := (x 4 : ℝ) - 5 / 4 * x 5
+  set y5 : ℝ := (x 5 : ℝ) - 4 / 3 * x 6
+  set y6 : ℝ := (x 6 : ℝ) - 3 / 2 * x 7
+  set M : ℝ := 4 * n + 1
+  have hn : (0 : ℝ) ≤ n := n.cast_nonneg
+  have hM : 0 ≤ M := by positivity
+  have p0 := sq_nonneg y0; have p1 := sq_nonneg y1; have p2 := sq_nonneg y2
+  have p3 := sq_nonneg y3; have p4 := sq_nonneg y4; have p5 := sq_nonneg y5
+  have p6 := sq_nonneg y6; have p7 := sq_nonneg (x 7 : ℝ)
+  have hM2 : 4 * (n : ℝ) ≤ M ^ 2 := by simp only [M]; nlinarith
+  have b : ∀ a : ℝ, a ^ 2 ≤ 4 * n → -M ≤ a ∧ a ≤ M := fun a ha =>
+    abs_le_of_sq_le_sq' (ha.trans hM2) hM
+  obtain ⟨a0, b0⟩ := b y0 (by linarith)
+  obtain ⟨a1, b1⟩ := b y1 (by linarith)
+  obtain ⟨a2, b2⟩ := b y2 (by linarith)
+  obtain ⟨a3, b3⟩ := b y3 (by linarith)
+  obtain ⟨a4, b4⟩ := b y4 (by linarith)
+  obtain ⟨a5, b5⟩ := b y5 (by linarith)
+  obtain ⟨a6, b6⟩ := b y6 (by linarith)
+  obtain ⟨a7, b7⟩ := b (x 7 : ℝ) (by linarith)
+  simp only [y0, y1, y2, y3, y4, y5, y6] at *
+  rw [abs_le]
+  fin_cases i <;> simp <;> constructor <;> linarith
+
+/-- The vectors of E8-norm `2n` form a finite set. -/
+theorem e8_finite_fibre (n : ℕ) : {x : Fin 8 → ℤ | e8Form x = 2 * n}.Finite := by
+  set B : ℤ := 10 * (4 * n + 1)
+  refine (Set.finite_Icc (fun _ : Fin 8 => -B) (fun _ => B)).subset fun x hx => ?_
+  simp only [Set.mem_ofPred_eq] at hx
+  refine ⟨fun i => ?_, fun i => ?_⟩
+  · have h := (abs_le.mp (e8_coord_bound hx.le i)).1
+    simp only [B]; exact_mod_cast h
+  · have h := (abs_le.mp (e8_coord_bound hx.le i)).2
+    simp only [B]; exact_mod_cast h
+
+theorem e8Form_nonneg (x : Fin 8 → ℤ) : 0 ≤ e8Form x := by
+  by_cases hx : x = 0
+  · subst hx; simp [e8Form]
+  · exact (e8Form_pos hx).le
+
+/-- The E8 norm `Q(v) = ‖v‖²/2 ∈ ℕ` (well defined since the form is even and nonnegative). -/
+def e8Norm (x : Fin 8 → ℤ) : ℕ := (e8Form x / 2).toNat
+
+theorem e8Norm_eq_iff (x : Fin 8 → ℤ) (n : ℕ) : e8Norm x = n ↔ e8Form x = 2 * n := by
+  obtain ⟨k, hk⟩ := e8Form_even x
+  have h0 := e8Form_nonneg x
+  unfold e8Norm
+  rw [hk] at h0 ⊢
+  constructor
+  · intro h; omega
+  · intro h; omega
+
+theorem e8Norm_finite_fibre (n : ℕ) : Finite {x : Fin 8 → ℤ // e8Norm x = n} := by
+  have : {x : Fin 8 → ℤ | e8Norm x = n} = {x | e8Form x = 2 * n} := by
+    ext x; exact e8Norm_eq_iff x n
+  exact Set.Finite.to_subtype (s := {x | e8Norm x = n}) (this ▸ e8_finite_fibre n)
+
+/-- **`Θ_{E8 ⊕ E8} = Θ_{E8}²`** — the theta series of the heterotic lattice `E8 ⊕ E8` is the square
+of that of E8 (as formal power series in `q`, with `Q = ‖v‖²/2`). -/
+theorem theta_e8_sum_e8 : theta (directSum e8Norm e8Norm) = theta e8Norm * theta e8Norm :=
+  theta_directSum e8Norm e8Norm e8Norm_finite_fibre e8Norm_finite_fibre
 
 end Fugue

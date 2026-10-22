@@ -280,6 +280,18 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   both start at `n = 1` with values `4` and `1`. *Corpus link:* ledger C6, `ζ·L(s,χ₋₄) = ζ_{ℚ(i)}`
   at the level of coefficients.
 
+### `Fugue/E8Lattice.lean` — the E8 lattice and `E8 ⊕ E8`
+
+* **`e8Form_even`, `e8Form_pos`** — for the E8 Cartan matrix `A`, `xᵀAx` is even and positive for
+  `x ≠ 0`. With Mathlib's `det A = 1`, that is "E8 is an even unimodular positive definite
+  lattice" (ledger A1). *Why positive:* completing squares gives
+  `xᵀAx = 2y₀² + 2y₁² + (3/2)y₂² + (5/6)y₃² + (4/5)y₄² + (3/4)y₅² + (2/3)y₆² + (1/2)x₇²` with each
+  `yᵢ` an `xᵢ` minus a multiple of a later `x`; all coefficients are positive, and if the sum is
+  `0`, back-substitution from `x₇` forces `x = 0`.
+* **`theta_e8_sum_e8`** — `Θ_{E8⊕E8} = Θ_{E8}²`, from the direct-sum theorem; the needed
+  finiteness (`e8_finite_fibre`) comes from the same completed squares bounding every coordinate.
+  (That `Θ_{E8} = E₄` is *not* formalised — it needs theta functions as modular forms.)
+
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
 * **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the

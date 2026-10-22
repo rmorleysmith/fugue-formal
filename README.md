@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **42** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **44** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -58,7 +58,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **42** headline theorems (al
 
 | File | Content | Status |
 |---|---|---|
-| `Fugue/E8Lattice.lean` | E8 Cartan form is even and positive definite (with Mathlib's `det = 1`: even unimodular), A1 | ✅ |
+| `Fugue/E8Lattice.lean` | E8 Cartan form is even and positive definite (with Mathlib's `det = 1`: even unimodular), finite norm-fibres, and `Θ_{E8⊕E8} = Θ_{E8}²` (A1, C13) | ✅ |
 | `Fugue/TwoRings.lean` | Ring A (Cauchy, `K⟦X⟧`) and Ring B (Dirichlet) are **not isomorphic** (Dirichlet ring not a PID); C1, C3, C4, C5, C8 (refutation `σ₃ ≠ ζ⁴`), C9 (log is a derivation), C11 | ✅ |
 | `Fugue/EllipticPoints.lean` | every level-1 form of weight `6 ∤ k` vanishes at `ρ`, of weight `4 ∤ k` at `i`; `E₄(ρ) = 0`, `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` (A3, A8) | ✅ |
 | `Fugue/Dynamics.lean` | minimum modulus: attractors of `|F|` are the zeros (A9); coupling matrix PSD ⟺ `|κ| ≤ 1`, PD ⟺ `|κ| < 1`; equilibria preserved for *any* `K` (E2, E3, E5) | ✅ |

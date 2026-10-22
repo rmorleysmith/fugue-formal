@@ -108,3 +108,14 @@ example : Fugue.reprCount Fugue.sq 1 = 2 := by
 -- Non-vacuity: the root e₀ has norm 2 (so the form is not identically zero and the
 -- positivity statement is not about an empty set of vectors).
 example : Fugue.e8Form (Pi.single 0 1) = 2 := by rw [Fugue.e8Form_eq]; simp
+#print axioms Fugue.e8_finite_fibre
+#print axioms Fugue.theta_e8_sum_e8
+-- Non-vacuity: the constant term of Θ_{E8} is 1 (only the zero vector has norm 0).
+example : Fugue.reprCount Fugue.e8Norm 0 = 1 := by
+  have : {x : Fin 8 → ℤ | Fugue.e8Norm x = 0} = {0} := by
+    ext x
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff, Fugue.e8Norm_eq_iff]
+    constructor
+    · intro h; by_contra hx; have := Fugue.e8Form_pos hx; omega
+    · rintro rfl; simp [Fugue.e8Form]
+  rw [Fugue.reprCount, ← Set.coe_ofPred, this, Nat.card_coe_set_eq, Set.ncard_singleton]
