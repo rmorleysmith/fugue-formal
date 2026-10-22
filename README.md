@@ -40,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **51** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **55** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -68,6 +68,8 @@ Two libraries, both sorry-free; `Audit.lean` checks **51** headline theorems (al
 | `Fugue/Ramanujan.lean` | **`E₄² = E₈`** and Ramanujan's **`σ₇(n) = σ₃(n) + 120 Σ σ₃(a)σ₃(n−a)`** — Ring A (Cauchy) of Ring B (Dirichlet) objects | ✅ |
 | `Fugue/HeckeRefutation.lean` | ledger C12 refuted in Lean: `a₂(Δ·E₄) = 216 ≠ a₂(Δ)·a₂(E₄)`; Ramanujan `τ(2) = −24` from `Δ = (E₄³−E₆²)/1728` | ✅ |
 | `Fugue/SieveEta.lean` | D9 sieve by `{2,3,5,7}` = Eratosthenes; C15 eta quotients never vanish on `ℍ` | ✅ |
+| `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` (the Eisenstein road; see `EISENSTEIN-ROAD.md`) | ✅ |
+| `Fugue/HexagonalCount.lean` | **`#{a²−ab+b²=n} = 6Σ_{d∣n} χ₋₃(d)`** (C7) — the Eisenstein integers / hexagonal lattice, `ζ_{ℚ(√−3)}` | ✅ |
 | `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
 
 ### `../FormalPNT` — chapter 6, the hard direction (✅ complete)

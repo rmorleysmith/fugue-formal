@@ -346,6 +346,25 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   `240σ₃(n)`, `−504σ₅(n)`. The correct closure law is about coefficient *sequences* being
   multiplicative (ledger C11), not about eigenvalues multiplying.
 
+### `Fugue/HeckeE4.lean` — the Eisenstein road: E₄ knows ζ's functional equation
+
+* **`heckeE4_functional_equation`, `heckeE4_eq`** — let `Λ` be the Mellin transform of `E₄(iy) − 1`.
+  For `Re s > 4`, `Λ(s) = 240(2π)^{−s}Γ(s)ζ(s)ζ(s−3)`; `Λ` continues to `ℂ` except simple poles at
+  `0` and `4` (residues `−1`, `1`), and `Λ(4 − s) = Λ(s)`. *Why:* `E₄(i/y) = y⁴E₄(iy)` is modularity
+  under `S : τ ↦ −1/τ`; splitting the Mellin integral at `y = 1` and substituting `y ↦ 1/y` on the
+  lower half turns this symmetry of `E₄` into the symmetry `s ↔ 4 − s` of `Λ` (Mathlib's abstract
+  `WeakFEPair` machinery does the analysis). The coefficients `240σ₃(n)` turn the Mellin transform
+  into `Σσ₃(n)n^{−s} = ζ(s)ζ(s−3)`. *Lesson (D3):* the symmetry is genuine and the zeros are not on
+  its axis `Re s = 2` at all — symmetry does not locate zeros.
+
+### `Fugue/HexagonalCount.lean` — the Eisenstein integers
+
+* **`card_hexagonal`** — `#{(a,b) : a² − ab + b² = n} = 6 Σ_{d∣n} χ₋₃(d)`; e.g. `n = 7`: `12`. Same
+  architecture as Jacobi's theorem, in `ℤ[ω]` (`ω² = −1 − ω`): 6 units, `3` ramifies (`3 = −ω²(1−ω)²`),
+  `p ≡ 2 (mod 3)` stays prime, `p ≡ 1 (mod 3)` splits (found via an element of order 3 mod `p`).
+  This is the Dedekind zeta function of `ℚ(√−3)` at the coefficient level — the field over which
+  OpenAI's proof works.
+
 ### `Fugue/Factoring.lean` — what the factoring scripts really compute
 
 * **`sum_exp_eq`** (D12) — `∑_{j<k} e^{2πijN/k}` is `k` if `k ∣ N` and `0` otherwise; so the

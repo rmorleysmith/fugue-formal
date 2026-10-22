@@ -21,6 +21,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C4 | `ζ * μ = δ` | PROVEN | `zeta_mul_moebius` (Mathlib) | same |
 | C5 | `ζ * ζ = d` | PROVEN | `zeta_mul_zeta_eq_sigma_zero` | same |
 | C6 | `r₂(n) = 4 Σ χ₋₄(d)` | PROVEN (numerically) | **`Fugue.card_sq_add_sq`** — Jacobi's two-square theorem (not in Mathlib) | `Fugue/TwoSquares.lean` |
+| C7 | `6(ζ*χ₋₃)(n) = #{a²−ab+b² = n}` (Eisenstein integers) | PROVEN (numerically) | **`Fugue.card_hexagonal`** — via a hand-built Euclidean structure on ℤ[ω]; = coefficients of `ζ_{ℚ(√−3)}`, OpenAI's field | `Fugue/HexagonalCount.lean` |
 | C8 | `σ₃ = ζ⁴` | REFUTED | `sigma_three_ne_zeta_pow_four`; correct form `sigma_three_eq` | same |
 | C1×C8 | Ramanujan's Eisenstein identities link the rings | (corpus prose, Q2) | **`Fugue.E₄sq_eq`** (`E₄² = E₈`, via `dim M₈ = 1`) and **`sigma_seven_eq`**: `σ₇ = σ₃ + 120 σ₃⋆σ₃` | `Fugue/Ramanujan.lean` |
 | C9 | `·log` is a derivation; `log * μ = Λ` | PROVEN | `pmul_log_mul`; Mathlib `log_mul_moebius_eq_vonMangoldt` | same |
@@ -30,6 +31,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C13 | `Θ_{L⊕M} = Θ_L Θ_M` | PROVEN | `reprCount_directSum`, `theta_directSum`, `theta_two_squares` | `Fugue/Theta.lean` |
 | C15 | eta quotients can place a neuron anywhere | REFUTED | `Fugue.etaQuotient_ne_zero`: no zeros in `ℍ` at all | `Fugue/SieveEta.lean` |
 | D2 | functional equation | PROVEN | Mathlib `riemannZeta_one_sub`; used in `QuasiRH.riemannHypothesis_iff_zeroFreeRight_half` | `QuasiRH/Reflection.lean` |
+| A2⇒D2 | (corpus Q2: E8 / E₄ ↔ ζ) | — | **`Fugue.HeckeE4.heckeE4_functional_equation`**, `heckeE4_eq`: modularity of `E₄` ⇒ `Λ(s) = 240(2π)^{−s}Γ(s)ζ(s)ζ(s−3)` continues with `Λ(4−s) = Λ(s)` (Hecke) | `Fugue/HeckeE4.lean` |
 | D3 | symmetry alone does not force RH; Euler product is load-bearing | PROVEN | the reflection theorem shows exactly what symmetry *does* give: RH ⟺ no zeros right of ½ | same |
 | D4 | zeros ↔ primes (explicit formula) | PROVEN (classical) | qualitative form: `zeroFreeRight_iff_differentiableOn`, `zeroFreeRight_of_psiError`; quantitative: `Ingham.*` | `QuasiRH/*`, `../FormalPNT` |
 | D6 | `L(1,χ₋₄) = π/4` | PROVEN (numerically) | **`Fugue.LFunction_chi4_one`** (Leibniz series + dominated convergence + continuity of the entire `L`) | `Fugue/LeibnizL.lean` |

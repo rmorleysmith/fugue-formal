@@ -9,3 +9,5 @@ import Fugue.LeibnizL
 import Fugue.Ramanujan
 import Fugue.HeckeRefutation
 import Fugue.SieveEta
+import Fugue.HeckeE4
+import Fugue.HexagonalCount

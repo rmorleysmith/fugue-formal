@@ -142,3 +142,11 @@ example : ArithmeticFunction.sigma 7 2 =
 -- 12. D9 sieve, C15 eta quotients.
 #print axioms Fugue.sieve_2357
 #print axioms Fugue.etaQuotient_ne_zero
+
+-- 13. Hecke's theorem for E₄: modularity ⇒ continuation + functional equation of ζ(s)ζ(s−3).
+#print axioms Fugue.HeckeE4.heckeE4_functional_equation
+#print axioms Fugue.HeckeE4.heckeE4_eq
+#print axioms Fugue.HeckeE4.heckeE4_residue_four
+
+-- 14. Eisenstein integers: #{a² − ab + b² = n} = 6 Σ_{d∣n} χ₋₃(d) (C7), ζ_{ℚ(√−3)} coefficients.
+#print axioms Fugue.card_hexagonal
