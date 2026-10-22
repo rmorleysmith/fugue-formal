@@ -5,6 +5,8 @@ The working formalisation space that follows on from the `Fugue/` extraction. Wh
 steps, each one explainable in plain language.
 
 For what each theorem means and how to explain it, read [`EXPLAINED.md`](EXPLAINED.md).
+For the map from the Fugue evidence ledger to Lean names, read [`CORPUS-MAP.md`](CORPUS-MAP.md).
+For what is ready to submit elsewhere, read [`contributions/README.md`](contributions/README.md).
 
 ## Build
 
@@ -38,7 +40,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **37** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **39** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -59,6 +61,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **37** headline theorems (al
 | `Fugue/TwoRings.lean` | Ring A (Cauchy, `K⟦X⟧`) and Ring B (Dirichlet) are **not isomorphic** (Dirichlet ring not a PID); C1, C3, C4, C5, C8 (refutation `σ₃ ≠ ζ⁴`), C9 (log is a derivation), C11 | ✅ |
 | `Fugue/EllipticPoints.lean` | every level-1 form of weight `6 ∤ k` vanishes at `ρ`, of weight `4 ∤ k` at `i`; `E₄(ρ) = 0`, `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` (A3, A8) | ✅ |
 | `Fugue/Dynamics.lean` | minimum modulus: attractors of `|F|` are the zeros (A9); coupling matrix PSD ⟺ `|κ| ≤ 1`, PD ⟺ `|κ| < 1`; equilibria preserved for *any* `K` (E2, E3, E5) | ✅ |
+| `Fugue/Theta.lean` | `Θ_{L⊕M} = Θ_L·Θ_M` as a Cauchy product (C13; settles B9) | ✅ |
 | `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
 
 ### `../FormalPNT` — sibling project for the hard direction (in progress)
