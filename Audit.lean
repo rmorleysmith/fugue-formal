@@ -213,3 +213,7 @@ example : (List.range 11).map (fun n => Fintype.card (Nat.Partition n)) =
 #print axioms Fugue.tau_congr_691
 #print axioms Fugue.Tau691.qExpansion_discriminant_eq
 example : (691 : ℤ) ∣ Fugue.Tau691.tauZ 2 - ArithmeticFunction.sigma 11 2 := Fugue.tau_sub_sigma_dvd 2
+
+-- 26. Direct sum: E8 ⊕ E8 Gram = block-diagonal, det 1, even, symmetric.
+#print axioms Fugue.e8e8_det
+#print axioms Fugue.e8e8_diag
