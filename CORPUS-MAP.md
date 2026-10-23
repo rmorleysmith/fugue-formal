@@ -33,6 +33,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | C15 | eta quotients can place a neuron anywhere | REFUTED | `Fugue.etaQuotient_ne_zero`: no zeros in `ℍ` at all | `Fugue/SieveEta.lean` |
 | D2 | functional equation | PROVEN | Mathlib `riemannZeta_one_sub`; used in `QuasiRH.riemannHypothesis_iff_zeroFreeRight_half` | `QuasiRH/Reflection.lean` |
 | A2⇒D2 | (corpus Q2: E8 / E₄ ↔ ζ) | — | **`Fugue.HeckeE4.heckeE4_functional_equation`**, `heckeE4_eq`: modularity of `E₄` ⇒ `Λ(s) = 240(2π)^{−s}Γ(s)ζ(s)ζ(s−3)` continues with `Λ(4−s) = Λ(s)` (Hecke) | `Fugue/HeckeE4.lean` |
+| D1 | Euler product over primes `≤ N` gives `a(n) = 1` for all `n ≤ N` | PROVEN | **`Fugue.EulerCompose.prod_eulerFactor_apply_of_le`**; general form `prod_eulerFactor` (`∏_{p∈S} eulerFactor p` = `S`-smooth indicator), `smooth_tendsto_zeta`; analytic `zeta_eulerProduct` (Mathlib) | `Fugue/EulerCompose.lean` |
 | D3 | symmetry alone does not force RH; Euler product is load-bearing | PROVEN | the reflection theorem shows exactly what symmetry *does* give: RH ⟺ no zeros right of ½ | same |
 | D4 | zeros ↔ primes (explicit formula) | PROVEN (classical) | qualitative form: `zeroFreeRight_iff_differentiableOn`, `zeroFreeRight_of_psiError`; quantitative: `Ingham.*` | `QuasiRH/*`, `../FormalPNT` |
 | D6 | `L(1,χ₋₄) = π/4` | PROVEN (numerically) | **`Fugue.LFunction_chi4_one`** (Leibniz series + dominated convergence + continuity of the entire `L`) | `Fugue/LeibnizL.lean` |

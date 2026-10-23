@@ -411,6 +411,21 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
 
 ---
 
+### `Fugue/EulerCompose.lean` — composing the per-prime models (figure 32)
+
+* **`prod_eulerFactor`** — `∏_{p∈S} eulerFactor p = smooth S`: the Dirichlet product of the Euler
+  factors (`1` at `1, p, p², …`, `0` elsewhere) over any finite set `S` is the indicator of the
+  `S`-smooth numbers. *Why:* both sides are multiplicative, so it suffices to compare them on prime
+  powers; there `smooth_mul_smooth` is a one-line case split — for disjoint `S, T` a number is
+  `(S ∪ T)`-smooth exactly when it splits, uniquely, as (`S`-smooth) × (`T`-smooth). That is unique
+  factorisation, read off coefficient by coefficient.
+* **`prod_eulerFactor_apply_of_le`** — with `S` = the primes `≤ N`, every coefficient `1 ≤ n ≤ N`
+  is `1`: the all-ones row of the figure *is* the `ζ` series on the window
+  (`prod_eulerFactor_eq_zeta_of_le`); beyond the window the filled cells are exactly the `N`-smooth
+  numbers. **`smooth_tendsto_zeta`** is the coefficientwise limit, and `zeta_eulerProduct` restates
+  Mathlib's analytic `∏_p (1 − p^{−s})^{−1} → ζ(s)` for `Re s > 1`. Nothing here touches zeros — the
+  script's own scope note is right.
+
 ## Why the audit's sanity checks matter
 
 A formal equivalence can be "true" for a silly reason — for instance if the region were empty,

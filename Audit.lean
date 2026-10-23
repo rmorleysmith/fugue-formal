@@ -217,3 +217,21 @@ example : (691 : ℤ) ∣ Fugue.Tau691.tauZ 2 - ArithmeticFunction.sigma 11 2 :=
 -- 26. Direct sum: E8 ⊕ E8 Gram = block-diagonal, det 1, even, symmetric.
 #print axioms Fugue.e8e8_det
 #print axioms Fugue.e8e8_diag
+
+-- 27. Composing per-prime Euler factors (zeta_compose.py, fig 32): ∏_{p∈S} eulerFactor p = indicator
+--     of S-smooth numbers; all-ones row on the window n ≤ N; Mathlib's analytic Euler product.
+#print axioms Fugue.EulerCompose.prod_eulerFactor
+#print axioms Fugue.EulerCompose.smooth_mul_smooth
+#print axioms Fugue.EulerCompose.prod_eulerFactor_apply_of_le
+#print axioms Fugue.EulerCompose.prod_eulerFactor_eq_zeta_of_le
+#print axioms Fugue.EulerCompose.smooth_tendsto_zeta
+#print axioms Fugue.EulerCompose.zeta_eulerProduct
+-- non-vacuity: 6 = 2·3 is {2,3}-smooth, 5 and 12·5 are not; the Euler factor of 2 is 1 at 8 and 0 at 6.
+example : (∏ p ∈ ({2, 3} : Finset ℕ), Fugue.EulerCompose.eulerFactor p) 6 = 1 := by
+  rw [Fugue.EulerCompose.prod_eulerFactor_apply]; decide +kernel
+example : (∏ p ∈ ({2, 3} : Finset ℕ), Fugue.EulerCompose.eulerFactor p) 5 = 0 := by
+  rw [Fugue.EulerCompose.prod_eulerFactor_apply]; decide +kernel
+example : Fugue.EulerCompose.eulerFactor 2 8 = 1 := by
+  simpa using Fugue.EulerCompose.eulerFactor_prime_pow Nat.prime_two 3
+example : Fugue.EulerCompose.eulerFactor 2 6 = 0 := by
+  rw [Fugue.EulerCompose.eulerFactor, Fugue.EulerCompose.smooth_apply]; decide +kernel
