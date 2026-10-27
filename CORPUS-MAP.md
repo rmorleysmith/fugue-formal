@@ -46,7 +46,7 @@ All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
 | H16 / App. A §§4, 6 | `pos` homomorphism "loses the information" | (ledger: PROVEN) **corrected here** | `pos_mul`; `pos_injective_odd` — the information is *not* lost, only not made computable | same |
 | (OpenAI link) | quasi-RH, `θ = 7/8` | — | `QuasiRH.OpenAIStatement` (verbatim), `openAIStatement_iff_differentiableOn`, `OpenAIDirichletStatement`, `twistedVonMangoldt_continuation_of_openAI` | `QuasiRH/*` |
 
-## Beyond the ledger (from the follow-up ideas, see `IDEAS-TRIAGE.md`)
+## Beyond the ledger
 
 | Idea | Lean | File |
 |---|---|---|

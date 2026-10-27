@@ -5,10 +5,29 @@ The working formalisation space that follows on from the `Fugue/` extraction. Wh
 steps, each one explainable in plain language.
 
 For what each theorem means and how to explain it, read [`EXPLAINED.md`](EXPLAINED.md).
-**New here? Start with [`../HANDOVER.md`](../HANDOVER.md).**
+The audit that grades the June files is in [rmorleysmith/fugue](https://github.com/rmorleysmith/fugue); the June files themselves are archived unchanged in [rmorleysmith/hsln-archive](https://github.com/rmorleysmith/hsln-archive).
 
 For the map from the Fugue evidence ledger to Lean names, read [`CORPUS-MAP.md`](CORPUS-MAP.md).
 For what is ready to submit elsewhere, read [`contributions/README.md`](contributions/README.md).
+
+## How AI was used
+
+The ideas in this work are Richard Morley-Smith's: the questions, the links between areas of
+mathematics, and the choices of what to pursue. AI was used as a tool, in two phases.
+
+- **May–June 2026, the original exploration.** The exploration was carried out in conversation
+  with AI coding assistants, chiefly Anthropic's Claude through Claude Code (the design document
+  also quotes Google's Gemini). The assistants wrote most of the code, Lean files and documents
+  from the author's ideas and direction, quickly and without later editing. Those files are kept
+  unchanged in [hsln-archive](https://github.com/rmorleysmith/hsln-archive).
+- **October 2026 onwards.** Claude, through Claude Code, helps the author formalise the ideas in
+  Lean 4, audit and tidy the earlier files, and write out the working: the steps between an
+  intuition and a precise statement.
+
+Checking the results does not rely on trusting the AI. Every Lean theorem is verified by the
+Lean kernel against Mathlib, and `#print axioms` shows only Lean's three standard axioms. Every
+script asserts the numbers it reports and can be rerun. Every grade in the audit cites the
+evidence it rests on.
 
 ## Build
 
@@ -78,10 +97,10 @@ Two libraries, both sorry-free; `Audit.lean` checks **103** headline theorems (a
 | `Fugue/GoldenPrimes.lean` | **golden-ratio primes**: `p = x² + xy − y²` (the norm of `ℤ[φ]`) ⇔ `p = 5` or `p ≡ ±1 (mod 5)`; inert primes stay prime; `√5 = 2φ − 1` ramifies; `φⁿ⁺¹ = F_n + F_{n+1}φ` and Cassini's identity | ✅ |
 | `Fugue/Partitions.lean` | **partitions**: Euler's `Σp(n)qⁿ·∏(1−qⁿ) = 1` and recurrence (p(0..10) checked); **Jacobi's identity** `∏(1−qⁿ)³ = Σ(−1)ᵏ(2k+1)q^{k(k+1)/2}` (not in Mathlib); **Ramanujan's congruence `p(5n+4) ≡ 0 (mod 5)`** for all n | ✅ |
 | `Fugue/Tau691.lean` | **Ramanujan's `τ(n) ≡ σ₁₁(n) (mod 691)`**; integrality of `τ` from `Δ = q∏(1−qⁿ)²⁴` (`qExpansion_discriminant_eq`); `E₁₂ = E₄³ − (432000/691)Δ` | ✅ |
-| `Fugue/DirectSumGenus.lean` | direct sum = block-diagonal Gram matrix: `E8⊕E8` is even unimodular (det 1); see HANDOVER §5 for what "genus" does and does not do | ✅ |
+| `Fugue/DirectSumGenus.lean` | direct sum = block-diagonal Gram matrix: `E8⊕E8` is even unimodular (det 1); a direct sum multiplies theta series and adds weights, but does not raise the Siegel degree | ✅ |
 | `Fugue/EulerCompose.lean` | **composing per-prime Euler factors** (fig 32, ledger D1): `∏_{p∈S} eulerFactor p = smooth S` (indicator of the `S`-smooth numbers — unique factorisation coefficient by coefficient), all-ones row for `n ≤ N`, coefficientwise limit `ζ`, Mathlib's analytic Euler product | ✅ |
-| `Fugue/EntropicAction.lean` | **Bianconi's gravity-from-entropy, warm-up case** (owner's 27 Oct link): `−ln det(1 + α∇φ∇φᵀ) = −ln(1 + α|∇φ|²)` (matrix determinant lemma), low-energy limit = massless Klein–Gordon (`HasDerivAt`), emergent cosmological constant `Σ(λ−1−ln λ) ≥ 0` with equality iff all `λ = 1` (vacuum) | ✅ |
-| `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` (the Eisenstein road; see `EISENSTEIN-ROAD.md`) | ✅ |
+| `Fugue/EntropicAction.lean` | **Bianconi's gravity-from-entropy, warm-up case**: `−ln det(1 + α∇φ∇φᵀ) = −ln(1 + α|∇φ|²)` (matrix determinant lemma), low-energy limit = massless Klein–Gordon (`HasDerivAt`), emergent cosmological constant `Σ(λ−1−ln λ) ≥ 0` with equality iff all `λ = 1` (vacuum) | ✅ |
+| `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` | ✅ |
 | `Fugue/HeckeEk.lean` | Hecke for **every** `E_k` (`k ≥ 4` even): root number `(−1)^{k/2}`, identification with `−(2k/B_k)(2π)^{−s}Γ(s)ζ(s)ζ(s−k+1)` on `ℂ∖{1,k,0,−1,…}`; `E₆`'s forced centre zero `Λ₆(3) = 0` *is* the trivial zero `ζ(−2) = 0` | ✅ |
 | `Fugue/RankinSelberg.lean` | **Ramanujan's formula** `Σσ_a(n)σ_b(n)n^{−s}·ζ(2s−a−b) = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)` (Re s > a+b+1) — the Rankin–Selberg prototype; C11's "Rankin–Selberg closure" made precise | ✅ |
 | `Fugue/HexagonalCount.lean` | **`#{a²−ab+b²=n} = 6Σ_{d∣n} χ₋₃(d)`** (C7) — the Eisenstein integers / hexagonal lattice, `ζ_{ℚ(√−3)}` | ✅ |

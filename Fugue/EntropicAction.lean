@@ -5,8 +5,8 @@ set_option autoImplicit false
 /-!
 # The entropic action, warm-up case (Bianconi, "Gravity from entropy", PRD 111, 066001 (2025))
 
-The owner's idea (HANDOVER §9, 27 Oct 2026): the corpus' picture "gravity warps the path, not the
-destination" and Bianconi's *gravity from entropy* should match. Bianconi's Lagrangian is the
+The June files describe the coupling as something that "warps the path, not the destination".
+This file checks that picture against Bianconi's *gravity from entropy*. Her Lagrangian is the
 geometric quantum relative entropy between the metric `g` and the metric `G = g + α M` induced
 by a matter field, `L = Tr g ln G⁻¹ = −Tr ln (G g⁻¹) = −Σ ln λ̃ₙ` over the eigenvalues `λ̃ₙ` of
 `G g⁻¹`. This file makes precise the two linear-algebra facts her warm-up scenario rests on,

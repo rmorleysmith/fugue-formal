@@ -10,7 +10,7 @@ The corpus builds `ζ(s) = ∑ n^{-s}` "from first principles" by composing one 
 per prime — the Euler factor `1/(1 − p^{-s}) = ∑_k p^{-ks}`, whose Dirichlet coefficients
 are `1` at `1, p, p², …` and `0` elsewhere — under Dirichlet multiplication. Figure 32 shows
 the coefficient table filling in: after the primes `≤ N` are merged, the row is all ones for
-every `n ≤ N`. The owner asked for this pattern to be formalised. The precise statement is:
+every `n ≤ N`. The precise statement is:
 
 * `eulerFactor p` is the indicator of the powers of `p` (`eulerFactor_prime_pow`,
   `eulerFactor_eq_one_iff`), and its generating series along the powers of `p` is the
