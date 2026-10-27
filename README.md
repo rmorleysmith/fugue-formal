@@ -1,14 +1,179 @@
-# Formal — a Lean/Mathlib workspace for the number theory in the HSLN corpus
+# Fugue — machine-checked proofs
 
-The working formalisation space that follows on from the `Fugue/` extraction. Where `Fugue/`
-*graded* the corpus' claims, this directory *proves* things — small, sorry-free, machine-checked
-steps, each one explainable in plain language.
+[![build](https://github.com/rmorleysmith/fugue-formal/actions/workflows/build.yml/badge.svg)](https://github.com/rmorleysmith/fugue-formal/actions/workflows/build.yml)
+[![licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue.svg)](LICENSE)
+[![Lean 4](https://img.shields.io/badge/Lean-v4.34.1-informational.svg)](lean-toolchain)
 
-For what each theorem means and how to explain it, read [`EXPLAINED.md`](EXPLAINED.md).
-The audit that grades the June files is in [rmorleysmith/fugue](https://github.com/rmorleysmith/fugue); the June files themselves are archived unchanged in [rmorleysmith/hsln-archive](https://github.com/rmorleysmith/hsln-archive).
+Lean 4 proofs, checked against [Mathlib](https://github.com/leanprover-community/mathlib4), of
+the mathematics behind the HSLN exploration of 2026: an attempt to build a neural network out
+of modular forms, which led straight into classical number theory.
 
-For the map from the Fugue evidence ledger to Lean names, read [`CORPUS-MAP.md`](CORPUS-MAP.md).
-For what is ready to submit elsewhere, read [`contributions/README.md`](contributions/README.md).
+- **About 620 theorems**, of which **103 headline results** are re-checked by
+  [`Audit.lean`](Audit.lean).
+- **No `sorry`.** Every headline result depends only on Lean's three standard axioms.
+- **The mathematics is classical.** What is new is that it is machine-checked, connected to the
+  pictures that motivated it, and in several cases not yet in Mathlib at the pinned version
+  (for example Jacobi's two-square theorem, `L(1, χ₋₄) = π/4`, and the vanishing of level-one
+  forms at the elliptic points).
+
+## From picture to proof
+
+Each figure below comes from the exploration
+([rmorleysmith/fugue-exploration](https://github.com/rmorleysmith/fugue-exploration), where the
+script that draws it lives). Under each is the theorem it became and the Lean name to cite.
+
+### The landscape
+
+![E₄ on the Poincaré disk](docs/figures/13_e4_disk_clean.png)
+
+**E₄ has one zero, at ρ.** Drawn by phase on the disk, the Eisenstein series `E₄` vanishes at
+`ρ = e^{2πi/3}` and its images, and nowhere else (the classical valence formula; that half is
+not formalised here). *Proved:* every level-one modular form of
+weight not divisible by 6 vanishes at `ρ`, and of weight not divisible by 4 vanishes at `i`.
+`Fugue.eq_zero_at_rho`, `Fugue.eq_zero_at_I`, `Fugue.E₄_rho`
+
+![Energy landscape and its zeros](docs/figures/03_energy_zeros.png)
+
+**The valleys are the zeros.** For a holomorphic `F`, the energy `|F|²` has no local minimum
+except at a zero of `F`, so a gradient flow on it settles only at zeros. *Proved:* a local
+minimum of `|f|` where `f` is not locally constant is a zero, and every zero is a local minimum.
+`Fugue.eq_zero_of_isLocalMin_norm`, `Fugue.isLocalMin_norm_of_eq_zero`
+
+![Coupling two landscapes](docs/figures/22_coupling_sweep.png)
+
+**Coupling two copies.** Two landscapes joined by an off-diagonal coupling `κ` in a 2×2 period
+matrix still define a geometry exactly when `|κ| < 1`, and a common zero stays an equilibrium
+for any coupling. `Fugue.couplingMatrix_posDef_iff`, `Fugue.equilibrium_preserved`
+
+### The lattice
+
+![The 240 roots of E8 and the coefficients of E₄](docs/figures/06_e8_roots_coefficients.png)
+
+**E8 counts the coefficients of E₄.** Counting vectors of the E8 lattice by length gives 240 of
+norm 2, 2160 of norm 4, 6720 of norm 6: the coefficients of `E₄`. *Proved:* `Θ_E8 = E₄`, and the
+number of vectors of norm `2n` is `240 σ₃(n)`. `Fugue.thetaE8_eq_E₄`, `Fugue.reprCount_e8`
+
+![From the divisor function to E8 ⊕ E8](docs/figures/56_hsln_e8_divisor_bridge.png)
+
+**Two copies: E8 ⊕ E8.** Squaring the theta series counts vectors in `E8 ⊕ E8`: `480 σ₇(n)`.
+The lattice `D16⁺` has exactly the same counts (Witt), so the lattices of the two heterotic
+string theories cannot be told apart this way. Comparing coefficients gives Ramanujan's
+`σ₇(n) = σ₃(n) + 120 Σ σ₃(a) σ₃(n − a)`. `Fugue.thetaE8_sq_eq_E₈`, `Fugue.reprCount_e8e8`,
+`Fugue.thetaD16_eq_thetaE8_sq`, `Fugue.sigma_seven_eq`
+
+### Two multiplications on one list of numbers
+
+![Two rings on one coefficient list](docs/figures/43_hsln_two_rings.png)
+
+**Same coefficients, different products.** A list of coefficients can be multiplied as a power
+series (the Cauchy product) or as a Dirichlet series (the Dirichlet product). The two already
+disagree at `n = 1`, and the two rings are not isomorphic. Multiplying by `log n` is a
+derivation of the Dirichlet ring. `Fugue.cauchy_ne_dirichlet`, `Fugue.not_ringEquiv_powerSeries`,
+`Fugue.pmul_log_mul`
+
+![Building ζ one prime at a time](docs/figures/32_zeta_compose.png)
+
+**Building ζ one prime at a time.** Each prime contributes a factor `1 + p⁻ˢ + p⁻²ˢ + …`.
+Multiplying them fills in the coefficients of `ζ`. *Proved:* the product of the factors for the
+primes in a set `S` is exactly the indicator of the numbers built from `S`, so with the primes up
+to `N` every coefficient up to `N` is 1. This is unique factorisation, read coefficient by
+coefficient. `Fugue.EulerCompose.prod_eulerFactor`, `Fugue.EulerCompose.prod_eulerFactor_apply_of_le`
+
+![The Dirichlet ring: Möbius, two squares, primes](docs/figures/37_dna_algebra.png)
+
+**Arithmetic as algebra.** In the Dirichlet ring, `μ` is the inverse of `ζ` (Mathlib's
+`ArithmeticFunction.coe_zeta_mul_moebius`), and `ζ · χ₋₄` counts the ways to write `n` as a sum of
+two squares. *Proved:* Jacobi's two-square theorem, `r₂(n) = 4 Σ_{d | n} χ₋₄(d)`.
+`Fugue.card_sq_add_sq`
+
+![The derivative that stays in the ring](docs/figures/38_lie_derivative.png)
+
+**A derivative that stays in the ring.** Ramanujan's `q d/dq` sends `E₂, E₄, E₆` to polynomials
+in themselves, and the Serre derivative raises the weight by 2 (Mathlib:
+`normalizedDerivOfComplex_E₄`, `serreDerivative_E₄`). On Dirichlet series the matching
+operator, `−d/ds`, multiplies the `n`-th coefficient by `log n`: the derivation above.
+
+### L-functions and primes
+
+![Dirichlet L-functions and their values](docs/figures/39_lfunctions.png)
+
+**L-functions as a family.** Twisting `ζ` by a character gives an L-function with an Euler
+product of its own. *Proved:* `L(1, χ₋₄) = π/4` (Leibniz), and the hexagonal lattice has
+`6 Σ_{d | n} χ₋₃(d)` points of norm `n`. `Fugue.LFunction_chi4_one`, `Fugue.card_hexagonal`,
+`Fugue.Epstein.epstein_hexagonal`
+
+![Eta quotients compose by adding exponents](docs/figures/21_eta_compose.png)
+
+**Eta quotients never vanish.** Products of `η(mτ)` compose by adding exponent vectors, and
+none of them has a zero inside the upper half-plane. `Fugue.etaQuotient_ne_zero`
+
+![The zeros of ζ rebuild the primes](docs/figures/35_explicit.png)
+
+**The zeros rebuild the primes.** Adding the contributions of more and more zeros of `ζ`
+reproduces the prime staircase `ψ(x)`. *Proved* (in
+[fugue-formal-pnt](https://github.com/rmorleysmith/fugue-formal-pnt)): for `½ ≤ θ < 1`, `ζ` has
+no zeros to the right of `θ` exactly when `ψ(x) = x + O(x^{θ+δ})` for every `δ > 0` (Ingham); in
+particular the Riemann hypothesis is equivalent to a square-root error term.
+`Ingham.zeroFreeRight_iff_psiError`, `Ingham.riemannHypothesis_iff_psiError`
+
+### Also proved here
+
+Ramanujan's congruences `τ(n) ≡ σ₁₁(n) (mod 691)` (`Fugue.tau_congr_691`) and
+`p(5n + 4) ≡ 0 (mod 5)` (`Fugue.Partitions.ramanujan_congruence_five`); Jacobi's identity
+`∏(1 − qⁿ)³ = Σ (−1)ᵏ (2k + 1) q^{k(k+1)/2}`; Ramanujan's L-function of `Δ` is entire with `Λ(12 − s) = Λ(s)`;
+Hecke's functional equation for every `E_k`; Ramanujan's `Σ σ_a(n) σ_b(n) n⁻ˢ` formula; the
+primon gas (fermions give `ζ(s)/ζ(2s)`, and `(−1)^F` is `μ`); primes of the form
+`x² + xy − y²`; Epstein zeta functions of E8, E8 ⊕ E8, ℤ² and the hexagonal lattice; and the
+warm-up case of Bianconi's entropic action. The full list, file by file, is in
+[`RESULTS.md`](RESULTS.md).
+
+## The quasi-Riemann library
+
+A second library, `QuasiRH`, works from OpenAI's October 2026 theorem that `ζ` has no zeros with
+real part above `7/8`. That theorem is taken as a hypothesis, copied verbatim
+(`QuasiRH.OpenAIStatement`); its proof is not imported. From it: zero-free half-planes are
+equivalent to the holomorphy of `−ζ′/ζ` (also for every Dirichlet `L`), the Riemann hypothesis is
+equivalent to `ZeroFreeRight (1/2)`, and a power-saving error in `ψ(x)` forces a zero-free
+region. See [`RESULTS.md`](RESULTS.md).
+
+## Using these results
+
+**Build and check.**
+
+```bash
+git clone https://github.com/rmorleysmith/fugue-formal.git
+cd fugue-formal
+lake exe cache get          # downloads prebuilt Mathlib
+lake build                  # about two minutes after the cache
+lake env lean Audit.lean    # prints the axioms of every headline result
+```
+
+Every line of the audit must read `[propext, Classical.choice, Quot.sound]`; if `sorryAx` ever
+appears, something is unproved.
+
+**Depend on it from your own Lake project.** The library is pinned to Lean `v4.34.1` and Mathlib
+commit `d13f23b`, the versions used by OpenAI's published proof, so that its statement can be
+matched exactly. Your project must use the same versions:
+
+```toml
+[[require]]
+name = "Formal"
+git = "https://github.com/rmorleysmith/fugue-formal.git"
+rev = "v1.0.0"
+```
+
+**Cite it.** Use GitHub's *Cite this repository* button (from [`CITATION.cff`](CITATION.cff)),
+cite a tagged release, and give the Lean name of the result you use. Names are stable within a
+release.
+
+## Further reading
+
+| File | What it is |
+|---|---|
+| [`EXPLAINED.md`](EXPLAINED.md) | every theorem in plain language, with self-test questions |
+| [`RESULTS.md`](RESULTS.md) | the full results table, file by file, and what is new relative to Mathlib |
+| [`CORPUS-MAP.md`](CORPUS-MAP.md) | each claim of the [audit's ledger](https://github.com/rmorleysmith/fugue) and the Lean name that settles it |
+| [`contributions/`](contributions/README.md) | pieces prepared for Mathlib, `formal-conjectures` and the Palomar registry |
 
 ## How AI was used
 
@@ -22,149 +187,11 @@ mathematics, and the choices of what to pursue. AI was used as a tool, in two ph
   unchanged in [hsln-archive](https://github.com/rmorleysmith/hsln-archive).
 - **October 2026 onwards.** Claude, through Claude Code, helps the author formalise the ideas in
   Lean 4, audit and tidy the earlier files, and write out the working: the steps between an
-  intuition and a precise statement.
+  intuition and a precise statement. The proofs in this repository were written that way.
 
-Checking the results does not rely on trusting the AI. Every Lean theorem is verified by the
-Lean kernel against Mathlib, and `#print axioms` shows only Lean's three standard axioms. Every
-script asserts the numbers it reports and can be rerun. Every grade in the audit cites the
-evidence it rests on.
+Checking the results does not rely on trusting the AI. Every theorem here is verified by the
+Lean kernel against Mathlib, and `#print axioms` shows only Lean's three standard axioms.
 
-## Build
+## Licence
 
-```bash
-cd /home/rms/Math/Formal
-lake exe cache get      # once; downloads prebuilt Mathlib
-lake build              # builds QuasiRH and Fugue (~1 min after cache)
-lake env lean Audit.lean   # axiom audit + sanity checks
-```
-
-`Audit.lean` must print only `[propext, Classical.choice, Quot.sound]` for every theorem: these
-are Lean's three standard axioms. If `sorryAx` ever appears, something is unproved.
-
-## Toolchain — and why it is pinned where it is
-
-| | |
-|---|---|
-| Lean | `v4.34.1` |
-| Mathlib | commit `d13f23b723b8a846827a245b89c10fc7d3f11612` |
-
-These are **exactly** the versions in `openai/math/lean/lake-manifest.json`. OpenAI's quasi-RH
-proof, `OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re`, was checked against them. Pinning to
-the same commit means the statement we assume (`OpenAIStatement`) is *literally* the statement of
-their comparator challenge, and the hypothesis can later be discharged by their proof without a
-version mismatch.
-
-Physlib is **not** a dependency yet: nothing in the number theory needs it, its Mathlib pin would
-constrain ours, and Palomar `Challenge.lean` files may import only Lean core, Mathlib and Tau Ceti.
-The physics side (the Siegel/heterotic geometry) should be a separate Lake project when we get to
-it.
-
-## Status
-
-Two libraries, both sorry-free; `Audit.lean` checks **103** headline theorems (all
-`[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
-
-### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
-
-| File | Content | Status |
-|---|---|---|
-| `QuasiRH/Basic.lean` | `ZeroFreeRight θ`, `QuasiRiemannHypothesis`, `OpenAIStatement` (verbatim); `RH ⇒ ZeroFreeRight ½`; zero-free ⇒ `−ζ′/ζ` holomorphic ⇒ the von Mangoldt series continues | ✅ |
-| `QuasiRH/Characterisation.lean` | at a zero of ζ, `−ζ′/ζ` has a simple pole; **`ZeroFreeRight θ ↔ −ζ′/ζ holomorphic on {θ < Re s, s ≠ 1}`** | ✅ |
-| `QuasiRH/Continuation.lean` | *any* holomorphic continuation of `∑Λ(n)n^{-s}` to the region forces `ZeroFreeRight θ` (identity theorem on the connected region) | ✅ |
-| `QuasiRH/Reflection.lean` | **`RH ↔ ZeroFreeRight (1/2)`** via the functional equation | ✅ |
-| `QuasiRH/InghamEasy.lean` | **`ψ(x) − x = O(x^θ) ⇒ ZeroFreeRight θ`** (partial summation + Mellin holomorphy); hence `ψ(x) = x + O(x^{1/2+ε}) ∀ε ⇒ RH`; Chebyshev `PsiError 1` as non-vacuity | ✅ |
-| `QuasiRH/Dirichlet.lean` | the characterisation for every Dirichlet `L(s,χ)`; OpenAI's Dirichlet statement (verbatim) ⇒ every `∑χ(n)Λ(n)n^{-s}` continues to `Re s > 7/8` | ✅ |
-
-### `Fugue` — theorems extracted from the HSLN corpus (ledger rows cited in each file)
-
-| File | Content | Status |
-|---|---|---|
-| `Fugue/E8Lattice.lean` | E8 Cartan form is even and positive definite (with Mathlib's `det = 1`: even unimodular), finite norm-fibres, and `Θ_{E8⊕E8} = Θ_{E8}²` (A1, C13) | ✅ |
-| `Fugue/TwoRings.lean` | Ring A (Cauchy, `K⟦X⟧`) and Ring B (Dirichlet) are **not isomorphic** (Dirichlet ring not a PID); C1, C3, C4, C5, C8 (refutation `σ₃ ≠ ζ⁴`), C9 (log is a derivation), C11 | ✅ |
-| `Fugue/EllipticPoints.lean` | every level-1 form of weight `6 ∤ k` vanishes at `ρ`, of weight `4 ∤ k` at `i`; `E₄(ρ) = 0`, `E₆(i) = 0`, `E₄(i) ≠ 0`, `E₆(ρ) ≠ 0` (A3, A8) | ✅ |
-| `Fugue/Dynamics.lean` | minimum modulus: attractors of `|F|` are the zeros (A9); coupling matrix PSD ⟺ `|κ| ≤ 1`, PD ⟺ `|κ| < 1`; equilibria preserved for *any* `K` (E2, E3, E5) | ✅ |
-| `Fugue/Theta.lean` | `Θ_{L⊕M} = Θ_L·Θ_M` as a Cauchy product (C13; settles B9) | ✅ |
-| `Fugue/TwoSquares.lean` | **Jacobi's two-square theorem** `r₂(n) = 4·Σ_{d∣n} χ₋₄(d)` (C6) — not in Mathlib; via Gaussian integers, strong induction on the least prime factor | ✅ |
-| `Fugue/LeibnizL.lean` | **`L(1, χ₋₄) = π/4`** (D6) — not in Mathlib (which has no `s = 1` values of odd Hurwitz/sine zeta) | ✅ |
-| `Fugue/Ramanujan.lean` | **`E₄² = E₈`** and Ramanujan's **`σ₇(n) = σ₃(n) + 120 Σ σ₃(a)σ₃(n−a)`** — Ring A (Cauchy) of Ring B (Dirichlet) objects | ✅ |
-| `Fugue/HeckeRefutation.lean` | ledger C12 refuted in Lean: `a₂(Δ·E₄) = 216 ≠ a₂(Δ)·a₂(E₄)`; Ramanujan `τ(2) = −24` from `Δ = (E₄³−E₆²)/1728` | ✅ |
-| `Fugue/SieveEta.lean` | D9 sieve by `{2,3,5,7}` = Eratosthenes; C15 eta quotients never vanish on `ℍ` | ✅ |
-| `Fugue/ThetaE8*.lean` | **`Θ_{E8} = E₄`** (A2): `E8 = D8 ∪ (D8+½𝟙)` gives `Θ_{E8} = (θ₂⁸+θ₃⁸+θ₄⁸)/2`, which is a level-one weight-4 form, hence `E₄`; **#E8 vectors of norm 2n = 240σ₃(n)** (240, 2160, 6720) | ✅ |
-| `Fugue/HeteroticE8.lean`, `Fugue/D16Plus.lean` | **heterotic lattices**: `Θ_{E8⊕E8} = E₈` (480σ₇(n) vectors of norm 2n) and **Witt's isospectrality** `Θ_{D16⁺} = Θ_{E8⊕E8}` — the lattices of the `E8×E8` and `Spin(32)/ℤ₂` heterotic strings have the same theta series | ✅ |
-| `Fugue/RamanujanL.lean` | **Ramanujan's L-function** `Σ τ(n)n^{−s}` of `Δ = η²⁴`: completed `Λ` is **entire** with `Λ(12−s) = Λ(s)`; `τ(1..3) = 1, −24, 252`; Hecke's bound `τ(n) = O(n⁶)` (Mordell multiplicativity and Deligne's bound not formalised) | ✅ |
-| `Fugue/PrimonGas.lean` | **primon gas** (Julia, Spector 1990): bosonic partition function `ζ(s)`, **fermionic** `ζ(s)/ζ(2s)` (Pauli = squarefree), fermion parity `(−1)^F = μ`, Witten index `1/ζ(s)`, fermionic Fock states ↔ finite sets of primes — an analogy made precise | ✅ |
-| `Fugue/Epstein.lean` | **Epstein zeta functions**: `Z_{E8} = 240ζ(s)ζ(s−3)`, `Z_{E8⊕E8} = 480ζ(s)ζ(s−7)`, `Z_{ℤ²} = 4ζ(s)L(s,χ₋₄)`, `Z_{hex} = 6ζ(s)L(s,χ₋₃)` | ✅ |
-| `Fugue/GoldenPrimes.lean` | **golden-ratio primes**: `p = x² + xy − y²` (the norm of `ℤ[φ]`) ⇔ `p = 5` or `p ≡ ±1 (mod 5)`; inert primes stay prime; `√5 = 2φ − 1` ramifies; `φⁿ⁺¹ = F_n + F_{n+1}φ` and Cassini's identity | ✅ |
-| `Fugue/Partitions.lean` | **partitions**: Euler's `Σp(n)qⁿ·∏(1−qⁿ) = 1` and recurrence (p(0..10) checked); **Jacobi's identity** `∏(1−qⁿ)³ = Σ(−1)ᵏ(2k+1)q^{k(k+1)/2}` (not in Mathlib); **Ramanujan's congruence `p(5n+4) ≡ 0 (mod 5)`** for all n | ✅ |
-| `Fugue/Tau691.lean` | **Ramanujan's `τ(n) ≡ σ₁₁(n) (mod 691)`**; integrality of `τ` from `Δ = q∏(1−qⁿ)²⁴` (`qExpansion_discriminant_eq`); `E₁₂ = E₄³ − (432000/691)Δ` | ✅ |
-| `Fugue/DirectSumGenus.lean` | direct sum = block-diagonal Gram matrix: `E8⊕E8` is even unimodular (det 1); a direct sum multiplies theta series and adds weights, but does not raise the Siegel degree | ✅ |
-| `Fugue/EulerCompose.lean` | **composing per-prime Euler factors** (fig 32, ledger D1): `∏_{p∈S} eulerFactor p = smooth S` (indicator of the `S`-smooth numbers — unique factorisation coefficient by coefficient), all-ones row for `n ≤ N`, coefficientwise limit `ζ`, Mathlib's analytic Euler product | ✅ |
-| `Fugue/EntropicAction.lean` | **Bianconi's gravity-from-entropy, warm-up case**: `−ln det(1 + α∇φ∇φᵀ) = −ln(1 + α|∇φ|²)` (matrix determinant lemma), low-energy limit = massless Klein–Gordon (`HasDerivAt`), emergent cosmological constant `Σ(λ−1−ln λ) ≥ 0` with equality iff all `λ = 1` (vacuum) | ✅ |
-| `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` | ✅ |
-| `Fugue/HeckeEk.lean` | Hecke for **every** `E_k` (`k ≥ 4` even): root number `(−1)^{k/2}`, identification with `−(2k/B_k)(2π)^{−s}Γ(s)ζ(s)ζ(s−k+1)` on `ℂ∖{1,k,0,−1,…}`; `E₆`'s forced centre zero `Λ₆(3) = 0` *is* the trivial zero `ζ(−2) = 0` | ✅ |
-| `Fugue/RankinSelberg.lean` | **Ramanujan's formula** `Σσ_a(n)σ_b(n)n^{−s}·ζ(2s−a−b) = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)` (Re s > a+b+1) — the Rankin–Selberg prototype; C11's "Rankin–Selberg closure" made precise | ✅ |
-| `Fugue/HexagonalCount.lean` | **`#{a²−ab+b²=n} = 6Σ_{d∣n} χ₋₃(d)`** (C7) — the Eisenstein integers / hexagonal lattice, `ζ_{ℚ(√−3)}` | ✅ |
-| `Fugue/Factoring.lean` | root-of-unity detector = divisibility test = trial division (D12, D13); `φ(pq)` reveals `p, q` (Miller); **`pos = frac∘log₂` is injective on odd numbers** — corrects appendix A §§4, 6 | ✅ |
-
-### `../FormalPNT` — chapter 6, the hard direction (✅ complete)
-
-Same pins plus PrimeNumberTheoremAnd at OpenAI's commit `c39a751` and this project as a path
-dependency. **`Ingham.zeroFreeRight_iff_psiError`**: for `1/2 ≤ θ < 1`, *no zeros right of θ ⟺
-`ψ(x) = x + O(x^{θ+δ})` for all δ > 0*; hence RH ⟺ square-root error, and **OpenAI's 7/8 ⟺
-`ψ(x) = x + O(x^{7/8+δ})`**. 11 theorems audited, standard axioms. See
-[`../FormalPNT/README.md`](../FormalPNT/README.md).
-
-Every claim in these tables was established by `lake build` + `lake env lean Audit.lean`.
-
-## What is new, and what is not — honestly
-
-**Not new:** the mathematics of chapters 1–5 is textbook (Titchmarsh, Davenport). The
-identity `∑ Λ(n)n^{-s} = −ζ′/ζ` for `Re s > 1` is already in Mathlib
-(`ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div`), as is the theorem that a
-log-derivative has a simple pole at a zero (`meromorphicOrderAt_logDeriv_eq_neg_one`).
-
-**New in the formal sense** (as far as we could find — each claim checked against Mathlib at our
-pin, `formal-conjectures`, PrimeNumberTheoremAnd and OpenAI's repository):
-
-1. the quasi-Riemann hypothesis as a Lean `Prop` outside OpenAI's repository, and its
-   characterisation by holomorphy of `−ζ′/ζ` (chapters 1–3, also for every `L(s,χ)`);
-2. **Ingham's theorem in both directions** (`../FormalPNT`, `../PalomarIngham`): zero-free right of
-   θ ⟺ `ψ(x) = x + O(x^{θ+δ})`; RH ⟺ square-root error; **OpenAI's 7/8 ⟺ `ψ(x) = x + O(x^{7/8+δ})`**; and in `../PalomarIngham/PalomarIngham/Dirichlet/`, **OpenAI's Dirichlet theorem ⇒ `ψ(x; q, a) = x/φ(q) + O(x^{7/8+δ})`** (primes in progressions).
-   PrimeNumberTheoremAnd has RH-conditional error terms only as `sorry`'d statements; OpenAI's
-   prime-counting files have no error term;
-3. classical theorems absent from Mathlib at our pin, extracted from the corpus: **Jacobi's
-   two-square theorem**, **`L(1,χ₋₄) = π/4`**, the elliptic-point vanishing of level-one forms
-   (`E₄(ρ) = 0`, `E₆(i) = 0`), Ramanujan's `σ₇` identity via `E₄² = E₈`, positive definiteness of
-   the E8 form and `Θ_{E8⊕E8} = Θ_{E8}²`, and non-isomorphism of the Cauchy and Dirichlet rings.
-
-None of the *mathematics* is new; it is classical. What is new is that it is now machine-checked,
-connected to the corpus' claims, and (for item 2) packaged for the Palomar registry.
-
-## Contribution paths found during the research
-
-1. **`formal-conjectures` (small, concrete, ready).** The repo has RH, GRH, and four RH
-   equivalents, but **no quasi-RH**. Its contribution guide provides exactly the right mechanism:
-   `@[category research solved, AMS 11, formal_proof using lean4 at "<url>"]`, linking to
-   `OAI/NumberTheory/DirichletL/Nonvanishing.lean` at a pinned commit. Their guide "strongly
-   recommends" a Palomar entry for research proofs; OpenAI's result is **not** on Palomar
-   (checked against the registry's 200-entry recent feed, 22 Oct 2026), so whether to mark it
-   `solved` is the maintainers' call. A PR adding the *statement* with an honest docstring is
-   uncontroversial either way.
-2. **Mathlib (small).** `riemannZeta_not_eventually_zero` / the order-−1 lemma at zeros of ζ are
-   natural Mathlib lemmas near `NumberTheory/LSeries/ZetaZeros.lean` (which already has
-   `isDiscrete_riemannZetaZeros`).
-3. **Palomar (large, later).** A registry entry needs "credible research interest". The chapters
-   below build toward one that would qualify (chapter 6).
-
-## Roadmap
-
-| # | Chapter | Content | State |
-|---|---|---|---|
-| 1 | `Basic` | zero-free ⇒ prime series continues | ✅ |
-| 2 | `Characterisation` | …and conversely (zeros = poles) | ✅ |
-| 3 | `Dirichlet` | the same for every `L(s,χ)` | ✅ |
-| 4 | `Continuation`, `Reflection` | any continuation suffices; RH ⟺ `ZeroFreeRight ½` | ✅ |
-| 5 | `InghamEasy` | `ψ(x) − x = O(x^θ) ⇒ ZeroFreeRight θ` | ✅ |
-| 6 | ✅ `Ingham` (in `../FormalPNT`) | `ZeroFreeRight θ ⇒ ψ(x) = x + O(x^{θ+ε})` for `½ ≤ θ < 1`. With OpenAI's proof: **`ψ(x) = x + O(x^{7/8+ε})`**. As far as we could find, no proof assistant has a machine-checked power-saving error term in the PNT (PrimeNumberTheoremAnd contains RH-conditional ones only as `sorry`'d blueprint statements). Plan: smoothed Chebyshev function from PNT+'s `MediumPNT`, contour moved to the straight line `Re s = θ + δ`, with a new bound `ζ′/ζ ≪ log|t|` there from Borel–Carathéodory | ✅ |
-
-Chapter 6 is the Palomar candidate; the Palomar-ready port is `../PalomarIngham` (✅ `lake comparator` passes; awaiting a public repo + human submission). Chapters 1–5 are the honest steps toward it.
+Apache-2.0, the same licence as Mathlib. See [`LICENSE`](LICENSE).

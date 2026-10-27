@@ -1,0 +1,22 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          use-mathlib-cache: true
+      - name: Axiom audit (fails if any headline theorem uses sorry or a non-standard axiom)
+        run: |
+          lake env lean Audit.lean > audit.log 2>&1 || { cat audit.log; exit 1; }
+          cat audit.log
+          if grep -E "sorryAx|error" audit.log; then echo "Audit failed"; exit 1; fi
+          n=$(grep -c "propext, Classical.choice, Quot.sound" audit.log)
+          echo "Headline theorems on the three standard axioms: $n"

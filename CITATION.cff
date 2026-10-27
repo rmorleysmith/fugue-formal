@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use these results, please cite this repository and the Lean name of the result you use."
+type: software
+title: "Fugue — machine-checked proofs (Lean 4 / Mathlib)"
+abstract: >-
+  Lean 4 proofs, checked against Mathlib, of the mathematics behind the HSLN exploration
+  (2026): theta series of E8 and E8 ⊕ E8 (Θ_E8 = E₄, 240σ₃(n) and 480σ₇(n) vectors), Witt's
+  D16⁺ isospectrality, Ramanujan's congruences τ(n) ≡ σ₁₁(n) (mod 691) and p(5n+4) ≡ 0 (mod 5),
+  Jacobi's two-square theorem, L(1, χ₋₄) = π/4, the Cauchy and Dirichlet rings, Euler-factor
+  composition, Hecke's functional equations for Eisenstein series, and a library on zero-free
+  regions of the Riemann zeta function. No sorry; only Lean's standard axioms.
+authors:
+  - family-names: Morley-Smith
+    given-names: Richard
+repository-code: "https://github.com/rmorleysmith/fugue-formal"
+license: Apache-2.0
+version: 1.0.0
+date-released: 2026-10-27
+keywords:
+  - Lean 4
+  - Mathlib
+  - formal verification
+  - modular forms
+  - E8 lattice
+  - theta series
+  - Eisenstein series
+  - Dirichlet series
+  - Riemann zeta function

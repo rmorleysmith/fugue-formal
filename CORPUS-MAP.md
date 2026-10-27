@@ -1,10 +1,10 @@
 # From the Fugue ledger to Lean
 
-Every row of [`Fugue/02-threads/evidence-ledger.md`](../Fugue/02-threads/evidence-ledger.md)
+Every row of [`Fugue/02-threads/evidence-ledger.md`](https://github.com/rmorleysmith/fugue/blob/main/Fugue/02-threads/evidence-ledger.md)
 that has been turned into a machine-checked statement, with the exact Lean name. "Mathlib"
 means the fact was already in Mathlib (at commit `d13f23b`) and we only restate or use it.
 All entries are sorry-free and appear in [`Audit.lean`](Audit.lean) or
-[`../FormalPNT`](../FormalPNT).
+[fugue-formal-pnt](https://github.com/rmorleysmith/fugue-formal-pnt).
 
 | Ledger | Corpus claim | Verdict in ledger | Lean | Where |
 |---|---|---|---|---|

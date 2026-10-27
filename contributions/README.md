@@ -42,7 +42,7 @@ File: [`formal-conjectures/QuasiRiemannHypothesis.lean`](formal-conjectures/Quas
 
 ## 3. Palomar — two entries (ready, need a human to publish)
 
-Project: [`../../PalomarIngham`](../../PalomarIngham/README.md) (Lean v4.35.0, Mathlib v4.35.0,
+Project: [palomar-ingham](https://github.com/rmorleysmith/palomar-ingham) (Lean v4.35.0, Mathlib v4.35.0,
 every file a `module`, PrimeNumberTheoremAnd vendored under Apache-2.0).
 
 * `Challenge.lean` (Mathlib only, no new definitions) states:
