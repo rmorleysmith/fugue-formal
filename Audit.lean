@@ -235,3 +235,11 @@ example : Fugue.EulerCompose.eulerFactor 2 8 = 1 := by
   simpa using Fugue.EulerCompose.eulerFactor_prime_pow Nat.prime_two 3
 example : Fugue.EulerCompose.eulerFactor 2 6 = 0 := by
   rw [Fugue.EulerCompose.eulerFactor, Fugue.EulerCompose.smooth_apply]; decide +kernel
+
+-- 28. Bianconi's entropic action, warm-up case: −ln det(1 + α u uᵀ) = −ln(1 + α|u|²); low-energy limit
+--     is massless Klein–Gordon; the emergent cosmological constant Σ(λ−1−ln λ) ≥ 0, = 0 iff vacuum.
+#print axioms Fugue.EntropicAction.warmup_lagrangian
+#print axioms Fugue.EntropicAction.warmup_linearisation
+#print axioms Fugue.EntropicAction.cosmological_nonneg
+#print axioms Fugue.EntropicAction.cosmological_eq_zero_iff
+example : Fugue.EntropicAction.lam 1 = 0 := by simp [Fugue.EntropicAction.lam]

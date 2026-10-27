@@ -42,7 +42,7 @@ it.
 
 ## Status
 
-Two libraries, both sorry-free; `Audit.lean` checks **99** headline theorems (all
+Two libraries, both sorry-free; `Audit.lean` checks **103** headline theorems (all
 `[propext, Classical.choice, Quot.sound]`) plus non-vacuity examples.
 
 ### `QuasiRH` — building on OpenAI's quasi-Riemann theorem
@@ -80,6 +80,7 @@ Two libraries, both sorry-free; `Audit.lean` checks **99** headline theorems (al
 | `Fugue/Tau691.lean` | **Ramanujan's `τ(n) ≡ σ₁₁(n) (mod 691)`**; integrality of `τ` from `Δ = q∏(1−qⁿ)²⁴` (`qExpansion_discriminant_eq`); `E₁₂ = E₄³ − (432000/691)Δ` | ✅ |
 | `Fugue/DirectSumGenus.lean` | direct sum = block-diagonal Gram matrix: `E8⊕E8` is even unimodular (det 1); see HANDOVER §5 for what "genus" does and does not do | ✅ |
 | `Fugue/EulerCompose.lean` | **composing per-prime Euler factors** (fig 32, ledger D1): `∏_{p∈S} eulerFactor p = smooth S` (indicator of the `S`-smooth numbers — unique factorisation coefficient by coefficient), all-ones row for `n ≤ N`, coefficientwise limit `ζ`, Mathlib's analytic Euler product | ✅ |
+| `Fugue/EntropicAction.lean` | **Bianconi's gravity-from-entropy, warm-up case** (owner's 27 Oct link): `−ln det(1 + α∇φ∇φᵀ) = −ln(1 + α|∇φ|²)` (matrix determinant lemma), low-energy limit = massless Klein–Gordon (`HasDerivAt`), emergent cosmological constant `Σ(λ−1−ln λ) ≥ 0` with equality iff all `λ = 1` (vacuum) | ✅ |
 | `Fugue/HeckeE4.lean` | **Hecke for `E₄`**: modularity ⇒ `(2π)^{−s}Γ(s)·240ζ(s)ζ(s−3)` continues to `ℂ∖{0,4}`, symmetric under `s ↔ 4−s`, residues `±1` (the Eisenstein road; see `EISENSTEIN-ROAD.md`) | ✅ |
 | `Fugue/HeckeEk.lean` | Hecke for **every** `E_k` (`k ≥ 4` even): root number `(−1)^{k/2}`, identification with `−(2k/B_k)(2π)^{−s}Γ(s)ζ(s)ζ(s−k+1)` on `ℂ∖{1,k,0,−1,…}`; `E₆`'s forced centre zero `Λ₆(3) = 0` *is* the trivial zero `ζ(−2) = 0` | ✅ |
 | `Fugue/RankinSelberg.lean` | **Ramanujan's formula** `Σσ_a(n)σ_b(n)n^{−s}·ζ(2s−a−b) = ζ(s)ζ(s−a)ζ(s−b)ζ(s−a−b)` (Re s > a+b+1) — the Rankin–Selberg prototype; C11's "Rankin–Selberg closure" made precise | ✅ |

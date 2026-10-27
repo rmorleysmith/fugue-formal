@@ -28,3 +28,4 @@ import Fugue.Partitions
 import Fugue.Tau691
 import Fugue.DirectSumGenus
 import Fugue.EulerCompose
+import Fugue.EntropicAction

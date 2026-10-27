@@ -426,6 +426,21 @@ Cauchy product (multiplying `q`-series, `PowerSeries`), **Ring B** the Dirichlet
   Mathlib's analytic `∏_p (1 − p^{−s})^{−1} → ζ(s)` for `Re s > 1`. Nothing here touches zeros — the
   script's own scope note is right.
 
+### `Fugue/EntropicAction.lean` — gravity from entropy, the warm-up case
+
+* **`warmup_lagrangian`** — Bianconi's Lagrangian is the relative entropy between the metric `g`
+  and the metric `G = g + α ∇φ̄∇φ` induced by a matter field, `−Σ ln λ̃ₙ = −ln det(G g⁻¹)`. In flat
+  space the induced metric is `1 + α u uᵀ` with `u = ∇φ`, a rank-one perturbation, so the
+  matrix determinant lemma gives `−ln(1 + α|∇φ|²)`: the field enters only through `|∇φ|²`.
+  **`warmup_linearisation`** differentiates at zero field: the action is `−α|∇φ|²` to first
+  order, the massless Klein–Gordon Lagrangian, exactly as her slides say.
+* **`cosmological_nonneg`, `cosmological_eq_zero_iff`** — her emergent cosmological "constant" is
+  `Λ ∝ Tr[𝒢 − 1 − ln 𝒢] = Σ(λᵢ − 1 − ln λᵢ)`; since `ln x ≤ x − 1` with equality only at `x = 1`,
+  `Λ ≥ 0` and `Λ = 0` exactly when every eigenvalue is `1`, i.e. in the vacuum. This is the
+  precise content of the corpus' slogan "gravity warps the path, not the destination": the
+  entropic action has a unique zero, and everything else is tension between two metrics.
+  *Not here:* curvature, the `G`-field, the equations of motion.
+
 ## Why the audit's sanity checks matter
 
 A formal equivalence can be "true" for a silly reason — for instance if the region were empty,
