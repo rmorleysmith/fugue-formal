@@ -13,10 +13,13 @@ jobs:
       - uses: leanprover/lean-action@v1
         with:
           use-mathlib-cache: true
-      - name: Axiom audit (fails if any headline theorem uses sorry or a non-standard axiom)
+      - name: Axiom audit (every headline theorem uses only Lean's standard axioms, no sorry)
         run: |
           lake env lean Audit.lean > audit.log 2>&1 || { cat audit.log; exit 1; }
-          cat audit.log
-          if grep -E "sorryAx|error" audit.log; then echo "Audit failed"; exit 1; fi
-          n=$(grep -c "propext, Classical.choice, Quot.sound" audit.log)
-          echo "Headline theorems on the three standard axioms: $n"
+          expected=$(grep -c "^#print axioms" Audit.lean)
+          audited=$(grep -c -E "depends on axioms|does not depend on any axioms" audit.log)
+          bad=$(grep "depends on axioms" audit.log | grep -v -E "\[((propext|Classical\.choice|Quot\.sound)(, )?)+\]$" || true)
+          if grep -q -E "sorryAx|error" audit.log || [ -n "$bad" ] || [ "$audited" -ne "$expected" ]; then
+            cat audit.log; echo "$bad"; echo "Audit failed: $audited of $expected results checked"; exit 1
+          fi
+          echo "All $audited headline theorems use only Lean's standard axioms (no sorry)."
