@@ -13,6 +13,14 @@ authors:
   - family-names: Morley-Smith
     given-names: Richard
 repository-code: "https://github.com/rmorleysmith/fugue-formal"
+doi: 10.5281/zenodo.23695018
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23695018
+    description: "All versions"
+  - type: doi
+    value: 10.5281/zenodo.23695019
+    description: "Version 1.0.0"
 license: Apache-2.0
 version: 1.0.0
 date-released: 2026-10-27

@@ -3,6 +3,7 @@
 [![build](https://github.com/rmorleysmith/fugue-formal/actions/workflows/build.yml/badge.svg)](https://github.com/rmorleysmith/fugue-formal/actions/workflows/build.yml)
 [![licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue.svg)](LICENSE)
 [![Lean 4](https://img.shields.io/badge/Lean-v4.34.1-informational.svg)](lean-toolchain)
+[![DOI](https://zenodo.org/badge/1435655240.svg)](https://doi.org/10.5281/zenodo.23695018)
 
 Lean 4 proofs, checked against [Mathlib](https://github.com/leanprover-community/mathlib4), of
 the mathematics behind the HSLN exploration of 2026: an attempt to build a neural network out
@@ -162,9 +163,10 @@ git = "https://github.com/rmorleysmith/fugue-formal.git"
 rev = "v1.0.0"
 ```
 
-**Cite it.** Use GitHub's *Cite this repository* button (from [`CITATION.cff`](CITATION.cff)),
-cite a tagged release, and give the Lean name of the result you use. Names are stable within a
-release.
+**Cite it.** Cite the release you used and the Lean name of the result. For v1.0.0 the DOI is
+[10.5281/zenodo.23695019](https://doi.org/10.5281/zenodo.23695019); to cite every version at once, use
+[10.5281/zenodo.23695018](https://doi.org/10.5281/zenodo.23695018). GitHub's *Cite this repository*
+button gives the full reference ([`CITATION.cff`](CITATION.cff)). Names are stable within a release.
 
 ## Further reading
 
